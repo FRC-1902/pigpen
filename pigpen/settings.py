@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+API_KEY = os.getenv("PIGPEN_API", "pass")
+
 
 # Application definition
 

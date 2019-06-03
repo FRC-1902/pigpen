@@ -11,7 +11,10 @@ class Member(models.Model):
     first = models.TextField()
     last = models.TextField()
     role = models.CharField(max_length=10, default="stu", choices=roles)
-    avatar = models.ImageField()
+    avatar = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return "%s %s" % (self.first, self.last)
 
 
 class Meeting(models.Model):
@@ -26,15 +29,21 @@ class Meeting(models.Model):
     date = models.DateField()
     type = models.CharField(max_length=10, default="build", choices=types)
     name = models.TextField(null=True, blank=True)
-    signup_active = models.BooleanField()
-    self_register = models.BooleanField()
+    signup_active = models.BooleanField(default=False)
+    self_register = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s on %s" % (self.get_type_display(), self.date)
 
 
 class Punch(models.Model):
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
+    start = models.DateTimeField(null=True, blank=True)
+    end = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "%s punched at %s" % (str(self.member), str(self.meeting))
 
 
 class Registration(models.Model):
@@ -42,3 +51,6 @@ class Registration(models.Model):
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)
     approved = models.BooleanField()
     notes = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return "%s registered at %s" % (str(self.member), str(self.meeting))
