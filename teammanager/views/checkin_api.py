@@ -1,10 +1,9 @@
 from datetime import datetime
 
-from django.conf import settings
-from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
-from ..models import Member, Meeting, Punch
+from ..models import Member, Meeting, Punch, Token
 
 
 def get_members(request):
@@ -25,7 +24,11 @@ def get_members(request):
 def punch(request):
     if request.method == 'POST':
         data = request.POST
-        if "secret" in data and "member" in data and data['secret'] == settings.API_KEY:
+        if "secret" in data and "member" in data:
+            # Authenticate against token in database
+            if not Token.objects.filter(token=data['token']).exists():
+                return HttpResponseForbidden
+
             q = Member.objects.filter(id=data['member'])
             if q.exists():
                 member = q.first()

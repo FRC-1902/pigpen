@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gca@!y=keoyw56)2jxz*$&e+sf9zh4en#-w4in3*0c548sn8ld'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv("prod", False))
+DEBUG = bool(os.getenv("prod", True))
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -31,9 +31,6 @@ ALLOWED_HOSTS = [
     'pen.vegetarianbaconite.com',
     'pen.explodingbacon.com',
 ]
-
-API_KEY = os.getenv("PIGPEN_API", "pass")
-
 
 # Application definition
 

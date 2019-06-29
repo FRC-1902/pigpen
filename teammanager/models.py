@@ -1,5 +1,12 @@
 from django.db import models
 
+from .utils import gen_token
+
+
+class Token(models.Model):
+    token = models.CharField(max_length=100, default=gen_token)
+    comment = models.TextField()
+
 
 class Member(models.Model):
     roles = (
