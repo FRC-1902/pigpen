@@ -7,7 +7,7 @@ from ..models import Member, Meeting, Punch, Token
 
 
 def get_members(request):
-    members = Member.objects.all()
+    members = Member.objects.all().order_by("last")
     out = []
 
     for member in members:
