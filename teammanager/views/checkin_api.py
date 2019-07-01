@@ -93,3 +93,27 @@ def get_hours(request):
             return JsonResponse(dict((k, str(v).split('.')[0]) for k, v in hours.items()))
 
     return HttpResponseBadRequest()
+
+
+@csrf_exempt
+def add_member(request):
+    if request.method == 'POST':
+        data = request.POST
+        if 'secret' in data and 'first' in data and 'last' in data and 'role' in data:
+            # Authenticate against token in database
+            if not Token.objects.filter(token=data['secret']).exists():
+                return HttpResponseForbidden
+
+            m, created = Member.objects.get_or_create(first=data['first'], last=data['last'])
+
+            if data['role'] in Member.roles:
+                m.role = m
+
+            m.save()
+
+            return JsonResponse({
+                "success": True,
+                "created": created
+            })
+
+    return HttpResponseBadRequest()
