@@ -45,11 +45,25 @@ def punch(request):
                     pun.start = datetime.now()
                     pun.save()
 
-                return JsonResponse({
+                out = {
                     "success": True,
                     "member": str(member),
-                    "punch": "Out" if exists else "In"
-                })
+                }
+
+                if not exists:
+                    out.update({
+                        "punch": "in",
+                        "time": pun.start.strftime("%-I:%M %p")
+                    })
+                else:
+                    out.update({
+                        "punch": "out",
+                        "time": pun.end.strftime("%-I:%M %p"),
+                        "duration": str(pun.duration())
+                    })
+
+                return JsonResponse(out)
+
             else:
                 return JsonResponse({
                     "success": False,

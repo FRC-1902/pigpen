@@ -52,6 +52,9 @@ class Punch(models.Model):
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
 
+    def duration(self):
+        return self.end - self.start
+
     def __str__(self):
         return "%s punched at %s" % (str(self.member), str(self.meeting))
 
