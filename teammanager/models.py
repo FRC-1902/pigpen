@@ -55,6 +55,9 @@ class Punch(models.Model):
     def duration(self):
         return self.end - self.start
 
+    def is_complete(self):
+        return bool(self.meeting) and bool(self.start) and bool(self.end)
+
     def __str__(self):
         return "%s punched at %s" % (str(self.member), str(self.meeting))
 

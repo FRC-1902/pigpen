@@ -21,7 +21,7 @@ def get_members(request):
 
 
 @csrf_exempt
-def punch(request):
+def do_punch(request):
     timezone.activate(settings.TIME_ZONE)
 
     if request.method == 'POST':
@@ -73,5 +73,22 @@ def punch(request):
                     "success": False,
                     "error": "Member does not exist."
                 })
+
+    return HttpResponseBadRequest()
+
+
+def get_hours(request):
+    if request.method == 'GET':
+        data = request.GET
+        if 'member' in data:
+            hours = {}
+            for punch in Punch.objects.filter(member__id=data['member']):
+                if punch.is_complete():
+                    if punch.meeting.type in hours:
+                        hours[punch.meeting.type] += punch.duration()
+                    else:
+                        hours[punch.meeting.type] = punch.duration()
+
+            return JsonResponse(hours)
 
     return HttpResponseBadRequest()
