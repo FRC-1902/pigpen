@@ -57,12 +57,12 @@ def punch(request):
                 if not exists:
                     out.update({
                         "punch": "in",
-                        "time": pun.start.strftime("%-I:%M %p")
+                        "time": timezone.localtime(pun.start).strftime("%-I:%M %p")
                     })
                 else:
                     out.update({
                         "punch": "out",
-                        "time": pun.end.strftime("%-I:%M %p"),
+                        "time": timezone.localtime(pun.end).strftime("%-I:%M %p"),
                         "duration": str(pun.duration()).split('.')[0]
                     })
 
