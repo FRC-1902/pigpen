@@ -61,7 +61,7 @@ def punch(request):
                     out.update({
                         "punch": "out",
                         "time": pun.end.strftime("%-I:%M %p"),
-                        "duration": str(pun.duration())
+                        "duration": str(pun.duration()).split('.')[0]
                     })
 
                 return JsonResponse(out)
