@@ -45,6 +45,8 @@ def punch(request):
                     pun.start = datetime.now()
                     pun.save()
 
+                pun.refresh_from_db()  # Needed to fix naive datetime issue
+
                 out = {
                     "success": True,
                     "member": str(member),
