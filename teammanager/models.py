@@ -7,6 +7,9 @@ class Token(models.Model):
     token = models.CharField(max_length=100, default=gen_token)
     comment = models.TextField()
 
+    def __str__(self):
+        return self.comment
+
 
 class Member(models.Model):
     roles = (
