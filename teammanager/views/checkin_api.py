@@ -29,7 +29,7 @@ def do_punch(request):
         if "secret" in data and "member" in data:
             # Authenticate against token in database
             if not Token.objects.filter(token=data['secret']).exists():
-                return HttpResponseForbidden
+                return HttpResponseForbidden()
 
             q = Member.objects.filter(id=data['member'])
             if q.exists():
@@ -102,7 +102,7 @@ def add_member(request):
         if 'secret' in data and 'first' in data and 'last' in data and 'role' in data:
             # Authenticate against token in database
             if not Token.objects.filter(token=data['secret']).exists():
-                return HttpResponseForbidden
+                return HttpResponseForbidden()
 
             m, created = Member.objects.get_or_create(first=data['first'], last=data['last'])
 
