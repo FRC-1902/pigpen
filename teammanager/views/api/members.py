@@ -65,7 +65,7 @@ def get_signed_in(request, member):
         meeting = Meeting.objects.filter(type='build', date=timezone.now().date())
 
         if meeting.exists():
-            pq = Punch.objects.filter(member=member, meeting=meeting, end=None)
+            pq = Punch.objects.filter(member=member, meeting=meeting.first(), end=None)
             if pq.exists():
                 return JsonResponse({
                     "signed_in": True
