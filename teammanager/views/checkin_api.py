@@ -26,7 +26,7 @@ def punch(request):
         data = request.POST
         if "secret" in data and "member" in data:
             # Authenticate against token in database
-            if not Token.objects.filter(token=data['token']).exists():
+            if not Token.objects.filter(token=data['secret']).exists():
                 return HttpResponseForbidden
 
             q = Member.objects.filter(id=data['member'])
