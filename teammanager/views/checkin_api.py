@@ -34,7 +34,7 @@ def do_punch(request):
             q = Member.objects.filter(id=data['member'])
             if q.exists():
                 member = q.first()
-                meeting = Meeting.objects.get_or_create(date=timezone.now().date())[0]
+                meeting = Meeting.objects.get_or_create(type='build', date=timezone.now().date())[0]
 
                 pq = Punch.objects.filter(member=member, meeting=meeting, end=None)
                 exists = pq.exists()
