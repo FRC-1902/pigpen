@@ -89,6 +89,7 @@ def get_hours(request):
                     else:
                         hours[punch.meeting.type] = punch.duration()
 
-            return JsonResponse(dict((k, str(v)) for k, v in hours.items()))  # Coerce all values to string
+            # Coerce all values to string
+            return JsonResponse(dict((k, str(v).split('.')[0]) for k, v in hours.items()))
 
     return HttpResponseBadRequest()
