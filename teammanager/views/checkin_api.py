@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -21,6 +22,8 @@ def get_members(request):
 
 @csrf_exempt
 def punch(request):
+    timezone.activate(settings.TIME_ZONE)
+
     if request.method == 'POST':
         data = request.POST
         if "secret" in data and "member" in data:
