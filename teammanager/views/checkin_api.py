@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseForbidden
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 from ..models import Member, Meeting, Punch, Token
@@ -32,17 +31,17 @@ def punch(request):
             q = Member.objects.filter(id=data['member'])
             if q.exists():
                 member = q.first()
-                meeting = Meeting.objects.get_or_create(date=datetime.now().date())[0]
+                meeting = Meeting.objects.get_or_create(date=timezone.now().date())[0]
 
                 pq = Punch.objects.filter(member=member, meeting=meeting, end=None)
                 exists = pq.exists()
                 if exists:
                     pun = pq.first()
-                    pun.end = datetime.now()
+                    pun.end = timezone.now()
                     pun.save()
                 else:
                     pun = Punch(member=member, meeting=meeting)
-                    pun.start = datetime.now()
+                    pun.start = timezone.now()
                     pun.save()
 
                 pun.refresh_from_db()  # Needed to fix naive datetime issue
