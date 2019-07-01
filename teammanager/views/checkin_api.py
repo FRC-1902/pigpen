@@ -106,7 +106,7 @@ def add_member(request):
 
             m, created = Member.objects.get_or_create(first=data['first'], last=data['last'])
 
-            if data['role'] in Member.roles:
+            if any(data['role'] in r for r in Member.roles):
                 m.role = m
 
             m.save()
