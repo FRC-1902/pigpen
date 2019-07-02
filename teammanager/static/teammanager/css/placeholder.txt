@@ -1,0 +1,1 @@
+Needed to ensure folder is checked in to VCS
