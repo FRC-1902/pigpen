@@ -6,7 +6,7 @@ from teammanager.models import Member, Token, Punch, Meeting
 
 
 def get_members(request):
-    members = Member.objects.all().order_by("last")
+    members = Member.objects.all().order_by("first")
     out = []
 
     for member in members:
