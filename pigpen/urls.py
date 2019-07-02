@@ -19,6 +19,6 @@ from django.urls import path, include
 from teammanager import urls as teammanager
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(teammanager.urls)),
+    path('superuser/', admin.site.urls),
+    path('', include(teammanager, namespace='man'))
 ]
