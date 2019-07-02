@@ -2,4 +2,4 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'teammanager/base.html', )
+    return render(request, 'teammanager/index.html', )

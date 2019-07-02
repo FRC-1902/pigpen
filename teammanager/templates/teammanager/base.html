@@ -38,9 +38,11 @@
 
     <div class="collapse navbar-collapse" id="navItems">
         <ul class="navbar-nav">
+            {% if request.user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'man:index' %}">Home</a>
             </li>
+            {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto">
             {% if not request.user.is_authenticated %}
