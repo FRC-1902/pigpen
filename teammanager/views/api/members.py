@@ -45,9 +45,11 @@ def add_member(request):
 
 def get_hours(request, member):
     if request.method == 'GET':
-        hours = {}
+        hours = {'total': 0}
         for punch in Punch.objects.filter(member__id=member):
             if punch.is_complete():
+                hours['total'] += punch.duration()
+
                 if punch.meeting.type in hours:
                     hours[punch.meeting.type] += punch.duration()
                 else:
