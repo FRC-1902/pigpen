@@ -1,11 +1,13 @@
 from django.urls import path
 
-from .views import index, auth
+from .views import index, auth, hours
 from .views.api import members, punch
 
 app_name = "teammanager"
 urlpatterns = [
     path('', index.index, name="index"),
+    path('hours', hours.hours, name="hours"),
+    path('hours/table', hours.hours_table, name="hours_table"),
 
     path('login', auth.login, name="login"),
     path('logout', auth.logout, name="logout"),

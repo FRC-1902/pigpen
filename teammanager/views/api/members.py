@@ -1,5 +1,3 @@
-from datetime import timedelta
-
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -47,19 +45,13 @@ def add_member(request):
 
 def get_hours(request, member):
     if request.method == 'GET':
-        hours = {}
-        hours['total'] = timedelta()
-        for punch in Punch.objects.filter(member__id=member):
-            if punch.is_complete():
-                hours['total'] += punch.duration()
+        try:
+            hours = Member.objects.get(id=member).get_hours()
 
-                if punch.meeting.type in hours:
-                    hours[punch.meeting.type] += punch.duration()
-                else:
-                    hours[punch.meeting.type] = punch.duration()
-
-        # Coerce all values to string
-        return JsonResponse(dict((k, str(v).split('.')[0]) for k, v in hours.items()))
+            # Coerce all values to string
+            return JsonResponse(dict((k, str(v).split('.')[0]) for k, v in hours.items()))
+        except Exception:
+            pass
 
     return HttpResponseBadRequest()
 

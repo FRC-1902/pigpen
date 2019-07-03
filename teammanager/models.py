@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 
 from .utils import gen_token
@@ -25,6 +27,20 @@ class Member(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.first, self.last)
+
+    def get_hours(self):
+        hours = {}
+        hours['total'] = timedelta()
+        for punch in Punch.objects.filter(member=self):
+            if punch.is_complete():
+                hours['total'] += punch.duration()
+
+                if punch.meeting.type in hours:
+                    hours[punch.meeting.type] += punch.duration()
+                else:
+                    hours[punch.meeting.type] = punch.duration()
+
+        return hours
 
 
 class Meeting(models.Model):

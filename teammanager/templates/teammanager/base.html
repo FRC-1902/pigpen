@@ -40,7 +40,7 @@
         <ul class="navbar-nav">
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'man:index' %}">Home</a>
+                <a class="nav-link" href="{% url 'man:hours' %}">Hours</a>
             </li>
             {% endif %}
         </ul>
