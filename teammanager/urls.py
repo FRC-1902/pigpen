@@ -8,6 +8,7 @@ urlpatterns = [
     path('', index.index, name="index"),
     path('hours', hours.hours, name="hours"),
     path('hours/table', hours.hours_table, name="hours_table"),
+    path('hours/outreach/add', hours.outreach_hours_add, name="outreach_hours_add"),
 
     path('login', auth.login, name="login"),
     path('logout', auth.logout, name="logout"),

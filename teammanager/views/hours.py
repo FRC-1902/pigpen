@@ -24,7 +24,14 @@ def hours_table(request):
             str(hours.get("out", 0)).split(':')[0]
         ]))
 
-    return render(request, "teammanager/partial/hours_table.html", {
+    return render(request, 'teammanager/partial/hours_table.html', {
         "head": head,
         "rows": out
+    })
+
+
+def outreach_hours_add(request):
+    members = Member.objects.all().order_by("first")
+    return render(request, 'teammanager/outreach_hours_add.html', {
+        "members": members
     })
