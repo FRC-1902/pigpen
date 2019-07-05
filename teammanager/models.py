@@ -16,8 +16,7 @@ class Token(models.Model):
 class Member(models.Model):
     roles = (
         ("stu", "Student"),
-        ("mtr", "Mentor"),
-        ("vol", "Volunteer")
+        ("mtr", "Adult")
     )
 
     first = models.TextField()
