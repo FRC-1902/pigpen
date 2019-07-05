@@ -11,7 +11,7 @@ def hours(request):
 
 @login_required
 def hours_table(request):
-    members = list(Member.objects.order_by("role", "first"))
+    members = list(Member.objects.order_by("-role", "first"))
 
     head = ["Name", "Build", "Outreach"]
     out = []
