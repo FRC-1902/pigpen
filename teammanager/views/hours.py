@@ -14,19 +14,28 @@ def hours_table(request):
     members = list(Member.objects.order_by("-role", "first"))
 
     head = ["Name", "Build", "Outreach"]
-    out = []
+    students = []
+    adults = []
 
     for member in members:
         hours = member.get_hours()
-        out.append(tuple([
-            str(member),
-            str(hours.get("build", "0")).split(':')[0],
-            str(hours.get("out", 0)).split(':')[0]
-        ]))
+        if member.role == 'stu':
+            students.append(tuple([
+                str(member),
+                str(hours.get("build", "0")).split(':')[0],
+                str(hours.get("out", 0)).split(':')[0]
+            ]))
+        else:
+            adults.append(tuple([
+                str(member),
+                str(hours.get("build", "0")).split(':')[0],
+                str(hours.get("out", 0)).split(':')[0]
+            ]))
 
     return render(request, 'teammanager/partial/hours_table.html', {
         "head": head,
-        "rows": out
+        "students": students,
+        "adults": adults,
     })
 
 
