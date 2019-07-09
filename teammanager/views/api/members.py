@@ -59,14 +59,15 @@ def get_hours(request, member):
 def get_signed_in(request, member):
     if request.method == 'GET':
         member = Member.objects.get(id=member)
+
+        # TODO: Fix meeting date late at night.
         meeting = Meeting.objects.filter(type='build', date=timezone.now().date())
 
-        if meeting.exists():
-            pq = Punch.objects.filter(member=member, meeting=meeting.first(), end=None)
-            if pq.exists():
-                return JsonResponse({
-                    "signed_in": True
-                })
+        pq = Punch.objects.filter(member=member, end=None)
+        if pq.exists():
+            return JsonResponse({
+                "signed_in": True
+            })
 
         return JsonResponse({
             "signed_in": False
