@@ -4,12 +4,10 @@ from django.shortcuts import render
 from ..models import Member
 
 
-@login_required
 def hours(request):
     return render(request, 'teammanager/hours.html')
 
 
-@login_required
 def hours_table(request):
     sort_leader = bool(request.GET.get('sort', 'default') == "leader")
     members = list(Member.objects.order_by("-role", "first"))
@@ -46,6 +44,7 @@ def hours_table(request):
     })
 
 
+@login_required
 def outreach_hours_add(request):
     members = Member.objects.all().order_by("first")
     return render(request, 'teammanager/outreach_hours_add.html', {
