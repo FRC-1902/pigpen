@@ -3,7 +3,6 @@
 {% block script %}
     <script>
         $.get("{% url 'man:hours_table' %}").then(function (response) {
-            console.log(response);
             $("#table").html(response);
         });
     </script>
@@ -13,4 +12,7 @@
     <div id="table" class="text-center w-100 mt-3">
         <p>Loading...</p>
     </div>
+  <div class="text-center w-100 mt-3">
+    <a href="{% url 'man:hours' %}?sort=leader">Show Leaderboard View</a>
+  </div>
 {% endblock %}
