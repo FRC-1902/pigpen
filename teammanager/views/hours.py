@@ -18,20 +18,22 @@ def hours_table(request):
 
     for member in members:
         hours = member.get_hours()
-        if member.role == 'stu':
-            students.append(tuple([
-                member.short_name(),
-                str(hours.get("total", "0")).split(':')[0],
-                str(hours.get("build", "0")).split(':')[0],
-                str(hours.get("out", 0)).split(':')[0]
-            ]))
-        else:
-            adults.append(tuple([
-                member.short_name(),
-                str(hours.get("total", "0")).split(':')[0],
-                str(hours.get("build", "0")).split(':')[0],
-                str(hours.get("out", 0)).split(':')[0]
-            ]))
+
+        if int(hours.get("total", "0").seconds) > 0:
+            if member.role == 'stu':
+                students.append(tuple([
+                    member.short_name(),
+                    str(hours.get("total", "0")).split(':')[0],
+                    str(hours.get("build", "0")).split(':')[0],
+                    str(hours.get("out", 0)).split(':')[0]
+                ]))
+            else:
+                adults.append(tuple([
+                    member.short_name(),
+                    str(hours.get("total", "0")).split(':')[0],
+                    str(hours.get("build", "0")).split(':')[0],
+                    str(hours.get("out", 0)).split(':')[0]
+                ]))
 
     if sort_leader:
         students = sorted(students, key=lambda x: int(x[1]))
