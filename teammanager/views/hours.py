@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.urls import reverse
 
 from ..models import Member
 
@@ -21,13 +22,13 @@ def hours_table(request):
         hours = member.get_hours()
         if member.role == 'stu':
             students.append(tuple([
-                str(member),
+                member.short_name(),
                 str(hours.get("build", "0")).split(':')[0],
                 str(hours.get("out", 0)).split(':')[0]
             ]))
         else:
             adults.append(tuple([
-                str(member),
+                member.short_name(),
                 str(hours.get("build", "0")).split(':')[0],
                 str(hours.get("out", 0)).split(':')[0]
             ]))

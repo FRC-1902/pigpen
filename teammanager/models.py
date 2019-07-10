@@ -27,6 +27,9 @@ class Member(models.Model):
     def __str__(self):
         return "%s %s" % (self.first, self.last)
 
+    def short_name(self):
+        return "%s %s." % (self.first, self.last[0])
+
     def get_hours(self):
         hours = {}
         hours['total'] = timedelta()
