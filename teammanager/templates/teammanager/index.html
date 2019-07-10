@@ -1,20 +1,20 @@
 {% extends 'teammanager/base.html' %}
 
 {% block content %}
-    <div class="row justify-content-center mt-3">
-        <div class="col-sm-12 col-md-8">
-            <div class="jumbotron">
-                <h1 class="display-4">Welcome to Pigpen</h1>
-                <p class="lead">Exploding Bacon's internal Team Management System.</p>
-                <hr>
-                {% if request.user.is_authenticated %}
-                    Use the links on the header to navigate the site.
-                {% else %}
-                <p>Please log in to access the site.
-                    For non-team visitors, please visit us at
-                    <a href="https://www.explodingbacon.com/">www.explodingbacon.com</a>. </p>
-                {% endif %}
-            </div>
-        </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-sm-12 col-md-8">
+      <div class="jumbotron">
+        <h1 class="display-4">Welcome to Pigpen</h1>
+        <p class="lead">Exploding Bacon's internal Team Management System.</p>
+        <hr>
+        {% if request.user.is_authenticated %}
+          Use the links on the header to navigate the site.
+        {% else %}
+          <p>Please log in to access the site.
+            For non-team visitors, please visit us at
+            <a href="https://www.explodingbacon.com/">www.explodingbacon.com</a>. </p>
+        {% endif %}
+      </div>
     </div>
+  </div>
 {% endblock %}

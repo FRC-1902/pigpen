@@ -1,17 +1,17 @@
 {% extends 'teammanager/base.html' %}
 
 {% block script %}
-    <script>
-        $.get("{% url 'man:hours_table' %}").then(function (response) {
-            $("#table").html(response);
-        });
-    </script>
+  <script>
+      $.get("{% url 'man:hours_table' %}").then(function (response) {
+          $("#table").html(response);
+      });
+  </script>
 {% endblock %}
 
 {% block content %}
-    <div id="table" class="text-center w-100 mt-3">
-        <p>Loading...</p>
-    </div>
+  <div id="table" class="text-center w-100 mt-3">
+    <p>Loading...</p>
+  </div>
   <div class="text-center w-100 mt-3">
     <a href="{% url 'man:hours' %}?sort=leader">Show Leaderboard View</a>
   </div>
