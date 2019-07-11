@@ -8,12 +8,14 @@ from teammanager.models import Member, Token, Punch, Meeting
 def get_members(request):
     members = Member.objects.all().order_by("first")
     out = []
+    members_in = [x.member for x in Punch.objects.filter(end__isnull=True)]
 
     for member in members:
         out.append({
             "id": member.id,
             "name": str(member),
-            "position": member.role
+            "position": member.role,
+            "isIn": bool(member in members_in)
         })
 
     return JsonResponse({"members": out})
