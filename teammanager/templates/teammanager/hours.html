@@ -5,6 +5,12 @@
       $.get("{% url 'man:hours_table' %}").then(function (response) {
           $("#table").html(response);
       });
+
+      let leaderboard = function () {
+          $.get("{% url 'man:hours_table' %}?sort=leader").then(function (response) {
+              $("#table").html(response);
+          });
+      };
   </script>
 {% endblock %}
 
@@ -13,6 +19,6 @@
     <p>Loading...</p>
   </div>
   <div class="text-center w-100 mt-3">
-    <a href="{% url 'man:hours' %}?sort=leader">Show Leaderboard View</a>
+    <a href="#" onclick="leaderboard()">Show Leaderboard View</a>
   </div>
 {% endblock %}

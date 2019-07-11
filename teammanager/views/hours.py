@@ -36,8 +36,8 @@ def hours_table(request):
                 ]))
 
     if sort_leader:
-        students = sorted(students, key=lambda x: int(x[1]))
-        adults = sorted(students, key=lambda x: int(x[1]))
+        students = sorted(students, key=lambda x: int(x[1]), reverse=True)
+        adults = sorted(adults, key=lambda x: int(x[1]), reverse=True)
 
     return render(request, 'teammanager/partial/hours_table.html', {
         "head": head,
