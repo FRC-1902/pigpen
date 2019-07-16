@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.conf.urls.static import static
 from teammanager import urls as teammanager
+import os
 
 urlpatterns = [
     path('superuser/', admin.site.urls),
     path('', include(teammanager, namespace='man'))
 ]
+
+urlpatterns += static("/media/", document_root=os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media/'))

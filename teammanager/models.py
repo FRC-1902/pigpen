@@ -44,6 +44,12 @@ class Member(models.Model):
 
         return hours
 
+    def get_avatar(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return "static/teammanager/no_profile.png"
+
 
 class Meeting(models.Model):
     types = (
