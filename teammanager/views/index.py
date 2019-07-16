@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from ..models import Member, Punch
+from ..utils import time_to_string
 
 
 def index(request):
@@ -13,18 +14,14 @@ def index(request):
 
         if int(hours.get("total", "0").seconds) > 0:
             if member.role == 'stu':
-                total = str(hours.get("total", "0")).split(":")
-                total_string = "{}.{}".format(total[0], total[1])
+                students.append({
+                    "name": member.short_name(),
+                    "hours": time_to_string(hours.get("total", "")),
+                    "avatar": member.get_avatar(),
+                    "raw_hours": hours.get("total")
+                })
 
-                students.append(tuple([
-                    member.short_name(),
-                    total_string,
-                    int(total[0]),
-                    int(total[1]),
-                    member.get_avatar()
-                ]))
-
-    students = sorted(students, key=lambda x: float(x[1]), reverse=True)
+    students = sorted(students, key=lambda x: x['raw_hours'], reverse=True)
 
     return render(request, 'teammanager/index.html', {"students": students[0:5]})
 

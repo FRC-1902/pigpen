@@ -40,10 +40,10 @@
             {% endif %}
             {% if forloop.counter < 4 %}
               <img class="rounded-circle mb-2"
-                     src="{{ student.4 }}"
-                     style="width: 3em; height:auto;"><br>
+                   src="{{ student.avatar }}"
+                   style="width: 3em; height:auto;"><br>
             {% endif %}
-            {{ student.0 }}<br><span class="text-muted">{{ student.2 }}h {{ student.3 }}m</span>
+            {{ student.name }}<br><span class="text-muted">{{ student.hours }}</span>
             {% if forloop.counter == 1 %}
               </h3>
             {% elif forloop.counter == 2 %}

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from ..models import Member
+from ..utils import time_to_string
 
 
 def hours(request):
@@ -9,7 +10,6 @@ def hours(request):
 
 
 def hours_table(request):
-    sort_leader = bool(request.GET.get('sort', 'default') == "leader")
     members = list(Member.objects.order_by("-role", "first"))
 
     head = ["Name", "Total", "Build", "Outreach"]
@@ -23,21 +23,17 @@ def hours_table(request):
             if member.role == 'stu':
                 students.append(tuple([
                     member.short_name(),
-                    str(hours.get("total", "0")).split(':')[0],
-                    str(hours.get("build", "0")).split(':')[0],
-                    str(hours.get("out", 0)).split(':')[0]
+                    time_to_string(hours.get("total", "0")),
+                    time_to_string(hours.get("build", "0")),
+                    time_to_string(hours.get("out", 0)),
                 ]))
             else:
                 adults.append(tuple([
                     member.short_name(),
-                    str(hours.get("total", "0")).split(':')[0],
-                    str(hours.get("build", "0")).split(':')[0],
-                    str(hours.get("out", 0)).split(':')[0]
+                    time_to_string(hours.get("total", "0")),
+                    time_to_string(hours.get("build", "0")),
+                    time_to_string(hours.get("out", 0)),
                 ]))
-
-    if sort_leader:
-        students = sorted(students, key=lambda x: int(x[1]), reverse=True)
-        adults = sorted(adults, key=lambda x: int(x[1]), reverse=True)
 
     return render(request, 'teammanager/partial/hours_table.html', {
         "head": head,
