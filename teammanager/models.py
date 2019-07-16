@@ -28,7 +28,11 @@ class Member(models.Model):
         return "%s %s" % (self.first, self.last)
 
     def short_name(self):
-        return "%s %s." % (self.first, self.last[0])
+        if not "-" in self.last:
+            return "%s %s." % (self.first, self.last[0])
+        else:
+            parts = self.last.split("-")
+            return "%s %s.%s." % (self.first, parts[0][0], parts[1][0])
 
     def get_hours(self):
         hours = {}
