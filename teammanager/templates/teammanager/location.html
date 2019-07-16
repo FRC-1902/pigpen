@@ -24,7 +24,7 @@
           {% if member.position == "stu" and member.isIn %}
             <div class="col-3 col-sm-2 text-center mb-3">
               <small>
-                <img class="rounded-circle mb-2"
+                <img class="rounded-circle mb-1"
                      src="{{ member.avatar }}"
                      style="width: 3em; height:auto;"><br>
                 {{ member.name }}
@@ -41,7 +41,7 @@
           {% if not member.position == "stu" and member.isIn %}
             <div class="col-3 col-sm-2 text-center mb-3">
               <small>
-                <img class="rounded-circle mb-2"
+                <img class="rounded-circle mb-1"
                      src="{{ member.avatar }}"
                      style="width: 3em; height:auto;"><br>
                 {{ member.name }}
@@ -62,7 +62,7 @@
           {% if member.position == "stu" and not member.isIn %}
             <div class="col-3 col-sm-2 text-center mb-3">
               <small>
-                <img class="gray rounded-circle mb-2"
+                <img class="gray rounded-circle mb-1"
                      src="{{ member.avatar }}"
                      style="width: 3em; height:auto;"><br>
                 {{ member.name }}
@@ -79,7 +79,7 @@
           {% if not member.position == "stu" and not member.isIn %}
             <div class="col-3 col-sm-2 text-center mb-3">
               <small>
-                <img class="gray rounded-circle mb-2"
+                <img class="gray rounded-circle mb-1"
                      src="{{ member.avatar }}"
                      style="width: 3em; height:auto;"><br>
                 {{ member.name }}
