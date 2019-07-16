@@ -13,16 +13,19 @@ def index(request):
 
         if int(hours.get("total", "0").seconds) > 0:
             if member.role == 'stu':
+                total = str(hours.get("total", "0")).split(":")
+                total_string = "{}.{}".format(total[0], total[1])
+
                 students.append(tuple([
                     member.short_name(),
-                    str(hours.get("total", "0")).split(':')[0],
-                    str(hours.get("build", "0")).split(':')[0],
-                    str(hours.get("out", 0)).split(':')[0],
+                    total_string,
+                    int(total[0]),
+                    int(total[1]),
                     member.get_avatar()
                 ]))
 
 
-    students = sorted(students, key=lambda x: int(x[1]), reverse=True)
+    students = sorted(students, key=lambda x: float(x[1]), reverse=True)
 
     return render(request, 'teammanager/index.html', {"students": students[0:5]})
 
