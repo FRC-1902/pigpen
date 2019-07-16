@@ -39,7 +39,7 @@
               <h6>
             {% endif %}
             {% if forloop.counter < 4 %}
-              <img class="rounded-circle mb-2"
+              <img class="rounded-circle mb-1"
                    src="{{ student.avatar }}"
                    style="width: 3em; height:auto;"><br>
             {% endif %}
@@ -56,6 +56,7 @@
           </div>
           <hr>
         {% endfor %}
+        <a href="{% url 'teammanager:hours'%}">See Here for Full Hours Listing</a>
       </div>
     </div>
   </div>

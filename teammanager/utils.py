@@ -10,6 +10,6 @@ def gen_token():
 def time_to_string(time):
     try:
         total = str(time).split(":")
-        return "{}h {}m".format(total[0], total[1])
+        return "{}h {}m".format(total[0], int(total[1]))
     except IndexError:
         return "0m"
