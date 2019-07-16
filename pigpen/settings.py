@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-is_prod = bool(os.getenv("PROD", True))
+is_prod = bool(os.getenv("PROD", False))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'gca@!y=keoyw56)2jxz*$&e+sf9zh4en#-w4in3*0c548sn8ld'
+if is_prod:
+    SECRET_KEY = os.getenv("PIGPEN_SECRET")
+else:
+    SECRET_KEY = 'gca@!y=keoyw56)2jxz*$&e+sf9zh4en#-w4in3*0c548sn8ld'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not is_prod
