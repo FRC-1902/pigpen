@@ -41,6 +41,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'man:hours' %}">Hours</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'man:location' %}">Check-in Status</a>
+      </li>
       {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'man:outreach_hours_add' %}">Log Outreach</a>

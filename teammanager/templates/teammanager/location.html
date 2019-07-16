@@ -14,6 +14,11 @@
       -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
       filter: grayscale(100%);
     }
+
+    .named-head {
+      width: 70px;
+      padding-bottom: 16px;
+    }
   </style>
   <br>
   <div class="container-fluid">
@@ -23,14 +28,12 @@
         <h3 class="text-center">
           Checked In
         </h3>
-        <!--<h5 class="text-muted text-center"><i>As of 1:14 PM</i></h5>-->
-
         <hr>
         <h5>Students</h5>
         <div class="row">
           {% for member in members %}
             {% if member.position == "stu" and member.isIn %}
-              <div class="float-left text-center" style="width: 70px; padding-bottom: 16px;">
+              <div class="float-left text-center named-head">
                 <small>
                   <img class="rounded-circle mb-1"
                        src="{{ member.avatar }}"
@@ -46,7 +49,7 @@
         <div class="row">
           {% for member in members %}
             {% if not member.position == "stu" and member.isIn %}
-              <div class="float-left text-center" style="width: 70px; padding-bottom: 16px;">
+              <div class="float-left text-center named-head">
                 <small>
                   <img class="rounded-circle mb-1"
                        src="{{ member.avatar }}"
@@ -76,7 +79,7 @@
         <div class="row">
           {% for member in members %}
             {% if member.position == "stu" and not member.isIn %}
-              <div class="float-left text-center" style="width: 70px; padding-bottom: 16px;">
+              <div class="float-left text-center named-head">
                 <small>
                   <img class="gray rounded-circle mb-1"
                        src="{{ member.avatar }}"
@@ -93,7 +96,7 @@
         <div class="row">
           {% for member in members %}
             {% if not member.position == "stu" and not member.isIn %}
-              <div class="float-left text-center" style="width: 70px; padding-bottom: 16px;">
+              <div class="float-left text-center named-head">
                 <small>
                   <img class="gray rounded-circle mb-1"
                        src="{{ member.avatar }}"
