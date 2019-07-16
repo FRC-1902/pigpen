@@ -38,7 +38,7 @@ def location(request):
     for member in members:
         out.append({
             "id": member.id,
-            "name": str(member),
+            "name": member.short_name(),
             "position": member.role,
             "isIn": bool(member in members_in),
             "avatar": member.get_avatar()
