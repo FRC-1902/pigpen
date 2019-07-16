@@ -1,6 +1,13 @@
 {% extends 'teammanager/base.html' %}
 
 {% load static %}
+
+{% block script %}
+  <script>
+      setInterval(function(){ location.reload(true); }, 10000);
+  </script>
+{% endblock %}
+
 {% block content %}
   <style>
     .gray {
