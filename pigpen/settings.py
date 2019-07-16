@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+is_prod = bool(os.getenv("prod", True))
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gca@!y=keoyw56)2jxz*$&e+sf9zh4en#-w4in3*0c548sn8ld'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv("prod", True))
+DEBUG = not is_prod
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
@@ -124,3 +126,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/pigpen/static/'
+
+if is_prod:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = '/home/pigpen/media/'
+else:
+    ENV_PATH = os.path.abspath(os.path.dirname(__file__))
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
