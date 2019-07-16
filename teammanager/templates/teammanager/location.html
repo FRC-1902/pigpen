@@ -42,7 +42,7 @@
             <div class="p-2">
               <small>
                 <img class="rounded-circle mb-2"
-                     src="{% static 'teammanager/no_profile.png' %}"
+                     src="{{ member.avatar }}"
                      style="width: 3em; height:auto;"><br>
                 {{ member.name }}
               </small>
@@ -80,7 +80,7 @@
             <div class="p-2">
               <small>
                 <img class="gray rounded-circle mb-2"
-                     src="{% static 'teammanager/no_profile.png' %}"
+                     src="{{ member.avatar }}"
                      style="width: 3em; height:auto;"><br>
                 {{ member.name }}
               </small>
