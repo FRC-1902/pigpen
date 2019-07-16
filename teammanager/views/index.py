@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 from ..models import Member, Punch
 
 
@@ -37,7 +38,7 @@ def location(request):
     for member in members:
         out.append({
             "id": member.id,
-            "name": member.first,
+            "name": str(member),
             "position": member.role,
             "isIn": bool(member in members_in),
             "avatar": member.get_avatar()
