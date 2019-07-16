@@ -37,7 +37,9 @@ def location(request):
             "name": member.short_name(),
             "position": member.role,
             "isIn": bool(member in members_in),
-            "avatar": member.get_avatar(),
-            "any_checkins": len(members_in) > 0
+            "avatar": member.get_avatar()
         })
-    return render(request, 'teammanager/location.html', {"members": out})
+    return render(request, 'teammanager/location.html', {
+        "members": out,
+        "any_checkins": len(members_in) > 0
+    })
