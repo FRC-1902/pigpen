@@ -19,6 +19,7 @@
   <div class="container-fluid">
     <div class="row mx-xl-5">
       <div class="col-sm-12 col-md-6">
+        {% if any_checkins %}
         <h3 class="text-center">
           Checked In
         </h3>
@@ -57,10 +58,19 @@
             {% endif %}
           {% endfor %}
         </div>
+        {% else %}
+      <h3 class="text-center">Nobody is Checked In!</h3>
+      {% endif %}
         <div class="d-block d-sm-block d-md-none"><hr></div>
       </div>
       <div class="col-sm-12 col-md-6">
-        <h3 class="text-center">Not</h3>
+        <h3 class="text-center">
+          {% if any_checkins %}
+            Not Present
+          {% else %}
+            Roster
+          {% endif %}
+        </h3>
         <hr>
         <h5>Students</h5>
         <div class="row">
