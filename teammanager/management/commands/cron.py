@@ -34,6 +34,10 @@ def create_families():
 
         member.save()
 
+    for fam in Family.objects.all():
+        if not fam.member_set.exists():
+            fam.delete()
+
 
 class Command(BaseCommand):
     def handle(self, **options):
