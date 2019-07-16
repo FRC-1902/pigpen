@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from teammanager.models import Punch
+from teammanager.models import Punch, Member, Family
 
 
 def close_old_punches():
@@ -21,6 +21,21 @@ def close_old_punches():
                 p.delete()
 
 
+def create_families():
+    for member in Member.objects.filter(family__isnull=True):
+        fq = Family.objects.filter(name=member.last)
+
+        if fq.exists():
+            member.family = fq.first()
+        else:
+            f = Family(name=member.last)
+            f.save()
+            member.family = f
+
+        member.save()
+
+
 class Command(BaseCommand):
     def handle(self, **options):
         close_old_punches()
+        create_families()

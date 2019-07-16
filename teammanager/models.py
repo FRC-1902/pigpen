@@ -13,6 +13,13 @@ class Token(models.Model):
         return self.comment
 
 
+class Family(models.Model):
+    name = models.TextField()
+
+    def __str__(self):
+        return "The %s Family" % self.name
+
+
 class Member(models.Model):
     roles = (
         ("stu", "Student"),
@@ -23,6 +30,7 @@ class Member(models.Model):
     last = models.TextField()
     role = models.CharField(max_length=10, default="stu", choices=roles)
     avatar = models.ImageField(null=True, blank=True)
+    family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return "%s %s" % (self.first, self.last)

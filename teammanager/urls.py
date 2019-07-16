@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, auth, hours
+from .views import index, auth, hours, facebook
 from .views.api import members, punch
 
 app_name = "teammanager"
@@ -9,6 +9,8 @@ urlpatterns = [
     path('hours', hours.hours, name="hours"),
     path('hours/table', hours.hours_table, name="hours_table"),
     path('hours/outreach/add', hours.outreach_hours_add, name="outreach_hours_add"),
+
+    path('facebook', facebook.families, name="families"),
 
     path('location', index.location, name="location"),
 
