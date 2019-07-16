@@ -19,6 +19,8 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+.idea/pigpen.iml
+.idea/misc.xml
 
 # Gradle
 .idea/**/gradle.xml
