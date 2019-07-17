@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
 from ..models import Member
 
 
+@login_required
 def upload_photo(request):
     if request.method == "GET":
         return render(request, 'teammanager/upload_photo.html', {
