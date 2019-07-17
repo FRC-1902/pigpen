@@ -55,15 +55,17 @@
           <h5>Adults</h5>
           <div class="row">
             {% for member in members %}
-              {% if not member.position == "stu" and member.isIn %}
-                <div class="float-left text-center named-head">
-                  <small>
-                    <img class="head rounded-circle mb-1"
-                         src="{{ member.avatar }}"><br>
-                    {{ member.name }}
-                  </small>
-                  <br>
-                </div>
+              {% if member.isIn %}
+                {% if member.position == "mtr" or member.position == "asib" %}
+                  <div class="float-left text-center named-head">
+                    <small>
+                      <img class="head rounded-circle mb-1"
+                           src="{{ member.avatar }}"><br>
+                      {{ member.name }}
+                    </small>
+                    <br>
+                  </div>
+                {% endif %}
               {% endif %}
             {% endfor %}
           </div>
@@ -105,7 +107,7 @@
         <h5>Adults</h5>
         <div class="row">
           {% for member in members %}
-            {% if not member.position == "stu" and not member.isIn %}
+            {% if member.position == "mtr" and not member.isIn %}
               <div class="float-left text-center named-head">
                 <small>
                   <img class="gray head rounded-circle mb-1"
