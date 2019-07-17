@@ -21,8 +21,6 @@ def families(request):
                     singles = singles + list(fam.member_set.all())
                     fams.remove(fam)
 
-            fams = sorted(fams, key=lambda x: x.member_set.count(), reverse=True)
-
             return render(request, "teammanager/families.html", {
                 "families": fams,
                 "singles": singles,
