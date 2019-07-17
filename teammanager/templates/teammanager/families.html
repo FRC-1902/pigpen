@@ -1,6 +1,17 @@
 {% extends 'teammanager/base.html' %}
 
 
+{% block style %}
+  <style>
+    .head {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+    }
+  </style>
+{% endblock %}
+
+
 {% block content %}
   <div class="container-fluid">
     {% for family in families %}
@@ -8,7 +19,7 @@
       <div class="row justify-content-center mb-1">
         {% for member in family.member_set.all %}
           <div class="col-sm-12 col-md-6 col-xl-3 mb-4 justify-content-center text-center">
-            <img class="head rounded-circle w-50 mb-3" src="{{ member.get_avatar }}">
+            <img class="head rounded-circle mb-3" src="{{ member.get_avatar }}">
             <h5>{{ member }}</h5>
             <p class="text-muted">{{ member.get_role_display }}</p>
           </div>
