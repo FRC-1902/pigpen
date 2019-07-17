@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include(teammanager, namespace='man'))
 ]
 
-urlpatterns += static("/media/", document_root=os.path.join(os.path.abspath(os.path.dirname(__file__)), 'media/'))
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -134,6 +134,6 @@ if is_prod:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = '/home/pigpen/media/'
 else:
-    ENV_PATH = os.path.abspath(os.path.dirname(__file__))
+    PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
+    MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')

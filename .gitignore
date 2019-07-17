@@ -75,3 +75,4 @@ fabric.properties
 *.pyc
 *.sqlite3
 env/
+media/*
