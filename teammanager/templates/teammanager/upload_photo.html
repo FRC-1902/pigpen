@@ -11,7 +11,7 @@
             <div class="form-group">
               <select name="member" class="custom-select">
                 {% for member in members %}
-                  <option value="{{ member.id }}">{{ member }}</option>
+                  <option value="{{ member.id }}">{{ member }}{% if member.avatar %} - REPLACE{% endif %}</option>
                 {% endfor %}
               </select>
             </div>
