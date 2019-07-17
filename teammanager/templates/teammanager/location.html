@@ -4,7 +4,9 @@
 
 {% block script %}
   <script>
-      setInterval(function(){ location.reload(true); }, 60000);
+      setInterval(function () {
+          location.reload(true);
+      }, 60000);
   </script>
 {% endblock %}
 
@@ -31,44 +33,49 @@
     <div class="row mx-xl-5">
       <div class="col-sm-12 col-md-6">
         {% if any_checkins %}
-        <h3 class="text-center">
-          Checked In
-        </h3>
-        <hr>
-        <h5>Students</h5>
-        <div class="row">
-          {% for member in members %}
-            {% if member.position == "stu" and member.isIn %}
-              <div class="float-left text-center named-head">
-                <small>
-                  <img class="head rounded-circle mb-1"
-                       src="{{ member.avatar }}"><br>
-                  {{ member.name }}
-                </small>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-        <br>
-        <h5>Adults</h5>
-        <div class="row">
-          {% for member in members %}
-            {% if not member.position == "stu" and member.isIn %}
-              <div class="float-left text-center named-head">
-                <small>
-                  <img class="head rounded-circle mb-1"
-                       src="{{ member.avatar }}"><br>
-                  {{ member.name }}
-                </small>
-                <br>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
+          <h3 class="text-center">
+            Checked In
+          </h3>
+          <hr>
+          <h5>Students</h5>
+          <div class="row">
+            {% for member in members %}
+              {% if member.position == "stu" and member.isIn %}
+                <div class="float-left text-center named-head">
+                  <small>
+                    <img class="head rounded-circle mb-1"
+                         src="{{ member.avatar }}"><br>
+                    {{ member.name }}
+                  </small>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <br>
+          <h5>Adults</h5>
+          <div class="row">
+            {% for member in members %}
+              {% if not member.position == "stu" and member.isIn %}
+                <div class="float-left text-center named-head">
+                  <small>
+                    <img class="head rounded-circle mb-1"
+                         src="{{ member.avatar }}"><br>
+                    {{ member.name }}
+                  </small>
+                  <br>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
         {% else %}
-      <h3 class="text-center">Nobody is Checked In!</h3>
-      {% endif %}
-        <div class="d-block d-sm-block d-md-none"><hr></div>
+          <h3 class="text-center">Nobody is Checked In!</h3>
+          <div class="d-none d-sm-none d-md-block">
+            <hr>
+          </div>
+        {% endif %}
+        <div class="d-block d-sm-block d-md-none">
+          <hr>
+        </div>
       </div>
       <div class="col-sm-12 col-md-6">
         <h3 class="text-center">
