@@ -23,7 +23,8 @@ class Family(models.Model):
 class Member(models.Model):
     roles = (
         ("stu", "Student"),
-        ("mtr", "Adult")
+        ("mtr", "Adult"),
+        ("asib", "Sibling")
     )
 
     first = models.TextField()
