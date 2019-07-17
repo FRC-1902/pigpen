@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from ..models import Member, Punch, Meeting
 
 
@@ -22,7 +22,10 @@ def location(request):
 
 
 def meeting_breakdown(request, id):
-    meeting = Meeting.objects.get(id=id)
+    try:
+        meeting = Meeting.objects.get(id=id)
+    except:
+        return redirect("teammanager:meetings")
     punches = Punch.objects.filter(meeting=meeting)
     members = []
     punches_sorted = []
