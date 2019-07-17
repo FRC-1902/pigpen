@@ -1,0 +1,19 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="card mt-3">
+      <div class="card-body">
+        <h3 class="card-title">Directory Password</h3>
+        <p>Please enter the team passcode to access the directory.</p>
+        <form action="{% url 'man:families' %}" method="post">
+          <div class="form-group">
+            <input class="form-control" type="text" name="passcode">
+          </div>
+
+          <button class="btn btn-primary">Go</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
