@@ -55,17 +55,15 @@
           <h5>Adults</h5>
           <div class="row">
             {% for member in members %}
-              {% if member.isIn %}
-                {% if member.position == "mtr" or member.position == "asib" %}
-                  <div class="float-left text-center named-head">
-                    <small>
-                      <img class="head rounded-circle mb-1"
-                           src="{{ member.avatar }}"><br>
-                      {{ member.name }}
-                    </small>
-                    <br>
-                  </div>
-                {% endif %}
+              {% if member.position == "mtr" and member.isIn %}
+                <div class="float-left text-center named-head">
+                  <small>
+                    <img class="head rounded-circle mb-1"
+                         src="{{ member.avatar }}"><br>
+                    {{ member.name }}
+                  </small>
+                  <br>
+                </div>
               {% endif %}
             {% endfor %}
           </div>
