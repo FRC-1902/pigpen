@@ -41,7 +41,7 @@
         </h6>
 
       {% for meeting in meetings %}
-        <a href="{% url "teammanager:meeting" id=meeting.id %}" >{{ meeting.date }}</a>
+        <a href="{% url "teammanager:meeting" id=meeting.id %}" >{{ meeting.date }}</a><br>
       {% endfor %}
 
       </div>
