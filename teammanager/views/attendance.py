@@ -27,7 +27,8 @@ def meeting_breakdown(request, id):
     members = []
     punches_sorted = []
     for punch in punches:
-        members.append(punch.member)
+        if punch.member not in members:
+            members.append(punch.member)
         punches_sorted.append((punch.start, punch, "in"))
         punches_sorted.append((punch.end, punch, "out"))
     punches_sorted = sorted(punches_sorted)
