@@ -61,7 +61,7 @@ class Member(models.Model):
         if self.avatar:
             return self.avatar.url
         else:
-            return "static/teammanager/no_profile.png"
+            return "http://pen.vegetarianbaconite.com/static/teammanager/no_profile.png"
 
 
 class Meeting(models.Model):

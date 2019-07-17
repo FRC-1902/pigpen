@@ -1,0 +1,92 @@
+{% extends 'teammanager/base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <style>
+    .gray {
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+    }
+
+    .named-head {
+      width: 70px;
+      padding-bottom: 16px;
+    }
+
+    .head {
+      width: 3em;
+      height: 3em;
+      object-fit: cover;
+    }
+  </style>
+  <br>
+  <div class="container-fluid">
+    <div class="row mx-xl-5">
+      <div class="col-sm-12 col-md-7">
+        <h3 class="text-center">
+          {{ members|length }} Attended
+        </h3>
+        <hr>
+        <h5>Students</h5>
+        <div class="row">
+          {% for member in members %}
+            {% if member.role == "stu" %}
+              <div class="float-left text-center named-head">
+                <small>
+                  <img class="head rounded-circle mb-1"
+                       src="{{ member.get_avatar }}"><br>
+                  {{ member.short_name }}
+                </small>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <br>
+        <h5>Adults</h5>
+        <div class="row">
+          {% for member in members %}
+            {% if member.role == "mtr" %}
+              <div class="float-left text-center named-head">
+                <small>
+                  <img class="head rounded-circle mb-1"
+                       src="{{ member.get_avatar }}"><br>
+                  {{ member.short_name }}
+                </small>
+                <br>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-sm-12 offset-md-1 col-md-4">
+        <h3 class="text-center">
+          Activity Log
+        </h3>
+        <hr>
+        <div class="list-group">
+          {% for punch in punches %}
+            <a href="#" class="list-group-item list-group-item-action">
+              <span >
+                <small>
+                <img class="head rounded-circle mb-1"
+                     src="{{ punch.1.member.get_avatar }}">
+                  </small>
+              </span>
+              <span>{{ punch.0|date:"g:i a"  }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span></a>
+            <!--<a href="#" class="list-group-item list-group-item-action">
+            <span>
+            {{ punch.0|date:"g:i a"  }}:
+            </span>
+            <small>
+                <img class="head rounded-circle mb-1"
+                     src="{{ punch.1.member.get_avatar }}">
+              </small>
+            <span>{{ punch.1.member.short_name }} punches {{ punch.2 }}</span>
+            </a>-->
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

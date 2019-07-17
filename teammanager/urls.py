@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, auth, hours, facebook, admin
+from .views import index, auth, hours, facebook, attendance, admin
 from .views.api import members, punch
 
 app_name = "teammanager"
@@ -12,7 +12,9 @@ urlpatterns = [
 
     path('directory', facebook.families, name="families"),
 
-    path('location', index.location, name="location"),
+    path('location', attendance.location, name="location"),
+    path('meetings/', attendance.meetings, name="meetings"),
+    path('meetings/<int:id>', attendance.meeting_breakdown, name="meeting"),
 
     path('login', auth.login, name="login"),
     path('logout', auth.logout, name="logout"),

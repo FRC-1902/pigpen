@@ -1,0 +1,11 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="list-group">
+      {% for meeting in meetings %}
+        <a href="{% url "teammanager:meeting" id=meeting.id %}" class="list-group-item list-group-item-action">{{ meeting }}</a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
