@@ -41,7 +41,7 @@
             {% if forloop.counter < 4 %}
               <img class="rounded-circle mb-1"
                    src="{{ student.avatar }}"
-                   style="width: 3em; height:auto;"><br>
+                   style="width: 3em; height:3em; object-fit: cover;"><br>
             {% endif %}
             {{ student.name }}<br><span class="text-muted">{{ student.hours }}</span>
             {% if forloop.counter == 1 %}

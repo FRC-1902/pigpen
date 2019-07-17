@@ -42,11 +42,11 @@
         <a class="nav-link" href="{% url 'man:hours' %}">Hours</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'man:location' %}">Check-in Status</a>
+        <a class="nav-link" href="{% url 'man:location' %}">Who's In?</a>
       </li>
       {% if request.user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'man:outreach_hours_add' %}">Log Outreach</a>
+          <a class="nav-link" href="{% url 'man:admin_add_photo' %}">Add Photos</a>
         </li>
       {% endif %}
     </ul>

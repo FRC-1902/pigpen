@@ -1,0 +1,31 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">Upload Photo</h2>
+          <form action="{% url 'man:admin_add_photo' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <select name="member" class="custom-select">
+                {% for member in members %}
+                  <option value="{{ member.id }}">{{ member }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group">
+              <input class="file-upload" type="file" name="photo" accept="image/*">
+            </div>
+
+            <div class="mt-4">
+              <button class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

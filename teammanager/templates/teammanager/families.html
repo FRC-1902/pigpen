@@ -8,7 +8,7 @@
       <div class="row justify-content-center mb-1">
         {% for member in family.member_set.all %}
           <div class="col-sm-12 col-md-6 col-xl-3 mb-4 justify-content-center text-center">
-            <img class="rounded-circle w-50 mb-3" src="{{ member.get_avatar }}">
+            <img class="head rounded-circle w-50 mb-3" src="{{ member.get_avatar }}">
             <h5>{{ member }}</h5>
             <p class="text-muted">{{ member.get_role_display }}</p>
           </div>
@@ -16,11 +16,11 @@
       </div>
       <hr>
     {% endfor %}
-
+    <h2 class="mt-5 mb-5 text-center">Everyone Else</h2>
     <div class="row justify-content-center mt-5">
       {% for member in singles %}
         <div class="col-sm-12 col-md-6 col-xl-3 mb-4 justify-content-center text-center">
-          <img class="rounded-circle w-50 mb-3" src="{{ member.get_avatar }}">
+          <img class="head rounded-circle w-50 mb-3" src="{{ member.get_avatar }}">
           <h5>{{ member }}</h5>
           <p class="text-muted">{{ member.get_role_display }}</p>
         </div>

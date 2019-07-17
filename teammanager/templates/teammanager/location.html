@@ -19,6 +19,12 @@
       width: 70px;
       padding-bottom: 16px;
     }
+
+    .head {
+      width: 3em;
+      height: 3em;
+      object-fit: cover;
+    }
   </style>
   <br>
   <div class="container-fluid">
@@ -35,9 +41,8 @@
             {% if member.position == "stu" and member.isIn %}
               <div class="float-left text-center named-head">
                 <small>
-                  <img class="rounded-circle mb-1"
-                       src="{{ member.avatar }}"
-                       style="width: 3em; height:auto;"><br>
+                  <img class="head rounded-circle mb-1"
+                       src="{{ member.avatar }}"><br>
                   {{ member.name }}
                 </small>
               </div>
@@ -51,9 +56,8 @@
             {% if not member.position == "stu" and member.isIn %}
               <div class="float-left text-center named-head">
                 <small>
-                  <img class="rounded-circle mb-1"
-                       src="{{ member.avatar }}"
-                       style="width: 3em; height:auto;"><br>
+                  <img class="head rounded-circle mb-1"
+                       src="{{ member.avatar }}"><br>
                   {{ member.name }}
                 </small>
                 <br>
@@ -81,9 +85,8 @@
             {% if member.position == "stu" and not member.isIn %}
               <div class="float-left text-center named-head">
                 <small>
-                  <img class="gray rounded-circle mb-1"
-                       src="{{ member.avatar }}"
-                       style="width: 3em; height:auto;"><br>
+                  <img class="gray head rounded-circle mb-1"
+                       src="{{ member.avatar }}"><br>
                   {{ member.name }}
                 </small>
 
@@ -98,9 +101,8 @@
             {% if not member.position == "stu" and not member.isIn %}
               <div class="float-left text-center named-head">
                 <small>
-                  <img class="gray rounded-circle mb-1"
-                       src="{{ member.avatar }}"
-                       style="width: 3em; height:auto;"><br>
+                  <img class="gray head rounded-circle mb-1"
+                       src="{{ member.avatar }}"><br>
                   {{ member.name }}
                 </small>
                 <br>
