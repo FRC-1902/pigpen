@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from ..models import Member, Punch, Meeting
+from ..utils import time_to_string
 
 
 def location(request):
@@ -46,3 +47,29 @@ def meeting_breakdown(request, id):
 def meetings(request):
     meetings = Meeting.objects.all().order_by("date")
     return render(request, "teammanager/meetings.html", {"meetings": meetings})
+
+
+def member(request, id):
+    try:
+        member = Member.objects.get(id=id)
+    except Exception as e:
+        print(e)
+        return redirect("teammanager:index")
+    meetings = []
+    total_meetings = len(Meeting.objects.filter(type="build"))
+    punches = Punch.objects.filter(member=member)
+    for punch in punches:
+        if punch.meeting not in meetings:
+            meetings.append(punch.meeting)
+    attend = int((len(meetings)/total_meetings) * 100)
+
+    hours = member.get_hours()
+    return render(request, "teammanager/member_attendance.html", {
+        "member": member,
+        "meetings": meetings,
+        "total_meetings": total_meetings,
+        "attendance_percent": attend,
+        "hr_total": time_to_string(hours.get("total", "0")),
+        "hr_build": time_to_string(hours.get("build", "0")),
+        "hr_out": time_to_string(hours.get("out", "0"))
+    })

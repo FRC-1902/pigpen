@@ -1,0 +1,50 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <br>
+  <div class="container">
+    <h3>
+    <img class="rounded-circle mb-1"
+         src="{{ member.get_avatar }}"
+         style="width: 3em; height:3em; object-fit: cover;"><br>
+    {{ member.short_name }}</h3>
+    <h5 class="text-muted">{{ member.get_role_display }}</h5>
+    <hr>
+    <div class="row">
+      <div class="col-4">
+        <h5>Hours</h5>
+        <br>
+        <div class="row text-center">
+          <div class="col">
+            <h6>Total</h6>
+            {{ hr_total }}
+          </div>
+          <div class="col">
+            <h6>Build</h6>
+            {{ hr_build }}
+          </div>
+          <div class="col">
+            <h6>Outreach</h6>
+            {{ hr_out }}
+          </div>
+        </div>
+      </div>
+      <div class="offset-2 col-4">
+        <h5>Attendance</h5>
+        <h6 class="text-muted">{{ meetings|length }}/{{ total_meetings }} Build Meetings (
+          {% if attendance_percent >= 30 %}
+            <span class="text-success">{{ attendance_percent }}%</span>
+          {% else %}
+            <span class="text-danger">{{ attendance_percent }}%</span>
+          {% endif %}
+        )
+        </h6>
+
+      {% for meeting in meetings %}
+        <a href="{% url "teammanager:meeting" id=meeting.id %}" >{{ meeting.date }}</a>
+      {% endfor %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

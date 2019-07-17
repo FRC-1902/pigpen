@@ -15,6 +15,7 @@ urlpatterns = [
     path('location', attendance.location, name="location"),
     path('meetings/', attendance.meetings, name="meetings"),
     path('meetings/<int:id>', attendance.meeting_breakdown, name="meeting"),
+    path('member/<int:id>', attendance.member, name="member"),
 
     path('login', auth.login, name="login"),
     path('logout', auth.logout, name="logout"),
