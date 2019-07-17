@@ -11,7 +11,7 @@
     <h5 class="text-muted">{{ member.get_role_display }}</h5>
     <hr>
     <div class="row">
-      <div class="col-4">
+      <div class="col-12 col-md-5 col-lg-4">
         <h5>Hours</h5>
         <br>
         <div class="row text-center">
@@ -28,8 +28,11 @@
             {{ hr_out }}
           </div>
         </div>
+        <div class="d-block d-sm-block d-md-none">
+            <hr>
+        </div>
       </div>
-      <div class="offset-2 col-4">
+      <div class="col-12 offset-md-1 col-md-4 offset-lg-2 col-lg-4">
         <h5>Attendance</h5>
         <h6 class="text-muted">{{ meetings|length }}/{{ total_meetings }} Build Meetings (
           {% if attendance_percent >= 30 %}

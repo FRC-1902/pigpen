@@ -61,6 +61,7 @@ def member(request, id):
     for punch in punches:
         if punch.meeting not in meetings:
             meetings.append(punch.meeting)
+    meetings.reverse()
     attend = int((len(meetings)/total_meetings) * 100)
 
     hours = member.get_hours()
