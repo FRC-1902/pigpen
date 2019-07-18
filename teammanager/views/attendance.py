@@ -45,7 +45,7 @@ def meeting_breakdown(request, id):
 
 
 def meetings(request):
-    meetings = Meeting.objects.all().order_by("date")
+    meetings = Meeting.objects.all().order_by("date").reverse()
     return render(request, "teammanager/meetings.html", {"meetings": meetings})
 
 
