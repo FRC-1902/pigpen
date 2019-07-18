@@ -34,7 +34,8 @@ def meeting_breakdown(request, id):
         if punch.member not in members:
             members.append(punch.member)
         punches_sorted.append((punch.start, punch, "in"))
-        punches_sorted.append((punch.end, punch, "out"))
+        if punch.end:
+            punches_sorted.append((punch.end, punch, "out"))
     punches_sorted = sorted(punches_sorted)
 
     return render(request, "teammanager/meeting.html", {
