@@ -1,14 +1,28 @@
 {% extends 'teammanager/base.html' %}
 
+{% block title %}{{ member.short_name }} - Pigpen{% endblock %}
+
 {% block content %}
   <br>
   <div class="container">
-    <h3>
-    <img class="rounded-circle mb-1"
-         src="{{ member.get_avatar }}"
-         style="width: 3em; height:3em; object-fit: cover;"><br>
-    {{ member.short_name }}</h3>
-    <h5 class="text-muted">{{ member.get_role_display }}</h5>
+    <div class="d-none d-sm-none d-md-block"> <!--Avatar & name for md and up-->
+      <h3>
+        <img class="rounded-circle mb-1"
+             src="{{ member.get_avatar }}"
+             style="width: 3em; height:3em; object-fit: cover;"><br>
+        {{ member.short_name }}
+      </h3>
+      <h5 class="text-muted">{{ member.get_role_display }}</h5>
+    </div>
+    <div class="d-block d-sm-block d-md-none text-center"> <!--Avatar & name for sm and down-->
+      <h3>
+        <img class="rounded-circle mb-1"
+             src="{{ member.get_avatar }}"
+             style="width: 3em; height:3em; object-fit: cover;"><br>
+        {{ member.short_name }}
+      </h3>
+      <h5 class="text-muted">{{ member.get_role_display }}</h5>
+    </div>
     <hr>
     <div class="row">
       <div class="col-12 col-md-5 col-lg-4">
@@ -40,12 +54,12 @@
           {% else %}
             <span>{{ attendance_percent }}%</span>
           {% endif %}
-        )
+          )
         </h6>
 
-      {% for meeting in meetings %}
-        <a href="{% url "teammanager:meeting" id=meeting.id %}" >{{ meeting.date }}</a><br>
-      {% endfor %}
+        {% for meeting in meetings %}
+          <a href="{% url "teammanager:meeting" id=meeting.id %}">{{ meeting.date }}</a><br>
+        {% endfor %}
 
       </div>
     </div>

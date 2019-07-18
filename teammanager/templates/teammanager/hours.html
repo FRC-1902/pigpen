@@ -1,5 +1,7 @@
 {% extends 'teammanager/base.html' %}
 
+{% block title %}Hours - Pigpen {% endblock %}
+
 {% block script %}
   <script>
       $.get("{% url 'man:hours_table' %}").then(function (response) {
