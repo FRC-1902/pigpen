@@ -36,9 +36,9 @@
         <h5>Attendance</h5>
         <h6 class="text-muted">{{ meetings|length }}/{{ total_meetings }} Build Meetings (
           {% if attendance_percent >= 30 %}
-            <span class="text-success">{{ attendance_percent }}%</span>
+            <span class="text-success"><b>{{ attendance_percent }}%</b></span>
           {% else %}
-            <span class="text-danger">{{ attendance_percent }}%</span>
+            <span>{{ attendance_percent }}%</span>
           {% endif %}
         )
         </h6>

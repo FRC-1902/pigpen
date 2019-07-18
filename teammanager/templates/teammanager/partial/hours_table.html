@@ -11,9 +11,11 @@
         {% for row in students %}
           <tr>
             {% for cell in row %}
-              {% if forloop.counter == 4 %}
+              {% if forloop.counter == 1 %}
+                <td onclick="window.location='{% url 'teammanager:member' id=cell.1 %}'">{{ cell.0 }}</td>
+              {% elif forloop.counter == 4 %}
                 {% if cell >= 30 %}
-                  <td class="text-primary"><b>{{ cell }}%</b></td>
+                  <td class="text-success"><b>{{ cell }}%</b></td>
                 {% else %}
                   <td>{{ cell }}%</td>
                 {% endif %}
@@ -38,7 +40,9 @@
         {% for row in adults %}
           <tr>
             {% for cell in row %}
-              {% if forloop.counter == 4 %}
+              {% if forloop.counter == 1 %}
+                <td onclick="window.location='{% url 'teammanager:member' id=cell.1 %}'">{{ cell.0 }}</td>
+              {% elif forloop.counter == 4 %}
                 {% if cell >= 30 %}
                   <td class="text-primary"><b>{{ cell }}%</b></td>
                 {% else %}
