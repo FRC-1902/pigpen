@@ -23,12 +23,15 @@
       width: 70px;
       padding-bottom: 16px;
     }
+
+    .head {
+      width: 3em;
+      height: 3em;
+      object-fit: cover;
+    }
   </style>
   <br>
-  <div class="conta <td onclick="window.location='{% url 'teammanager:member' id=cell.id %}'">
-                  <span><img class="rounded-circle mb-1"
-                         src="{{ cell.get_avatar }}"></span>{{ cell.short_name }}
-                </td>iner-fluid">
+  <div class="container-fluid">
     <div class="row mx-xl-5">
       <div class="col-sm-12 col-md-6">
         {% if any_checkins %}
