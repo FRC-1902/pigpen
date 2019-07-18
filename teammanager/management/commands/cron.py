@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-
 from teammanager.models import Punch, Member, Family
+from datetime import timedelta
 
 
 def close_old_punches():
@@ -37,6 +37,10 @@ def create_families():
     for fam in Family.objects.all():
         if not fam.member_set.exists():
             fam.delete()
+
+
+def update_hours():
+    pass #TODO
 
 
 class Command(BaseCommand):

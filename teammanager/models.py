@@ -32,6 +32,8 @@ class Member(models.Model):
     role = models.CharField(max_length=10, default="stu", choices=roles)
     avatar = models.ImageField(null=True, blank=True)
     family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
+    hours = models.IntegerField(default=0, blank=False)
+    attendance = models.IntegerField(default=0, blank=False)
 
     def __str__(self):
         return "%s %s" % (self.first, self.last)
