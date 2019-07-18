@@ -31,14 +31,14 @@ def hours_table(request):
         if int(hours.get("total", "0").seconds) > 0:
             if member.role == 'stu':
                 students.append(tuple([
-                    (member.short_name(), member.id),
+                    member,
                     time_to_string(hours.get("total", "0")),
                     time_to_string(hours.get("out", 0)),
                     attendance,
                 ]))
             else:
                 adults.append(tuple([
-                    (member.short_name(), member.id),
+                    member,
                     time_to_string(hours.get("total", "0")),
                     time_to_string(hours.get("out", 0)),
                     attendance,
