@@ -16,8 +16,13 @@
             {% for cell in row %}
               {% if forloop.counter == 1 %} <!-- The member's name -->
                 <td onclick="window.location='{% url 'teammanager:member' id=cell.id %}'">
-                  <span><small><img class="head-sm rounded-circle"
-                             src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
+                  <span class="d-none d-sm-block">
+                    <span><small><img class="head-sm rounded-circle"
+                                      src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
+                  </span>
+                    <span class="d-block d-sm-none">
+                    {{ cell.short_name }}
+                  </span>
                 </td>
               {% elif forloop.counter == 4 %} <!-- The member's attendance -->
                 {% if cell >= 30 %}
@@ -52,8 +57,13 @@
             {% for cell in row %}
               {% if forloop.counter == 1 %} <!-- The member's name -->
                 <td onclick="window.location='{% url 'teammanager:member' id=cell.id %}'">
-                  <span><small><img class="head-sm rounded-circle"
-                             src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
+                  <span class="d-none d-sm-block">
+                    <span><small><img class="head-sm rounded-circle"
+                                      src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
+                  </span>
+                  <span class="d-block d-sm-none">
+                    {{ cell.short_name }}
+                  </span>
                 </td>
               {% elif forloop.counter == 4 %} <!-- The member's attendance -->
                 {% if cell >= 30 %}
