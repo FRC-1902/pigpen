@@ -19,10 +19,13 @@
       <h2 class="mt-4 mb-4 text-center">{{ family }}</h2>
       <div class="row justify-content-center mb-1">
         {% for member in family.member_set.all %}
-          <div class="col-sm-12 col-md-4 col-xl-2 mb-2 justify-content-center text-center">
+          <div class="col-sm-12 col-md-4 col-xl-2 mb-4 justify-content-center text-center">
             <img class="head rounded-circle mb-3" src="{{ member.get_avatar }}">
             <h5>{{ member }}</h5>
-            <p class="text-muted">{{ member.get_role_display }}</p>
+            <p class="text-muted mb-0">{{ member.get_role_display }}</p>
+            {% if member.subtitle %}
+              <p class="small text-muted mb-0">{{ member.subtitle }}</p>
+            {% endif %}
           </div>
         {% endfor %}
       </div>
@@ -31,10 +34,13 @@
     <h2 class="mt-4 mb-4 text-center">Everyone Else</h2>
     <div class="row justify-content-center mb-1">
       {% for member in singles %}
-        <div class="col-sm-12 col-md-4 col-xl-2 mb-2 justify-content-center text-center">
+        <div class="col-sm-12 col-md-4 col-xl-2 mb-4 justify-content-center text-center">
           <img class="head rounded-circle mb-3" src="{{ member.get_avatar }}">
           <h5>{{ member }}</h5>
-          <p class="text-muted">{{ member.get_role_display }}</p>
+          <p class="text-muted mb-0">{{ member.get_role_display }}</p>
+          {% if member.subtitle %}
+            <p class="small text-muted mb-0">{{ member.subtitle }}</p>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
