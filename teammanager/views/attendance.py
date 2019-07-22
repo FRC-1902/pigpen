@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
+from django.db.models import Sum
+from datetime import timedelta
 
 
 def location(request):
@@ -57,19 +59,24 @@ def member(request, id):
         print(e)
         return redirect("teammanager:index")
     meetings = []
-    total_meetings = len(Meeting.objects.filter(type="build"))
+    total_meetings = Meeting.objects.filter(type="build")
+    total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
+    total_hours = timedelta(hours=total_hours)
+    hours = timedelta()
     punches = Punch.objects.filter(member=member)
     for punch in punches:
+        hours += punch.duration()
         if punch.meeting not in meetings:
             meetings.append(punch.meeting)
+
     meetings.reverse()
-    attend = int((len(meetings)/total_meetings) * 100)
+    attend = int(hours/total_hours * 100)
 
     hours = member.get_hours()
     return render(request, "teammanager/member_attendance.html", {
         "member": member,
         "meetings": meetings,
-        "total_meetings": total_meetings,
+        "total_meetings": len(total_meetings),
         "attendance_percent": attend,
         "hr_total": time_to_string(hours.get("total", "0")),
         "hr_build": time_to_string(hours.get("build", "0")),
