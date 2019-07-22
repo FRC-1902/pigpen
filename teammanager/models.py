@@ -82,6 +82,9 @@ class Position(models.Model):
     category = models.CharField(max_length=10, choices=categories)
     sort = models.IntegerField(default=50)
 
+    def __str__(self):
+        return "%s (%s)" % (self.name, str(self.member))
+
 
 class Meeting(models.Model):
     types = (
