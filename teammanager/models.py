@@ -67,6 +67,22 @@ class Member(models.Model):
             return "http://pen.vegetarianbaconite.com/static/teammanager/no_profile.png"
 
 
+class Position(models.Model):
+    categories = [
+        ("stoff", "Student Officers"),
+        ("abod", "Adult Board of Directors"),
+        ("stsub", "Student Subsystem/Subteam Leads"),
+        ("adsub", "Adult Subsystem/Subteam Leads"),
+        ("stbus", "Student Business Leads"),
+        ("adbus", "Adult Business Leads"),
+    ]
+
+    member = models.ForeignKey("Member", on_delete=models.CASCADE)
+    name = models.TextField()
+    category = models.CharField(max_length=10, choices=categories)
+    sort = models.IntegerField(default=50)
+
+
 class Meeting(models.Model):
     types = (
         ("build", "Build Meeting"),
