@@ -65,7 +65,8 @@ def member(request, id):
     hours = timedelta()
     punches = Punch.objects.filter(member=member)
     for punch in punches:
-        hours += punch.duration()
+        if punch.is_complete():
+            hours += punch.duration()
         if punch.meeting not in meetings:
             meetings.append(punch.meeting)
 

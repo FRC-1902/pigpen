@@ -29,7 +29,8 @@ def hours_table(request):
 
         punches = Punch.objects.filter(member=member)
         for punch in punches:
-            hours_delta += punch.duration()
+            if punch.is_complete():
+                hours_delta += punch.duration()
             if punch.meeting not in meetings:
                 meetings.append(punch.meeting)
         attendance = int(hours_delta/total_hours * 100)
