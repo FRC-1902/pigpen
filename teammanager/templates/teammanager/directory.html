@@ -26,8 +26,8 @@
           </div>
 
           <!-- Stagger rows --->
-          {% if forloop.counter != 0 and forloop.counter|divisibleby:"7" %}</div>
-            <div class="row justify-content-center">{% endif %}
+          {% if forloop.counter0 != 0 and forloop.counter|divisibleby:"7" %}
+            <div class="w-100 d-none d-xl-block"></div>{% endif %}
 
         {% endfor %}
         </div>
