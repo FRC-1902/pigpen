@@ -58,7 +58,10 @@
         <a class="nav-link" href="{% url 'man:location' %}">Who's In?</a>
       </li>
       <li>
-        <a class="nav-link" href="{% url 'man:families' %}">Directory</a>
+        <a class="nav-link" href="{% url 'man:directory' %}">Directory</a>
+      </li>
+      <li>
+        <a class="nav-link" href="{% url 'man:families' %}">Families</a>
       </li>
       {% if request.user.is_authenticated %}
         <li class="nav-item">
