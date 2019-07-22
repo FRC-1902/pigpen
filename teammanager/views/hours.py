@@ -33,8 +33,8 @@ def hours_table(request):
             if punch.meeting not in meetings:
                 meetings.append(punch.meeting)
         attendance = int(hours_delta/total_hours * 100)
-        if attendance > 100:
-            attendance = 100
+        #if attendance > 100:
+            #attendance = 100
 
         if int(hours.get("total", "0").seconds) > 0:
             if member.role == 'stu':

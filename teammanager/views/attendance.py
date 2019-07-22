@@ -71,8 +71,8 @@ def member(request, id):
 
     meetings.reverse()
     attend = int(hours/total_hours * 100)
-    if attend > 100:
-        attend = 100
+    #if attend > 100:
+        #attend = 100
 
     hours = member.get_hours()
     return render(request, "teammanager/member_attendance.html", {
