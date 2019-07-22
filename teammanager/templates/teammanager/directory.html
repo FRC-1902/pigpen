@@ -17,15 +17,20 @@
   <div class="container-fluid">
     {% for section in sections %}
       <h2 class="mt-4 mb-4 text-center">{{ section.title }}</h2>
-      <div class="row justify-content-center mb-1">
+      <div class="row justify-content-center">
         {% for position in section.positions %}
           <div class="col-sm-12 col-md-4 col-xl-3 mb-4 justify-content-center text-center">
             <img class="head rounded-circle mb-3" src="{{ position.member.get_avatar }}">
             <h5>{{ position.member }}</h5>
             <p class="small text-muted mb-0">{{ position.name }}</p>
           </div>
+
+          <!-- Stagger rows --->
+          {% if forloop.counter != 0 and forloop.counter|divisibleby:"7" %}</div>
+            <div class="row justify-content-center">{% endif %}
+
         {% endfor %}
-      </div>
+        </div>
     {% endfor %}
   </div>
 {% endblock %}
