@@ -3,6 +3,18 @@
 {% block title %}{{ member.short_name }} - Pigpen{% endblock %}
 
 {% block content %}
+  <style>
+  .named-head {
+      width: 70px;
+      padding-bottom: 16px;
+    }
+
+    .head {
+      width: 3em;
+      height: 3em;
+      object-fit: cover;
+    }
+  </style>
   <br>
   <div class="container">
     <div class="row justify-content-center">
@@ -56,7 +68,29 @@
                 <img class="rounded" src="{{ member.slack_avatar }}" width="30px" height="auto">
                 <code>@{{ member.slack_username }}</code>
               </div>
+              {% if family|length > 1 %}
             <hr>
+                {% endif %}
+            </div>
+          {% endif %}
+          {% if family|length > 1 %}
+            <div class="col-12">
+              <h4>Family Members</h4>
+              <div class="">
+                {% for fam in family %}
+                  {% if fam.id != member.id %}
+                  <div class="float-left text-center named-head">
+                    <a href="{% url 'man:member' id=fam.id %}">
+                      <small class="text-dark">
+                        <img class="head rounded-circle mb-1"
+                             src="{{ fam.get_avatar }}"><br>
+                        {{ fam.short_name }}
+                      </small>
+                    </a>
+                  </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
             </div>
           {% endif %}
         </div>

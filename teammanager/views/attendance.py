@@ -76,6 +76,7 @@ def member(request, id):
     attend = int(hours / total_hours * 100)
     # if attend > 100:
     # attend = 100
+    family = Member.objects.filter(family=member.family)
 
     hours = member.get_hours()
     return render(request, "teammanager/member_attendance.html", {
@@ -85,5 +86,6 @@ def member(request, id):
         "attendance_percent": attend,
         "hr_total": time_to_string(hours.get("total", "0")),
         "hr_build": time_to_string(hours.get("build", "0")),
-        "hr_out": time_to_string(hours.get("out", "0"))
+        "hr_out": time_to_string(hours.get("out", "0")),
+        "family": family
     })
