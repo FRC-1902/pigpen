@@ -13,9 +13,10 @@
                  src="{{ member.get_avatar }}"><br>
             {{ member.short_name }}
           </h3>
-        <h5 class="text-muted">{{ member.get_role_display }}</h5>
           {% if member.subtitle %}
             <h5 class="text-muted">{{ member.subtitle }}</h5>
+          {% else %}
+            <h5 class="text-muted">{{ member.get_role_display }}</h5>
           {% endif %}
         </div>
         <hr>
