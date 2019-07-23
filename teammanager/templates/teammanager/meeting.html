@@ -35,11 +35,13 @@
           {% for member in members %}
             {% if member.role == "stu" %}
               <div class="float-left text-center named-head">
-                <small>
-                  <img class="head rounded-circle mb-1"
-                       src="{{ member.get_avatar }}"><br>
-                  {{ member.short_name }}
-                </small>
+                <a href="{% url 'man:member' id=member.id %}">
+                  <small class="text-dark">
+                    <img class="head rounded-circle mb-1"
+                         src="{{ member.get_avatar }}"><br>
+                    {{ member.short_name }}
+                  </small>
+                </a>
               </div>
             {% endif %}
           {% endfor %}
@@ -50,11 +52,13 @@
           {% for member in members %}
             {% if member.role == "mtr" %}
               <div class="float-left text-center named-head">
-                <small>
-                  <img class="head rounded-circle mb-1"
-                       src="{{ member.get_avatar }}"><br>
-                  {{ member.short_name }}
-                </small>
+                <a href="{% url 'man:member' id=member.id %}">
+                  <small class="text-dark">
+                    <img class="head rounded-circle mb-1"
+                         src="{{ member.get_avatar }}"><br>
+                    {{ member.short_name }}
+                  </small>
+                </a>
                 <br>
               </div>
             {% endif %}

@@ -45,7 +45,7 @@
               {% if member.position == "stu" and member.isIn %}
                 <div class="float-left text-center named-head">
                   <a href="{% url 'man:member' id=member.id %}">
-                    <small>
+                    <small class="text-dark">
                       <img class="head rounded-circle mb-1"
                            src="{{ member.avatar }}"><br>
                       {{ member.name }}
@@ -62,7 +62,7 @@
               {% if member.position == "mtr" and member.isIn %}
                 <div class="float-left text-center named-head">
                   <a href="{% url 'man:member' id=member.id %}">
-                    <small>
+                    <small class="text-dark">
                       <img class="head rounded-circle mb-1"
                            src="{{ member.avatar }}"><br>
                       {{ member.name }}
@@ -98,7 +98,7 @@
             {% if member.position == "stu" and not member.isIn %}
               <div class="float-left text-center named-head">
                 <a href="{% url 'man:member' id=member.id %}">
-                  <small>
+                  <small class="text-dark">
                     <img class="gray head rounded-circle mb-1"
                          src="{{ member.avatar }}"><br>
                     {{ member.name }}
@@ -115,7 +115,7 @@
             {% if member.position == "mtr" and not member.isIn %}
               <div class="float-left text-center named-head">
                 <a href="{% url 'man:member' id=member.id %}">
-                  <small>
+                  <small class="text-dark">
                     <img class="gray head rounded-circle mb-1"
                          src="{{ member.avatar }}"><br>
                     {{ member.name }}
