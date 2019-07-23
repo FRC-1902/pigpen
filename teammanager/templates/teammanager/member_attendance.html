@@ -8,12 +8,6 @@
       width: 70px;
       padding-bottom: 16px;
     }
-
-    .head {
-      width: 3em;
-      height: 3em;
-      object-fit: cover;
-    }
   </style>
   <br>
   <div class="container">
@@ -82,7 +76,7 @@
                   <div class="float-left text-center named-head">
                     <a href="{% url 'man:member' id=fam.id %}">
                       <small class="text-dark">
-                        <img class="head rounded-circle mb-1"
+                        <img class="head-md rounded-circle mb-1"
                              src="{{ fam.get_avatar }}"><br>
                         {{ fam.short_name }}
                       </small>
