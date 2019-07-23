@@ -18,7 +18,8 @@ def index(request):
                     "name": member.short_name(),
                     "hours": time_to_string(hours.get("total", "")),
                     "avatar": member.get_avatar(),
-                    "raw_hours": hours.get("total")
+                    "raw_hours": hours.get("total"),
+                    "id": member.id
                 })
 
     students = sorted(students, key=lambda x: x['raw_hours'], reverse=True)

@@ -29,30 +29,32 @@
         <br>
         {% for student in students %}
           <div class="mb-0">
-            {% if forloop.counter == 1 %}
-              <h3 class="text-secondary">
-            {% elif forloop.counter == 2 %}
-              <h4>
-            {% elif forloop.counter == 3 %}
-              <h5>
-            {% else %}
-              <h6>
-            {% endif %}
-            {% if forloop.counter < 4 %}
-              <img class="rounded-circle mb-1"
-                   src="{{ student.avatar }}"
-                   style="width: 3em; height:3em; object-fit: cover;"><br>
-            {% endif %}
-            {{ student.name }}<br><span class="text-muted">{{ student.hours }}</span>
-            {% if forloop.counter == 1 %}
-              </h3>
-            {% elif forloop.counter == 2 %}
-              </h4>
-            {% elif forloop.counter == 3 %}
-              </h5>
-            {% else %}
-              </h6>
-            {% endif %}
+            <a href="{% url 'man:member' id=student.id %}">
+              {% if forloop.counter == 1 %}
+                <h3 class="text-secondary">
+              {% elif forloop.counter == 2 %}
+                <h4 class="text-dark">
+              {% elif forloop.counter == 3 %}
+                <h5 class="text-dark">
+              {% else %}
+                <h6 class="text-dark">
+              {% endif %}
+              {% if forloop.counter < 4 %}
+                <img class="rounded-circle mb-1"
+                     src="{{ student.avatar }}"
+                     style="width: 3em; height:3em; object-fit: cover;"><br>
+              {% endif %}
+              {{ student.name }}<br><span class="text-muted">{{ student.hours }}</span>
+              {% if forloop.counter == 1 %}
+                </h3>
+              {% elif forloop.counter == 2 %}
+                </h4>
+              {% elif forloop.counter == 3 %}
+                </h5>
+              {% else %}
+                </h6>
+              {% endif %}
+            </a>
           </div>
           <hr>
         {% endfor %}
