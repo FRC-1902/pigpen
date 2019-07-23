@@ -1,7 +1,9 @@
+from datetime import timedelta
+
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+
 from teammanager.models import Punch, Member, Family
-from datetime import timedelta
 
 
 def close_old_punches():
@@ -40,10 +42,20 @@ def create_families():
 
 
 def update_hours():
-    pass #TODO
+    for member in Member.objects.all():
+        pq = Punch.objects.filter(member=member)
+        hours = timedelta()
+
+        for punch in pq:
+            hours += punch.duration()
+
+        member.hours = hours.total_seconds()
+
+        member.save()
 
 
 class Command(BaseCommand):
     def handle(self, **options):
         close_old_punches()
         create_families()
+        update_hours()
