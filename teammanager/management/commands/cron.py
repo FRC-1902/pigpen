@@ -1,5 +1,8 @@
+import os
+import re
 from datetime import timedelta
 
+import requests
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -54,8 +57,37 @@ def update_hours():
         member.save()
 
 
+def get_slack_users():
+    key = os.getenv("SLACK_OAUTH")
+
+    if key is not None:
+        resp = requests.get("https://slack.com/api/users.list?token=" + key)
+
+        for member in resp.json().get("members", []):
+            # print(member)
+            try:
+                name = member.get("real_name")
+                first = str(name.split(" ")[0])
+                last = str(name.split(" ")[-1])
+
+                mq = Member.objects.filter(first__iexact=first, last__iexact=last)
+                if mq.exists():
+                    m = mq.first()
+                    m.subtitle = re.sub(r":\w*:", "", member.get("profile", {}).get("status_text", None)).strip()
+                    m.slack = member.get("id")
+                    m.save()
+                else:
+                    print("Can't find " + first + " " + last)
+            except Exception as e:
+                print(e)
+
+    else:
+        print("NO KEY")
+
+
 class Command(BaseCommand):
     def handle(self, **options):
         close_old_punches()
         create_families()
         update_hours()
+        get_slack_users()  # Also gets subtitles

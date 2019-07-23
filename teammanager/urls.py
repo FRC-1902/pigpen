@@ -29,4 +29,6 @@ urlpatterns = [
     path('api/member/<int:member>/signedin', members.get_signed_in, name="api_hours"),
 
     path('api/punch', punch.do_punch, name="api_punch"),
+
+    path('api/slack/action', punch.do_punch, name="api_punch"),
 ]
