@@ -1,10 +1,11 @@
+from datetime import timedelta
+
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.shortcuts import render
 
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
-from django.db.models import Sum
-from datetime import timedelta
 
 
 def hours(request):

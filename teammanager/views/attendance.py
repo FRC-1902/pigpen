@@ -1,8 +1,10 @@
+from datetime import timedelta
+
+from django.db.models import Sum
 from django.shortcuts import render, redirect
+
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
-from django.db.models import Sum
-from datetime import timedelta
 
 
 def location(request):
@@ -71,9 +73,9 @@ def member(request, id):
             meetings.append(punch.meeting)
 
     meetings.reverse()
-    attend = int(hours/total_hours * 100)
-    #if attend > 100:
-        #attend = 100
+    attend = int(hours / total_hours * 100)
+    # if attend > 100:
+    # attend = 100
 
     hours = member.get_hours()
     return render(request, "teammanager/member_attendance.html", {

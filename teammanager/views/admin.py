@@ -12,8 +12,6 @@ def upload_photo(request):
             "members": Member.objects.all().order_by("first", "last")
         })
     else:
-        post = request.POST
-        files = list(request.FILES.keys())
         if 'member' in request.POST and 'photo' in request.FILES:
             m = Member.objects.get(id=request.POST['member'])
             m.avatar = request.FILES['photo']
