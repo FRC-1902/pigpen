@@ -1,4 +1,4 @@
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 
 
 def action(request):
@@ -6,4 +6,6 @@ def action(request):
 
 
 def outreach(request):
-    return HttpResponse(status=200)
+    return JsonResponse({
+        "text": "Command received."
+    })
