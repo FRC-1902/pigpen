@@ -35,6 +35,8 @@ class Member(models.Model):
     hours = models.IntegerField(default=0, blank=False)
     attendance = models.IntegerField(default=0, blank=False)
     slack = models.CharField(max_length=20, null=True, blank=True)
+    slack_username = models.CharField(max_length=50, null=True, blank=True)
+    slack_avatar = models.TextField(null=True, blank=True)
     subtitle = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -64,6 +66,8 @@ class Member(models.Model):
     def get_avatar(self):
         if self.avatar:
             return self.avatar.url
+        elif self.slack_avatar:
+            return self.slack_avatar
         else:
             return "http://pen.vegetarianbaconite.com/static/teammanager/no_profile.png"
 

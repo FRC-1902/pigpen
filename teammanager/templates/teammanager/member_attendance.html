@@ -46,9 +46,19 @@
               {% for meeting in meetings %}
                 <a href="{% url "teammanager:meeting" id=meeting.id %}">{{ meeting.date }}</a><br>
               {% endfor %}
-
             </div>
+          <hr>
           </div>
+          {% if member.slack %}
+            <div class="col-12">
+              <h4>Slack Info</h4>
+              <div class="pl-4">
+                <img class="rounded" src="{{ member.slack_avatar }}" width="30px" height="auto">
+                <code>@{{ member.slack_username }}</code>
+              </div>
+            <hr>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>

@@ -66,15 +66,18 @@ def get_slack_users():
         for member in resp.json().get("members", []):
             # print(member)
             try:
-                name = member.get("real_name")
+                profile = member.get("profile", {})
+                name = profile.get("real_name")
                 first = str(name.split(" ")[0])
                 last = str(name.split(" ")[-1])
 
                 mq = Member.objects.filter(first__iexact=first, last__iexact=last)
                 if mq.exists():
                     m = mq.first()
-                    m.subtitle = re.sub(r":\w*:", "", member.get("profile", {}).get("status_text", None)).strip()
+                    m.subtitle = re.sub(r":\w*:", "", profile.get("status_text", None)).strip()
                     m.slack = member.get("id")
+                    m.slack_username = profile.get("display_name_normalized")
+                    m.slack_avatar = profile.get("image_512")
                     m.save()
                 else:
                     print("Can't find " + first + " " + last)
