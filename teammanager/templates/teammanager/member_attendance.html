@@ -53,7 +53,9 @@
                 <a href="{% url "teammanager:meeting" id=meeting.id %}">{{ meeting.date }}</a><br>
               {% endfor %}
             </div>
-          <hr>
+            {% if member.slack or family|length > 1 %}
+              <hr>
+            {% endif %}
           </div>
           {% if member.slack %}
             <div class="col-12">
@@ -63,8 +65,8 @@
                 <code>@{{ member.slack_username }}</code>
               </div>
               {% if family|length > 1 %}
-            <hr>
-                {% endif %}
+                <hr>
+              {% endif %}
             </div>
           {% endif %}
           {% if family|length > 1 %}
@@ -73,15 +75,15 @@
               <div class="">
                 {% for fam in family %}
                   {% if fam.id != member.id %}
-                  <div class="float-left text-center named-head">
-                    <a href="{% url 'man:member' id=fam.id %}">
-                      <small class="text-dark">
-                        <img class="head-md rounded-circle mb-1"
-                             src="{{ fam.get_avatar }}"><br>
-                        {{ fam.short_name }}
-                      </small>
-                    </a>
-                  </div>
+                    <div class="float-left text-center named-head">
+                      <a href="{% url 'man:member' id=fam.id %}">
+                        <small class="text-dark">
+                          <img class="head-md rounded-circle mb-1"
+                               src="{{ fam.get_avatar }}"><br>
+                          {{ fam.short_name }}
+                        </small>
+                      </a>
+                    </div>
                   {% endif %}
                 {% endfor %}
               </div>
