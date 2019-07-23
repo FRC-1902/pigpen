@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import index, auth, hours, directory, attendance, admin
-from .views.api import members, punch
+from .views.api import members, punch, slack
 
 app_name = "teammanager"
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
 
     path('api/punch', punch.do_punch, name="api_punch"),
 
-    path('api/slack/action', punch.do_punch, name="api_punch"),
+    path('api/slack/action', slack.action, name="slack_action"),
+    path('api/slack/outreach', slack.outreach, name="slack_outreach"),
 ]
