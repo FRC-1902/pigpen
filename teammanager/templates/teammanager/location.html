@@ -44,11 +44,13 @@
             {% for member in members %}
               {% if member.position == "stu" and member.isIn %}
                 <div class="float-left text-center named-head">
-                  <small>
-                    <img class="head rounded-circle mb-1"
-                         src="{{ member.avatar }}"><br>
-                    {{ member.name }}
-                  </small>
+                  <a href="{% url 'man:member' id=member.id %}">
+                    <small>
+                      <img class="head rounded-circle mb-1"
+                           src="{{ member.avatar }}"><br>
+                      {{ member.name }}
+                    </small>
+                  </a>
                 </div>
               {% endif %}
             {% endfor %}
@@ -59,12 +61,14 @@
             {% for member in members %}
               {% if member.position == "mtr" and member.isIn %}
                 <div class="float-left text-center named-head">
-                  <small>
-                    <img class="head rounded-circle mb-1"
-                         src="{{ member.avatar }}"><br>
-                    {{ member.name }}
-                  </small>
-                  <br>
+                  <a href="{% url 'man:member' id=member.id %}">
+                    <small>
+                      <img class="head rounded-circle mb-1"
+                           src="{{ member.avatar }}"><br>
+                      {{ member.name }}
+                    </small>
+                    <br>
+                  </a>
                 </div>
               {% endif %}
             {% endfor %}
@@ -93,12 +97,13 @@
           {% for member in members %}
             {% if member.position == "stu" and not member.isIn %}
               <div class="float-left text-center named-head">
-                <small>
-                  <img class="gray head rounded-circle mb-1"
-                       src="{{ member.avatar }}"><br>
-                  {{ member.name }}
-                </small>
-
+                <a href="{% url 'man:member' id=member.id %}">
+                  <small>
+                    <img class="gray head rounded-circle mb-1"
+                         src="{{ member.avatar }}"><br>
+                    {{ member.name }}
+                  </small>
+                </a>
               </div>
             {% endif %}
           {% endfor %}
@@ -109,12 +114,14 @@
           {% for member in members %}
             {% if member.position == "mtr" and not member.isIn %}
               <div class="float-left text-center named-head">
-                <small>
-                  <img class="gray head rounded-circle mb-1"
-                       src="{{ member.avatar }}"><br>
-                  {{ member.name }}
-                </small>
-                <br>
+                <a href="{% url 'man:member' id=member.id %}">
+                  <small>
+                    <img class="gray head rounded-circle mb-1"
+                         src="{{ member.avatar }}"><br>
+                    {{ member.name }}
+                  </small>
+                  <br>
+                </a>
               </div>
             {% endif %}
           {% endfor %}

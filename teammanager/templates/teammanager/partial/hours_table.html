@@ -12,10 +12,10 @@
         </thead>
         <tbody>
         {% for row in students %}
-          <tr>
+          <tr onclick="window.location='{% url 'teammanager:member' id=row.0.id %}'">
             {% for cell in row %}
               {% if forloop.counter == 1 %} <!-- The member's name -->
-                <td onclick="window.location='{% url 'teammanager:member' id=cell.id %}'">
+                <td>
                   <span class="d-none d-sm-block">
                     <span><small><img class="head-sm rounded-circle"
                                       src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
@@ -53,10 +53,10 @@
         </thead>
         <tbody>
         {% for row in adults %}
-          <tr>
+          <tr onclick="window.location='{% url 'teammanager:member' id=row.0.id %}'">
             {% for cell in row %}
               {% if forloop.counter == 1 %} <!-- The member's name -->
-                <td onclick="window.location='{% url 'teammanager:member' id=cell.id %}'">
+                <td>
                   <span class="d-none d-sm-block">
                     <span><small><img class="head-sm rounded-circle"
                                       src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
