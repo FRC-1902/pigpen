@@ -38,7 +38,9 @@ def action(request):
                 }
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
-                requests.post(response_url, json=response)
+                requests.post(response_url, json={
+                    "text": "Alright! Posting..."
+                })
                 response = {
                     "response_type": "in_channel",
                     "replace_original": False,
