@@ -148,7 +148,7 @@ def outreach(request):
 
 def outreach_create_blocks(posting="signup"):
     options = []
-    for meeting in Meeting.objects.all():
+    for meeting in Meeting.objects.filter(type="out"):
         options.append({
             "text": {
                 "type": "plain_text",
