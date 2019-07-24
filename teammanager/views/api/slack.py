@@ -10,7 +10,7 @@ def action(request):
         data = json.loads(request.POST["payload"])
         print(data)
         response_url = data["response_url"]
-        action_val = data["actions"][0]
+        action_val = data["actions"][0]["value"]
 
         if action_val == "outreach_signup_create":
             requests.post(response_url, json={
