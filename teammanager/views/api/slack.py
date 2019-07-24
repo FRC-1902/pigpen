@@ -120,8 +120,10 @@ def action(request):
                     pass
             elif action_val.startswith("outreach_create"):
                 dialog = outreach_create_dialog(data["trigger_id"])
-                requests.post("https://slack.com/api/dialog.open", json=dialog)
-                return HttpResponse(status=200)
+                res = requests.post("https://slack.com/api/dialog.open", json=dialog)
+                response = {
+                    "text": str(res)
+                }
             else:
                 response = {
                     "response_type": "ephemeral",
