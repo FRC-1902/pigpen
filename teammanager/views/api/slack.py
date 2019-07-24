@@ -123,7 +123,7 @@ def action(request):
                 dialog = outreach_create_dialog(trigger_id)
                 res = requests.post("https://slack.com/api/dialog.open", json=dialog, headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                 response = {
-                    "text": "ID: {}\nresponse\n{}\nData sent:{}".format(trigger_id, str(res), str(dialog))
+                    "text": "Creating outreach..."
                 }
             else:
                 response = {
@@ -281,7 +281,6 @@ def outreach_checkout_blocks(meeting):
 def outreach_create_dialog(trigger_id):
     data = {
         "trigger_id": trigger_id,
-        "token": os.getenv("SLACK_OAUTH"),
         "dialog": {
             "callback_id": "outreach_new",
             "title": "Create an Outreach",
