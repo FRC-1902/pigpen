@@ -109,7 +109,10 @@ class Meeting(models.Model):
     self_register = models.BooleanField(default=False)
 
     def __str__(self):
-        return "%s on %s" % (self.get_type_display(), self.date)
+        if self.name:
+            return "%s on %s" % (self.name, self.date)
+        else:
+            return "%s on %s" % (self.get_type_display(), self.date)
 
 
 class Punch(models.Model):

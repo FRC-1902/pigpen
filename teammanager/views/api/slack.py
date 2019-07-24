@@ -67,6 +67,8 @@ def action(request):
                     for punch in punches:
                         if not punch.is_complete():
                             requests.post(response_url, json={
+                                "response_type": "ephemeral",
+                                "replace_original": False,
                                 "text": "You're currently punched in for this outreach already. Try punching out?"
                             })
                             return HttpResponse(status=200)
