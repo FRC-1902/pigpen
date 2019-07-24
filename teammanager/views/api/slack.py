@@ -6,7 +6,7 @@ import requests
 @csrf_exempt
 def action(request):
     if request.method == 'POST':
-        data = request.POST
+        data = request.POST["payload"]
         print(data)
         action = data["actions"][0]["value"]
         response_url = data["response_url"]
