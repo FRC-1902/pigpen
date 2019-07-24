@@ -10,22 +10,15 @@ def action(request):
         data = json.loads(request.POST["payload"])
         print(data)
         response_url = data["response_url"]
-        action_val = None
-        for act in data["actions"]:
-            if "value" in act:
-                action_val = act
-                break
-        if action_val and action_val == "outreach_signup_create":
+        action_val = data["actions"][0]
+
+        if action_val == "outreach_signup_create":
             requests.post(response_url, json={
-                "payload": {
-                    "text": "You clicked outreach signup create! Hurray!"
-                }
+                "text": "You clicked outreach signup create! Hurray!"
             })
         else:
             requests.post(response_url, json={
-                "payload": {
-                    "text": "Unknown action. Sorry! :("
-                }
+                "text": "Unknown action. Sorry! :("
             })
 
     return HttpResponse(status=200)
