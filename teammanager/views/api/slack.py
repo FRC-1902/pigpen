@@ -13,8 +13,8 @@ def action(request):
         action_val = None
         if "value" in data["actions"][0]:
             action_val = data["actions"][0]["value"]
-        elif "selected_options" in data["actions"][0]:
-            action_val = data["actions"][0]["selected_options"][0]["value"]
+        elif "selected_option" in data["actions"][0]:
+            action_val = data["actions"][0]["selected_options"]["value"]
 
         if action_val:
             if action_val == "outreach_signup_create":
