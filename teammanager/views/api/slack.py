@@ -276,7 +276,7 @@ def outreach_signup_blocks(meeting):
             "text": {
                 "type": "mrkdwn",
                 "text": "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button."
-                        "Sign-up list: {}".format(reverse("man:meeting", kwargs={"id": meeting.id}), meeting)
+                        "<http://pen.vegetarianbaconite.com{}|Sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
             }
         },
         {
