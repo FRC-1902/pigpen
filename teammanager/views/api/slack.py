@@ -1,12 +1,13 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import requests
+import json
 
 
 @csrf_exempt
 def action(request):
     if request.method == 'POST':
-        data = request.POST["payload"]
+        data = json.loads(request.POST["payload"])
         print(data)
         response_url = data["response_url"]
         action_val = None
