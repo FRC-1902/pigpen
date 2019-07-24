@@ -2,6 +2,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from teammanager.models import Member, Punch, Meeting
+from datetime import datetime
 import requests
 import json
 import os
@@ -130,8 +131,18 @@ def action(request):
                 }
             elif action_val == "outreach_new":
                 submission = data["submission"]
+                try:
+                    date = datetime.strptime(submission["data"], '%d-%m-%Y')
+                except:
+                    requests.post(response_url, json={
+                        "text": "Failed to parse date."
+                    })
+                    return HttpResponse(status=200)
+
+                meeting = Meeting(type="out", name=submission["name"], date=date)
+                meeting.save()
                 response = {
-                    "text": str(submission)
+                    "text": "Outreach {} created!".format(meeting)
                 }
             else:
                 response = {
