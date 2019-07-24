@@ -139,7 +139,6 @@ def action(request):
 
 @csrf_exempt
 def outreach(request):
-    return JsonResponse(outreach_create_dialog("42"), safe=False)
     return JsonResponse(
         {
             "response-type": "ephemeral",
