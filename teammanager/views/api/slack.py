@@ -168,3 +168,4 @@ def outreach_checkin_blocks(meeting):
             ]
         }
     ]
+    return response
