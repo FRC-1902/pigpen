@@ -13,12 +13,15 @@ def action(request):
         data = json.loads(request.POST["payload"])
         response_url = data["response_url"]
         action_val = None
-        if "value" in data["actions"][0]:
-            action_val = data["actions"][0]["value"]
-        elif "selected_option" in data["actions"][0]:
-            action_val = data["actions"][0]["selected_option"]["value"]
+        if "actions" in data:
+            if "value" in data["actions"][0]:
+                action_val = data["actions"][0]["value"]
+            elif "selected_option" in data["actions"][0]:
+                action_val = data["actions"][0]["selected_option"]["value"]
+        elif data["type"] == "dialog_submission":
+            action_val = data["callback_id"]
 
-            response = {}
+        response = {}
         if action_val:
             if action_val == "outreach_signup_create": # Picking an outreach signup to post
                 response = {
@@ -124,6 +127,11 @@ def action(request):
                 res = requests.post("https://slack.com/api/dialog.open", json=dialog, headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                 response = {
                     "text": "Creating outreach..."
+                }
+            elif action_val == "outreach_new":
+                submission = data["submission"]
+                response = {
+                    "text": str(submission)
                 }
             else:
                 response = {
