@@ -37,6 +37,8 @@ def action(request):
             elif action_val.startswith("outreach_signup_create_"): # Posting an outreach signup
                 meeting_id = int(action_val.replace("outreach_signup_create_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
+                meeting.signup_active = True
+                meeting.save()
 
                 requests.post(response_url, json={
                     "text": "Alright! Posting..."
@@ -49,8 +51,7 @@ def action(request):
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
-                meeting.signup_active = True
-                meeting.save()
+
                 requests.post(response_url, json={
                     "text": "Alright! Posting..."
                 })
