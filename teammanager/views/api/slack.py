@@ -9,27 +9,36 @@ from teammanager.models import Meeting
 def action(request):
     if request.method == 'POST':
         data = json.loads(request.POST["payload"])
-        print(data)
         response_url = data["response_url"]
-        action_val = data["actions"][0]["name"]
+        action_val = None
+        if "value" in data["actions"][0]:
+            action_val = data["actions"][0]["value"]
+        elif "selected_options" in data["actions"][0]:
+            action_val = data["actions"][0]["selected_options"][0]["value"]
 
-        if action_val == "outreach_signup_create":
-            requests.post(response_url, json={
-                "blocks": outreach_blocks(posting="signup")
-            })
-        elif action_val == "outreach_checkin_create":
-            requests.post(response_url, json={
-                "blocks": outreach_blocks(posting="checkin")
-            })
-        elif action_val == "post_signup":
-            requests.post(response_url, json={
-                "text": str(data)
-            })
-        else:
-            requests.post(response_url, json={
-                "text": 'Unknown action "{}". Sorry! :sadparrot:\n{}'.format(action_val, str(data)),
-                "emoji": True
-            })
+        if action_val:
+            if action_val == "outreach_signup_create":
+                requests.post(response_url, json={
+                    "blocks": outreach_blocks(posting="signup")
+                })
+            elif action_val == "outreach_checkin_create":
+                requests.post(response_url, json={
+                    "blocks": outreach_blocks(posting="checkin")
+                })
+            elif action_val == "post_signup": # TODO: remove
+                requests.post(response_url, json={
+                    "text": str(data)
+                })
+            elif action_val.startswith("signup_meeting_"):
+                meeting_id = int(action_val.replace("signup_meeting_", ""))
+                requests.post(response_url, json={
+                    "text": "Wooo lets sign up for meeting #{}!".format(meeting_id)
+                })
+            else:
+                requests.post(response_url, json={
+                    "text": 'Unknown action "{}". Sorry! :sadparrot:'.format(action_val),
+                    "emoji": True
+                })
 
     return HttpResponse(status=200)
 
@@ -93,7 +102,7 @@ def outreach_blocks(posting="signup"):
                 "text": str(meeting),
                 "emoji": True
             },
-            "value": "meeting_{}".format(meeting.id)
+            "value": "{}_meeting_{}".format(posting, meeting.id)
         })
     response = [
         {
