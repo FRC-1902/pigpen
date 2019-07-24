@@ -135,7 +135,7 @@ def action(request):
                     date = datetime.strptime(submission["data"], '%d-%m-%Y')
                 except Exception as e:
                     requests.post(response_url, json={
-                        "text": "Failed to parse date.\n{}".format(str(e))
+                        "text": "{}.\nFailed to parse date.\n{}".format(submission, str(e))
                     })
                     return HttpResponse(status=200)
 
