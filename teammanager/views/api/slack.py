@@ -122,7 +122,7 @@ def action(request):
                 dialog = outreach_create_dialog(data["trigger_id"])
                 res = requests.post("https://slack.com/api/dialog.open", json=dialog)
                 response = {
-                    "text": str(res)
+                    "text": "response\n{}".format(str(res))
                 }
             else:
                 response = {

@@ -50,7 +50,7 @@ def meeting_breakdown(request, id):
 
 
 def meetings(request):
-    meetings = Meeting.objects.all().order_by("date").reverse()
+    meetings = Meeting.objects.filter(type="build").order_by("date").reverse()
     return render(request, "teammanager/meetings.html", {"meetings": meetings})
 
 
@@ -69,7 +69,7 @@ def member(request, id):
     for punch in punches:
         if punch.is_complete():
             hours += punch.duration()
-        if punch.meeting not in meetings:
+        if punch.meeting.type == "build" and punch.meeting not in meetings:
             meetings.append(punch.meeting)
 
     meetings.reverse()
