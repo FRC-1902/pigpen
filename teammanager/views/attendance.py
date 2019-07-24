@@ -40,7 +40,7 @@ def meeting_breakdown(request, id):
     punches_sorted = sorted(punches_sorted)
 
     return render(request, "teammanager/meeting.html", {
-        "members": meeting.members.objects.all(),
+        "members": meeting.members.all(),
         "meeting": meeting,
         "punches": punches_sorted
     })
