@@ -16,40 +16,52 @@ def action(request):
         elif "selected_option" in data["actions"][0]:
             action_val = data["actions"][0]["selected_option"]["value"]
 
+            response = {}
         if action_val:
-            if action_val == "outreach_signup_create":
-                requests.post(response_url, json={
-                    "blocks": outreach_blocks(posting="signup")
-                })
-            elif action_val == "outreach_checkin_create":
-                requests.post(response_url, json={
-                    "blocks": outreach_blocks(posting="checkin")
-                })
-            elif action_val == "post_signup": # TODO: remove
-                requests.post(response_url, json={
-                    "text": str(data)
-                })
-            elif action_val.startswith("signup_meeting_"):
-                meeting_id = int(action_val.replace("signup_meeting_", ""))
-                requests.post(response_url, json={
+            if action_val == "outreach_signup_create": # Picking an outreach signup to post
+                response = {
+                    "blocks": outreach_create_blocks(posting="signup")
+                }
+            elif action_val == "outreach_checkin_create": # Picking an outreach checkin to post
+                response = {
+                    "blocks": outreach_create_blocks(posting="checkin")
+                }
+            elif action_val.startswith("outreach_signup_create_"): # Posting an outreach signup
+                meeting_id = int(action_val.replace("outreach_signup_create_", ""))
+                response = {
                     "text": "Wooo lets sign up for meeting #{}!".format(meeting_id)
-                })
+                }
+            elif action_val.startswith("outreach_checkin_create_meeting_"): # Posting an outreach checkin
+                meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
+                response = {
+                    "blocks": outreach_checkin_blocks(Meeting.objects.get(id=meeting_id))
+                }
+            elif action.val_startswith("outreach_signup_"): # Signing up for an outreach
+                meeting_id = int(action_val.replace("outreach_signup_", ""))
+                response = {
+                    "text": "Okay, you've signed up for meeting #{}!".format(meeting_id)
+                }
+            elif action.val_startswith("outreach_checkin_"):  # Checking in to an outreach
+                meeting_id = int(action_val.replace("outreach_checkin_", ""))
+                response = {
+                    "text": "Okay, you've checked in for meeting #{}!".format(meeting_id)
+                }
             else:
-                requests.post(response_url, json={
+                response = {
                     "text": 'Unknown action "{}". Sorry! :sadparrot:'.format(action_val),
                     "emoji": True
-                })
+                }
         else:
-            requests.post(response_url, json={
+            response = {
                 "text": "Encountered an error.\n{}".format(str(data))
-            })
+            }
+        requests.post(response_url, json=response)
 
     return HttpResponse(status=200)
 
 
 @csrf_exempt
 def outreach(request):
-    #return JsonResponse(outreach_blocks(), safe=False)
     return JsonResponse(
         {
             "response-type": "ephemeral",
@@ -97,7 +109,7 @@ def outreach(request):
             ]})
 
 
-def outreach_blocks(posting="signup"):
+def outreach_create_blocks(posting="signup"):
     options = []
     for meeting in Meeting.objects.all():
         options.append({
@@ -106,7 +118,7 @@ def outreach_blocks(posting="signup"):
                 "text": str(meeting),
                 "emoji": True
             },
-            "value": "{}_meeting_{}".format(posting, meeting.id)
+            "value": "outreach_{}_create_{}".format(posting, meeting.id)
         })
     response = [
         {
@@ -128,3 +140,31 @@ def outreach_blocks(posting="signup"):
     ]
 
     return response
+
+
+def outreach_checkin_blocks(meeting):
+    response = [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Check-in to outreach event *{}* opened! Make sure to click the button only once you've "
+                        "arrived to the event.".format(meeting)
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "text": {
+                        "type": "plain_text",
+                        "text": ":wilbur: CHECK IN :wilbur:",
+                        "emoji": True
+                    },
+                    "value": "outreach_checkin_{}".format(meeting.id)
+                }
+            ]
+        }
+    ]
