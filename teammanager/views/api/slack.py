@@ -36,12 +36,12 @@ def action(request):
                 response = {
                     "blocks": outreach_checkin_blocks(Meeting.objects.get(id=meeting_id))
                 }
-            elif action.val_startswith("outreach_signup_"): # Signing up for an outreach
+            elif action.val.startswith("outreach_signup_"): # Signing up for an outreach
                 meeting_id = int(action_val.replace("outreach_signup_", ""))
                 response = {
                     "text": "Okay, you've signed up for meeting #{}!".format(meeting_id)
                 }
-            elif action.val_startswith("outreach_checkin_"):  # Checking in to an outreach
+            elif action.val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
                 response = {
                     "text": "Okay, you've checked in for meeting #{}!".format(meeting_id)
