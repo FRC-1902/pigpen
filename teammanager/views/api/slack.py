@@ -18,7 +18,7 @@ def action(request):
             })
         else:
             requests.post(response_url, json={
-                "text": "Unknown action '{}'. Sorry! :sadparrot:".format(action_val)
+                "text": "Unknown action '{}'. Sorry! :sadparrot:".format(action_val),
                 "emoji": True
             })
 
