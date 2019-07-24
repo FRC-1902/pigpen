@@ -59,13 +59,33 @@ def action(request):
                     "replace_original": False,
                     "blocks": outreach_checkin_blocks(meeting)
                 }
+
             elif action_val.startswith("outreach_signup_"): # Signing up for an outreach
                 meeting_id = int(action_val.replace("outreach_signup_", ""))
-                response = {
-                    "response_type": "ephemeral",
-                    "replace_original": False,
-                    "text": "Okay, you've signed up for meeting #{}!".format(meeting_id)
-                }
+                meeting = Meeting.objects.get(id=meeting_id)
+                slack_id = data["user"]["id"]
+                try:
+                    member = Member.objects.get(slack=slack_id)
+                except:
+                    requests.post(response_url, json={
+                        "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan or Dominic for help.".format(
+                            slack_id)
+                    })
+                    return HttpResponse(status=200)
+
+                if member in meeting.members.all():
+                    response = {
+                        "response_type": "ephemeral",
+                        "replace_original": False,
+                        "text": "You're already signed up for *{}*!".format(meeting)
+                    }
+                else:
+                    meeting.members.add(member)
+                    response = {
+                        "response_type": "ephemeral",
+                        "replace_original": False,
+                        "text": "Okay, you've signed up for *{}*".format(meeting)
+                    }
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
