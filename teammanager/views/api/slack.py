@@ -76,8 +76,13 @@ def outreach(request):
 
 
 def outreach_blocks(posting="signup"):
-    options = []
-
+    options = [{
+        "text": {
+            "type": "plain_text",
+            "text": "Placeholder"
+        }
+    }]
+    
     response = [
         {
             "type": "section",
