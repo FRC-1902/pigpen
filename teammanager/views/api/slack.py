@@ -135,14 +135,14 @@ def action(request):
                     date = datetime.strptime(submission["date"], '%m-%d-%Y')
                 except Exception as e:
                     requests.post(response_url, json={
-                        "text": "{}.\nFailed to parse date.\n{}".format(submission, str(e))
+                        "text": "Failed to parse date."
                     })
                     return HttpResponse(status=200)
 
                 meeting = Meeting(type="out", name=submission["name"], date=date)
                 meeting.save()
                 response = {
-                    "text": "Outreach {} created!".format(meeting)
+                    "text": "Outreach *{}* created!".format(meeting)
                 }
             else:
                 response = {
