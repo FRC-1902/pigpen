@@ -31,7 +31,7 @@ def action(request):
                 response = {
                     "text": "Wooo lets sign up for meeting #{}!".format(meeting_id)
                 }
-            elif action_val.startswith("outreach_checkin_create_meeting_"): # Posting an outreach checkin
+            elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
                 response = {
                     "blocks": outreach_checkin_blocks(Meeting.objects.get(id=meeting_id))
