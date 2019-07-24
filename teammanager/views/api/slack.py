@@ -9,7 +9,7 @@ def action(request):
 
 @csrf_exempt
 def outreach(request):
-    return JsonResponse({
+    return JsonResponse(
         [
             {
                 "type": "section",
@@ -43,4 +43,4 @@ def outreach(request):
                 ]
             }
         ]
-    })
+    , safe=False)
