@@ -6,7 +6,7 @@ import requests
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from teammanager.models import Punch, Member, Family
+from teammanager.models import Punch, Member, Family, Meeting
 
 
 def close_old_punches():
@@ -42,6 +42,12 @@ def create_families():
     for fam in Family.objects.all():
         if not fam.member_set.exists():
             fam.delete()
+
+
+def add_members_to_build_meetings():
+    for meeting in Meeting.objects.filter(type="build"):
+        for punch in Punch.objects.filter(meeting=meeting):
+            meeting.members.add(punch.member)
 
 
 def update_hours():
@@ -92,5 +98,6 @@ class Command(BaseCommand):
     def handle(self, **options):
         close_old_punches()
         create_families()
+        add_members_to_build_meetings()
         update_hours()
         get_slack_users()  # Also gets subtitles
