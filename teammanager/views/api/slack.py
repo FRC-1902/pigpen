@@ -31,10 +31,13 @@ def action(request):
                 }
             elif action_val.startswith("outreach_signup_create_"): # Posting an outreach signup
                 meeting_id = int(action_val.replace("outreach_signup_create_", ""))
+                requests.post(response_url, json={
+                    "text": "Alright! Posting..."
+                })
                 response = {
                     "response_type": "in_channel",
                     "replace_original": False,
-                    "text": "Lets sign up for meeting #{}!\n...once the feature is done.".format(meeting_id)
+                    "text": "Signup posted for meeting #{}!\n...once the feature is done.".format(meeting_id)
                 }
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
@@ -58,10 +61,12 @@ def action(request):
                 meeting = Meeting.objects.get(id=meeting_id)
                 slack_id = data["user"]["id"]
                 try:
+                    potato = "yes"
+                    potato *= 4
                     member = Member.objects.get(slack=slack_id)
                 except:
                     requests.post(response_url, json={
-                        "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan S. for help.".format(slack_id)
+                        "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact <@D1KR0F78A> for help.".format(slack_id)
                     })
                     return HttpResponse(status=200)
                 try:
@@ -92,12 +97,12 @@ def action(request):
                     member = Member.objects.get(slack=slack_id)
                 except:
                     requests.post(response_url, json={
-                    "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan S. for help.".format(
+                    "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact <@D1KR0F78A> for help.".format(
                         slack_id)
                     })
                     return HttpResponse(status=200)
+                completed = False
                 try:
-                    completed = False
                     punches = Punch.objects.filter(member=member, meeting=meeting)
                     for punch in punches:
                         if not punch.is_complete():
