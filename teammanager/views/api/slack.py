@@ -14,7 +14,7 @@ def action(request):
         if "value" in data["actions"][0]:
             action_val = data["actions"][0]["value"]
         elif "selected_option" in data["actions"][0]:
-            action_val = data["actions"][0]["selected_options"]["value"]
+            action_val = data["actions"][0]["selected_option"]["value"]
 
         if action_val:
             if action_val == "outreach_signup_create":
