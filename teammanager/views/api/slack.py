@@ -65,7 +65,7 @@ def action(request):
                 try:
                     punches = Punch.objects.filter(member=member, meeting=meeting)
                     for punch in punches:
-                        if punch.is_complete():
+                        if not punch.is_complete():
                             requests.post(response_url, json={
                                 "text": "You're currently punched in for this outreach already. Try punching out?"
                             })
