@@ -11,7 +11,7 @@ def action(request):
         data = json.loads(request.POST["payload"])
         print(data)
         response_url = data["response_url"]
-        action_val = data["actions"][0]["value"]
+        action_val = data["actions"][0]["name"]
 
         if action_val == "outreach_signup_create":
             requests.post(response_url, json={
@@ -27,7 +27,7 @@ def action(request):
             })
         else:
             requests.post(response_url, json={
-                "text": 'Unknown action "{}". Sorry! :sadparrot:'.format(action_val),
+                "text": 'Unknown action "{}". Sorry! :sadparrot:\n{}'.format(action_val, str(data)),
                 "emoji": True
             })
 
@@ -59,6 +59,7 @@ def outreach(request):
                                 "text": "Post a Signup",
                                 "emoji": True
                             },
+                            "name": "outreach_signup_create",
                             "value": "outreach_signup_create"
                         },
                         {
@@ -68,6 +69,7 @@ def outreach(request):
                                 "text": "Post a Check-In",
                                 "emoji": True
                             },
+                            "name": "outreach_checkin_create",
                             "value": "outreach_checkin_create"
                         },
                         {
@@ -77,6 +79,7 @@ def outreach(request):
                                 "text": "Create an Outreach",
                                 "emoji": True
                             },
+                            "name": "outreach_create",
                             "value": "outreach_create"
                         },
                     ]
