@@ -59,7 +59,6 @@ def outreach(request):
                                 "text": "Post a Signup",
                                 "emoji": True
                             },
-                            "name": "outreach_signup_create",
                             "value": "outreach_signup_create"
                         },
                         {
@@ -69,7 +68,6 @@ def outreach(request):
                                 "text": "Post a Check-In",
                                 "emoji": True
                             },
-                            "name": "outreach_checkin_create",
                             "value": "outreach_checkin_create"
                         },
                         {
@@ -79,7 +77,6 @@ def outreach(request):
                                 "text": "Create an Outreach",
                                 "emoji": True
                             },
-                            "name": "outreach_create",
                             "value": "outreach_create"
                         },
                     ]
