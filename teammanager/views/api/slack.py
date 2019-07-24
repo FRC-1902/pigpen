@@ -6,6 +6,4 @@ def action(request):
 
 
 def outreach(request):
-    return JsonResponse({
-        "text": "Command received."
-    })
+    return HttpResponse(status=200)
