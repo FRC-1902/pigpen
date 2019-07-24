@@ -7,13 +7,23 @@ import requests
 def action(request):
     if request.method == 'POST':
         data = request.POST["payload"]
-        print(data)
-        action = data["actions"][0]["value"]
+        try:
+            action_val = data["actions"][0]["value"]
+        except Exception as e:
+            print(e)
+            print(data)
+            return HttpResponse("rip")
         response_url = data["response_url"]
-        if action == "outreach_signup_create":
+        if action_val == "outreach_signup_create":
             requests.post(response_url, json={
                 "payload": {
                     "text": "You clicked outreach signup create! Hurray!"
+                }
+            })
+        else:
+            requests.post(response_url, json={
+                "payload": {
+                    "text": "Unknown action. Sorry! :("
                 }
             })
 
