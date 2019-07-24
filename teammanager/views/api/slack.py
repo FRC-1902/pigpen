@@ -76,6 +76,16 @@ def outreach(request):
 
 
 def outreach_blocks(posting="signup"):
+    options = []
+    for meeting in Meeting.objects.all():
+        options.append({
+            "text": {
+                "type": "plain_text",
+                "text": str(meeting),
+                "emoji": True
+            },
+            "value": meeting.id
+        })
     response = [
         {
             "type": "section",
@@ -90,14 +100,7 @@ def outreach_blocks(posting="signup"):
                     "text": "Select an item",
                     "emoji": True
                 },
-                "options": [
-                    {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Placeholder"
-                        }
-                    }
-                ]
+                "options": options
             }
         },
         {
@@ -116,15 +119,5 @@ def outreach_blocks(posting="signup"):
             ]
         }
     ]
-    options = []
-    for meeting in Meeting.objects.all():
-        options.append({
-            "text": {
-                "type": "plain_text",
-                "text": str(meeting),
-                "emoji": True
-            },
-            "value": meeting.id
-        })
-    response[0]["accessory"]["options"] = options
+
     return response
