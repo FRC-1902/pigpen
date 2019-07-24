@@ -16,7 +16,7 @@ def directory(request):
                                                                                               "\n"):
             sections = []
 
-            for pos in ["stoff", "tmldr", "adbod", "stsub", "adsub", "stbus", "adbus"]:
+            for pos in ["stoff", "tmldr", "stsub", "adsub", "stbus", "adbus", "adbod"]:
                 pos_list = Position.objects.filter(category=pos).order_by("sort")
 
                 if pos_list.exists():
