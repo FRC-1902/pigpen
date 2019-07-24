@@ -11,7 +11,9 @@ def action(request):
         response_url = data["response_url"]
         if action == "outreach_signup_create":
             requests.post(response_url, json={
-                "text": "It's 80 degrees right now."
+                "payload": {
+                    "text": "It's 80 degrees right now."
+                }
             })
 
     return HttpResponse(status=200)
