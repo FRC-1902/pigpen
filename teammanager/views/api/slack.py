@@ -80,8 +80,38 @@ def action(request):
                 response = {
                     "response_type": "ephemeral",
                     "replace_original": False,
-                    "text": "Okay, you've checked in for {}!".format(meeting)
+                    "blocks": outreach_checkout_blocks(meeting)
                 }
+            elif action_val.startswith("outreach_checkout_"):  # Checking OUT of an outreach
+                meeting_id = int(action_val.replace("outreach_checkout_", ""))
+                meeting = Meeting.objects.get(id=meeting_id)
+                slack_id = data["user"]["id"]
+                try:
+                    member = Member.objects.get(slack=slack_id)
+                except:
+                    requests.post(response_url, json={
+                    "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan S. for help.".format(
+                        slack_id)
+                    })
+                    return HttpResponse(status=200)
+                try:
+                    completed = False
+                    punches = Punch.objects.filter(member=member, meeting=meeting)
+                    for punch in punches:
+                        if not punch.is_complete():
+                            punch.end = timezone.now()
+                            punch.save()
+                            response = {
+                                "text": "You've checked out of {}. Time: {}".format(meeting, punch.duration())
+                            }
+                            completed = True
+                            break
+                    if not completed:
+                        response = {
+                            "text": "I don't know how you pulled this off, but you weren't even checked in in the first place."
+                        }
+                except:
+                    pass
             else:
                 response = {
                     "response_type": "ephemeral",
@@ -202,6 +232,33 @@ def outreach_checkin_blocks(meeting):
                         "emoji": True
                     },
                     "value": "outreach_checkin_{}".format(meeting.id)
+                }
+            ]
+        }
+    ]
+    return response
+
+def outreach_checkout_blocks(meeting):
+    response = [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "You've checked in to *{}*! Click the button below once you leave the event.".format(meeting)
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "style": "danger",
+                    "text": {
+                        "type": "plain_text",
+                        "text": ":bacon: CHECK OUT :bacon:",
+                        "emoji": True
+                    },
+                    "value": "outreach_checkout_{}".format(meeting.id)
                 }
             ]
         }
