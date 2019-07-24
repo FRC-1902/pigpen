@@ -28,6 +28,7 @@ def action(request):
 
 @csrf_exempt
 def outreach(request):
+    #return JsonResponse(outreach_blocks(), safe=False)
     return JsonResponse(
         {
             "response-type": "ephemeral",
@@ -76,13 +77,20 @@ def outreach(request):
 
 
 def outreach_blocks(posting="signup"):
-    options = [{
+    options = []
+    options.append({
         "text": {
             "type": "plain_text",
-            "text": "Placeholder"
+            "text": "Placeholder!"
         }
-    }]
-    
+    })
+    options.append({
+        "text": {
+            "type": "plain_text",
+            "text": "Placeholder 2!"
+        }
+    })
+
     response = [
         {
             "type": "section",
