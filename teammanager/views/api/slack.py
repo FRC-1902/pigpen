@@ -78,19 +78,15 @@ def outreach(request):
 
 def outreach_blocks(posting="signup"):
     options = []
-    options.append({
-        "text": {
-            "type": "plain_text",
-            "text": "Placeholder!"
-        }
-    })
-    options.append({
-        "text": {
-            "type": "plain_text",
-            "text": "Placeholder 2!"
-        }
-    })
-
+    for meeting in Meeting.objects.all():
+        options.append({
+            "text": {
+                "type": "plain_text",
+                "text": str(meeting),
+                "emoji": True
+            },
+            "value": "meeting_{}".format(meeting.id)
+        })
     response = [
         {
             "type": "section",
