@@ -4,6 +4,7 @@ from django.utils import timezone
 from teammanager.models import Member, Punch, Meeting
 import requests
 import json
+import os
 
 
 @csrf_exempt
@@ -117,6 +118,10 @@ def action(request):
                         }
                 except:
                     pass
+            elif action_val.startswith("outreach_create"):
+                dialog = outreach_create_dialog(data["trigger_id"])
+                requests.post("https://slack.com/api/dialog.open", json=dialog)
+                return HttpResponse(status=200)
             else:
                 response = {
                     "response_type": "ephemeral",
@@ -134,6 +139,7 @@ def action(request):
 
 @csrf_exempt
 def outreach(request):
+    return JsonResponse(outreach_create_dialog("42"), safe=False)
     return JsonResponse(
         {
             "response-type": "ephemeral",
@@ -269,3 +275,29 @@ def outreach_checkout_blocks(meeting):
         }
     ]
     return response
+
+def outreach_create_dialog(trigger_id):
+    data = {
+        "trigger_id": trigger_id,
+        "token": os.getenv("SLACK_OAUTH"),
+        "dialog": {
+            "callback_id": "outreach_new",
+            "title": "Create an Outreach",
+            "submit_label": "Create",
+            "notify_on_cancel": True,
+            "state": "Limo",
+            "elements": [
+                {
+                    "type": "text",
+                    "label": "Event Name",
+                    "name": "name"
+                },
+                {
+                    "type": "text",
+                    "label": "Date (i.e. 4-20-2019",
+                    "name": "date"
+                }
+            ]
+        }
+    }
+    return data
