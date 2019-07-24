@@ -36,13 +36,15 @@ def action(request):
                 }
             elif action_val.startswith("outreach_signup_create_"): # Posting an outreach signup
                 meeting_id = int(action_val.replace("outreach_signup_create_", ""))
+                meeting = Meeting.objects.get(id=meeting_id)
+
                 requests.post(response_url, json={
                     "text": "Alright! Posting..."
                 })
                 response = {
                     "response_type": "in_channel",
                     "replace_original": False,
-                    "text": "Signup posted for meeting #{}!\n...once the feature is done.".format(meeting_id)
+                    "blocks": outreach_signup_blocks(meeting)
                 }
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
@@ -242,6 +244,34 @@ def outreach_create_blocks(posting="signup"):
         }
     ]
 
+    return response
+
+
+def outreach_signup_blocks(meeting):
+    response = [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button.".format(meeting)
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "text": {
+                        "type": "plain_text",
+                        "text": ":parrot: SIGN UP:parrot:",
+                        "emoji": True
+                    },
+                    "value": "outreach_signup_{}".format(meeting.id)
+                }
+            ]
+        }
+    ]
     return response
 
 
