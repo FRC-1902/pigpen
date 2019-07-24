@@ -15,7 +15,15 @@ def action(request):
 
         if action_val == "outreach_signup_create":
             requests.post(response_url, json={
-                "blocks": outreach_blocks()
+                "blocks": outreach_blocks(posting="signup")
+            })
+        elif action_val == "outreach_checkin_create":
+            requests.post(response_url, json={
+                "blocks": outreach_blocks(posting="checkin")
+            })
+        elif action_val == "post_signup":
+            requests.post(response_url, json={
+                "text": str(data)
             })
         else:
             requests.post(response_url, json={
