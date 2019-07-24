@@ -2,6 +2,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
+from teammanager.models import Meeting
 
 
 @csrf_exempt
@@ -14,11 +15,11 @@ def action(request):
 
         if action_val == "outreach_signup_create":
             requests.post(response_url, json={
-                "text": "You clicked outreach signup create! Hurray!"
+                "blocks": outreach_blocks()
             })
         else:
             requests.post(response_url, json={
-                "text": "Unknown action '{}'. Sorry! :sadparrot:".format(action_val),
+                "text": 'Unknown action "{}". Sorry! :sadparrot:'.format(action_val),
                 "emoji": True
             })
 
@@ -72,3 +73,49 @@ def outreach(request):
                     ]
                 }
             ]})
+
+def outreach_blocks():
+    response = [
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "Which outreach are we posting for?"
+            },
+            "accessory": {
+                "type": "static_select",
+                "placeholder": {
+                    "type": "plain_text",
+                    "text": "Select an item",
+                    "emoji": True
+                },
+                "options": []
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "style": "primary",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Post Signup",
+                        "emoji": True
+                    },
+                    "value": "signup"
+                }
+            ]
+        }
+    ]
+    options = response[0]["accessory"]["options"]
+    for meeting in Meeting.objects.all():
+        options.append({
+            "text": {
+                "type": "plain_text",
+                "text": str(meeting),
+                "emoji": True
+            },
+            "value": meeting.id
+        })
+    return response
