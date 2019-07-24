@@ -1,8 +1,9 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+from teammanager.models import Member, Punch, Meeting
 import requests
 import json
-from teammanager.models import Meeting
 
 
 @csrf_exempt
@@ -52,10 +53,31 @@ def action(request):
                 }
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
+                meeting = Meeting.objects.get(id=meeting_id)
+                try:
+                    member = Member.objects.get(slack_id=data["user"]["id"])
+                except:
+                    requests.post(response_url, json={
+                        "text": "Could not find a Pigpen account associated with your Slack ID. Contact Ryan S. for help."
+                    })
+                    return HttpResponse(status=200)
+                try:
+                    punches = Punch.objects.filter(member=member, meeting=meeting)
+                    for punch in punches:
+                        if punch.is_complete():
+                            requests.post(response_url, json={
+                                "text": "You're currently punched in for this outreach already. Try punching out?"
+                            })
+                            return HttpResponse(status=200)
+                except:
+                    pass
+                pun = Punch(member=member, meeting=meeting)
+                pun.start = timezone.now()
+                pun.save()
                 response = {
                     "response_type": "ephemeral",
                     "replace_original": False,
-                    "text": "Okay, you've checked in for meeting #{}!".format(meeting_id)
+                    "text": "Okay, you've checked in for {}!".format(meeting)
                 }
             else:
                 response = {
