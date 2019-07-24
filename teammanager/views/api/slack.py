@@ -19,7 +19,7 @@ def action(request):
                 action_val = data["actions"][0]["value"]
             elif "selected_option" in data["actions"][0]:
                 action_val = data["actions"][0]["selected_option"]["value"]
-        elif data["type"] == "dialog_submission":
+        elif data["type"] == "dialog_submission" or data["type"] == "dialog_cancellation":
             action_val = data["callback_id"]
 
         response = {}
@@ -46,13 +46,16 @@ def action(request):
                 }
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
+                meeting = Meeting.objects.get(id=meeting_id)
+                meeting.signup_active = True
+                meeting.save()
                 requests.post(response_url, json={
                     "text": "Alright! Posting..."
                 })
                 response = {
                     "response_type": "in_channel",
                     "replace_original": False,
-                    "blocks": outreach_checkin_blocks(Meeting.objects.get(id=meeting_id))
+                    "blocks": outreach_checkin_blocks(meeting)
                 }
             elif action_val.startswith("outreach_signup_"): # Signing up for an outreach
                 meeting_id = int(action_val.replace("outreach_signup_", ""))
