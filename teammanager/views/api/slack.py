@@ -84,7 +84,7 @@ def action(request):
                     response = {
                         "response_type": "ephemeral",
                         "replace_original": False,
-                        "text": "Okay, you've signed up for *{}*".format(meeting)
+                        "text": "Okay, you've signed up for *{}*.".format(meeting)
                     }
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
