@@ -39,6 +39,10 @@ def action(request):
                     "text": 'Unknown action "{}". Sorry! :sadparrot:'.format(action_val),
                     "emoji": True
                 })
+        else:
+            requests.post(response_url, json={
+                "text": "Encountered an error.\n{}".format(str(data))
+            })
 
     return HttpResponse(status=200)
 
