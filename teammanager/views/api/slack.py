@@ -132,7 +132,7 @@ def action(request):
             elif action_val == "outreach_new":
                 submission = data["submission"]
                 try:
-                    date = datetime.strptime(submission["data"], '%d-%m-%Y')
+                    date = datetime.strptime(submission["date"], '%d-%m-%Y')
                 except Exception as e:
                     requests.post(response_url, json={
                         "text": "{}.\nFailed to parse date.\n{}".format(submission, str(e))
