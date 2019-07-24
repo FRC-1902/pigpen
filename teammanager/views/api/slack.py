@@ -123,7 +123,7 @@ def action(request):
                 dialog = outreach_create_dialog(trigger_id)
                 res = requests.post("https://slack.com/api/dialog.open", json=dialog)
                 response = {
-                    "text": "ID: {}\nresponse\n{}".format(trigger_id, str(res))
+                    "text": "ID: {}\nresponse\n{}\nData sent:{}".format(trigger_id, str(res), str(dialog))
                 }
             else:
                 response = {
@@ -283,21 +283,21 @@ def outreach_create_dialog(trigger_id):
         "trigger_id": trigger_id,
         "token": os.getenv("SLACK_OAUTH"),
         "dialog": {
-            "callback_id": "ryde-46e2b0",
-            "title": "Request a Ride",
-            "submit_label": "Request",
+            "callback_id": "outreach_new",
+            "title": "Create an Outreach",
+            "submit_label": "Create",
             "notify_on_cancel": True,
             "state": "Limo",
             "elements": [
                 {
                     "type": "text",
-                    "label": "Pickup Location",
-                    "name": "loc_origin"
+                    "label": "Event Name",
+                    "name": "name"
                 },
                 {
                     "type": "text",
-                    "label": "Dropoff Location",
-                    "name": "loc_destination"
+                    "label": "Date (i.e. 4-20-2019)",
+                    "name": "date"
                 }
             ]
         }
