@@ -32,18 +32,15 @@ def meeting_breakdown(request, id):
     except:
         return redirect("teammanager:meetings")
     punches = Punch.objects.filter(meeting=meeting)
-    members = []
     punches_sorted = []
     for punch in punches:
-        if punch.member not in members:
-            members.append(punch.member)
         punches_sorted.append((punch.start, punch, "in"))
         if punch.end:
             punches_sorted.append((punch.end, punch, "out"))
     punches_sorted = sorted(punches_sorted)
 
     return render(request, "teammanager/meeting.html", {
-        "members": members,
+        "members": meeting.members.objects.all(),
         "meeting": meeting,
         "punches": punches_sorted
     })
