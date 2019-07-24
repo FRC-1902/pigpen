@@ -27,7 +27,13 @@
     <div class="row mx-xl-5">
       <div class="col-sm-12 col-md-7">
         <h3 class="text-center">
-          {{ meeting }} <span class="text-muted"><i>({{ members|length }} attended)</i></span>
+          {{ meeting }} <span class="text-muted"><i>({{ members|length }}
+          {% if meeting.type == "build" %}
+            attended)
+          {% elif meeting.type == "out" %}
+            signed up)
+          {% endif %}
+          </span>
         </h3>
         <hr>
         <h5>Students</h5>
