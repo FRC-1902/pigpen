@@ -61,10 +61,10 @@ def action(request):
                 meeting = Meeting.objects.get(id=meeting_id)
                 slack_id = data["user"]["id"]
                 try:
-                    member = Member.objects.get(slack=slack_id, name="bob")
+                    member = Member.objects.get(slack=slack_id)
                 except:
                     requests.post(response_url, json={
-                        "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact <@D1KR0F78A> for help.".format(slack_id)
+                        "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan or Dominic for help.".format(slack_id)
                     })
                     return HttpResponse(status=200)
                 try:
@@ -95,7 +95,7 @@ def action(request):
                     member = Member.objects.get(slack=slack_id)
                 except:
                     requests.post(response_url, json={
-                    "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact <@D1KR0F78A> for help.".format(
+                    "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan or Dominic for help.".format(
                         slack_id)
                     })
                     return HttpResponse(status=200)
