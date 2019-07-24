@@ -12,7 +12,7 @@ def action(request):
         if action == "outreach_signup_create":
             requests.post(response_url, json={
                 "payload": {
-                    "text": "It's 80 degrees right now."
+                    "text": "You clicked outreach signup create! Hurray!"
                 }
             })
 
@@ -40,7 +40,7 @@ def outreach(request):
                             "type": "button",
                             "text": {
                                 "type": "plain_text",
-                                "text": "Outreach Signup",
+                                "text": "Post a Signup",
                                 "emoji": True
                             },
                             "value": "outreach_signup_create"
@@ -49,11 +49,20 @@ def outreach(request):
                             "type": "button",
                             "text": {
                                 "type": "plain_text",
-                                "text": "Outreach Check-In",
+                                "text": "Post a Check-In",
                                 "emoji": True
                             },
                             "value": "outreach_checkin_create"
-                        }
+                        },
+                        {
+                            "type": "button",
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Create an Outreach",
+                                "emoji": True
+                            },
+                            "value": "outreach_create"
+                        },
                     ]
                 }
             ]})
