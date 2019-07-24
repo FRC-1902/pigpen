@@ -283,21 +283,21 @@ def outreach_create_dialog(trigger_id):
         "trigger_id": trigger_id,
         "token": os.getenv("SLACK_OAUTH"),
         "dialog": {
-            "callback_id": "outreach_new",
-            "title": "Create an Outreach",
-            "submit_label": "Create",
+            "callback_id": "ryde-46e2b0",
+            "title": "Request a Ride",
+            "submit_label": "Request",
             "notify_on_cancel": True,
             "state": "Limo",
             "elements": [
                 {
                     "type": "text",
-                    "label": "Event Name",
-                    "name": "name"
+                    "label": "Pickup Location",
+                    "name": "loc_origin"
                 },
                 {
                     "type": "text",
-                    "label": "Date (i.e. 4-20-2019",
-                    "name": "date"
+                    "label": "Dropoff Location",
+                    "name": "loc_destination"
                 }
             ]
         }
