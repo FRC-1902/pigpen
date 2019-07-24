@@ -1,6 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.urls import reverse
 from teammanager.models import Member, Punch, Meeting
 from datetime import datetime
 import requests
@@ -274,7 +275,8 @@ def outreach_signup_blocks(meeting):
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button.".format(meeting)
+                "text": "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button."
+                        "Sign-up list: {}".format(reverse("man:meeting", args={"id": meeting.id}), meeting)
             }
         },
         {
