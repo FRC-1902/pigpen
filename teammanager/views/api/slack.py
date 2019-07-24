@@ -162,13 +162,14 @@ def outreach_create_blocks(posting="signup"):
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "Which outreach are we posting a {} for?".format(posting)
+                "text": "Which outreach are we posting a {} for? Be careful, once you select an event I'll post the {} "
+                        "for it *in this channel* immediately.".format(posting, posting)
             },
             "accessory": {
                 "type": "static_select",
                 "placeholder": {
                     "type": "plain_text",
-                    "text": "Select an item",
+                    "text": "Select an Outreach",
                     "emoji": True
                 },
                 "options": options
