@@ -106,7 +106,7 @@ class Meeting(models.Model):
     name = models.TextField(null=True, blank=True)
     length = models.IntegerField(null=False, default=4)
     signup_active = models.BooleanField(default=False)
-    self_register = models.BooleanField(default=False)
+    members = models.ManyToManyField("Member")
 
     def __str__(self):
         if self.name:
