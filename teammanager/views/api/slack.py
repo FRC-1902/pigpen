@@ -20,34 +20,41 @@ def action(request):
         if action_val:
             if action_val == "outreach_signup_create": # Picking an outreach signup to post
                 response = {
+                    "response_type": "ephemeral",
                     "blocks": outreach_create_blocks(posting="signup")
                 }
             elif action_val == "outreach_checkin_create": # Picking an outreach checkin to post
                 response = {
+                    "response_type": "ephemeral",
                     "blocks": outreach_create_blocks(posting="checkin")
                 }
             elif action_val.startswith("outreach_signup_create_"): # Posting an outreach signup
                 meeting_id = int(action_val.replace("outreach_signup_create_", ""))
                 response = {
-                    "text": "Wooo lets sign up for meeting #{}!".format(meeting_id)
+                    "response_type": "in_channel",
+                    "text": "Lets sign up for meeting #{}!\n...once the feature is done.".format(meeting_id)
                 }
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
                 response = {
+                    "response_type": "in_channel",
                     "blocks": outreach_checkin_blocks(Meeting.objects.get(id=meeting_id))
                 }
             elif action_val.startswith("outreach_signup_"): # Signing up for an outreach
                 meeting_id = int(action_val.replace("outreach_signup_", ""))
                 response = {
+                    "response_type": "ephemeral",
                     "text": "Okay, you've signed up for meeting #{}!".format(meeting_id)
                 }
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
                 response = {
+                    "response_type": "ephemeral",
                     "text": "Okay, you've checked in for meeting #{}!".format(meeting_id)
                 }
             else:
                 response = {
+                    "response_type": "ephemeral",
                     "text": 'Unknown action "{}". Sorry! :sadparrot:'.format(action_val),
                     "emoji": True
                 }
