@@ -5,8 +5,9 @@ import requests
 
 @csrf_exempt
 def action(request):
-    if request.POST:
+    if request.method == 'POST':
         data = request.POST
+        print(data)
         action = data["actions"][0]["value"]
         response_url = data["response_url"]
         if action == "outreach_signup_create":
