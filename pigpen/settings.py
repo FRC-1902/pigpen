@@ -109,6 +109,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+if is_prod:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'WARNING',
+                'class': 'logging.FileHandler',
+                'filename': '/var/log/pigpen.log',
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'WARNING',
+                'propagate': True,
+            },
+        },
+    }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
