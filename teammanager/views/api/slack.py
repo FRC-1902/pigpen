@@ -111,21 +111,6 @@ def outreach_blocks(posting="signup"):
                 },
                 "options": options
             }
-        },
-        {
-            "type": "actions",
-            "elements": [
-                {
-                    "type": "button",
-                    "style": "primary",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "Post {}".format(posting),
-                        "emoji": True
-                    },
-                    "value": "post_{}".format(posting)
-                }
-            ]
         }
     ]
 
