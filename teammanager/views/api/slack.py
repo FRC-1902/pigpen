@@ -121,7 +121,7 @@ def action(request):
             elif action_val.startswith("outreach_create"):
                 trigger_id = data["trigger_id"]
                 dialog = outreach_create_dialog(trigger_id)
-                res = requests.post("https://slack.com/api/dialog.open", json=dialog)
+                res = requests.post("https://slack.com/api/dialog.open", json=dialog, headers={"Authorization": os.getenv("SLACK_OAUTH")})
                 response = {
                     "text": "ID: {}\nresponse\n{}\nData sent:{}".format(trigger_id, str(res), str(dialog))
                 }
