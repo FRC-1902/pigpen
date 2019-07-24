@@ -8,9 +8,13 @@ def action(request):
     if request.method == 'POST':
         data = request.POST["payload"]
         print(data)
-        action_val = data["actions"][0]["value"]
         response_url = data["response_url"]
-        if action_val == "outreach_signup_create":
+        action_val = None
+        for act in data["actions"]:
+            if "value" in act:
+                action_val = act
+                break
+        if action_val and action_val == "outreach_signup_create":
             requests.post(response_url, json={
                 "payload": {
                     "text": "You clicked outreach signup create! Hurray!"
