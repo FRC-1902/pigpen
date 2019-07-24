@@ -11,13 +11,37 @@ def action(request):
 def outreach(request):
     return JsonResponse(
         {
-            "response-type": "in-channel",
+            "response-type": "ephemeral",
             "blocks": [
                 {
                     "type": "section",
                     "text": {
-                        "type": "mrkdwn",
-                        "text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
+                        "type": "plain_text",
+                        "text": "Welcome to the Outreach Manager! What would you like to post?",
+                        "emoji": True
                     }
+                },
+                {
+                    "type": "actions",
+                    "elements": [
+                        {
+                            "type": "button",
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Outreach Signup",
+                                "emoji": True
+                            },
+                            "value": "signup"
+                        },
+                        {
+                            "type": "button",
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Outreach Check-In",
+                                "emoji": True
+                            },
+                            "value": "checkin"
+                        }
+                    ]
                 }
             ]})
