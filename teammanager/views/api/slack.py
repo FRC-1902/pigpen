@@ -38,6 +38,7 @@ def action(request):
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
                 response = {
                     "response_type": "in_channel",
+                    "replace_original": False,
                     "blocks": outreach_checkin_blocks(Meeting.objects.get(id=meeting_id))
                 }
             elif action_val.startswith("outreach_signup_"): # Signing up for an outreach
