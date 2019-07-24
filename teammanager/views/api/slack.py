@@ -15,7 +15,7 @@ def action(request):
 
         if action_val == "outreach_signup_create":
             requests.post(response_url, json={
-                "blocks": outreach_blocks()
+                "text": outreach_blocks()
             })
         else:
             requests.post(response_url, json={
@@ -74,7 +74,7 @@ def outreach(request):
                 }
             ]})
 
-def outreach_blocks():
+def outreach_blocks(type="signup"):
     response = [
         {
             "type": "section",
@@ -100,10 +100,10 @@ def outreach_blocks():
                     "style": "primary",
                     "text": {
                         "type": "plain_text",
-                        "text": "Post Signup",
+                        "text": "Post {}".format(type),
                         "emoji": True
                     },
-                    "value": "signup"
+                    "value": "post_{}".format(type)
                 }
             ]
         }
