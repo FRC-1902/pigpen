@@ -10,12 +10,14 @@ def action(request):
 @csrf_exempt
 def outreach(request):
     return JsonResponse(
-        [
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
+        {
+            "response-type": "in-channel",
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
+                    }
                 }
-            }
-        ], safe=False, content_type="application/json")
+            ]})
