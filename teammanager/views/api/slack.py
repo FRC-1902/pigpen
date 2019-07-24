@@ -54,11 +54,12 @@ def action(request):
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
+                slack_id = data["user"]["id"]
                 try:
-                    member = Member.objects.get(slack_id=data["user"]["id"])
+                    member = Member.objects.get(slack_id=slack_id)
                 except:
                     requests.post(response_url, json={
-                        "text": "Could not find a Pigpen account associated with your Slack ID. Contact Ryan S. for help."
+                        "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact Ryan S. for help.".format(slack_id)
                     })
                     return HttpResponse(status=200)
                 try:
