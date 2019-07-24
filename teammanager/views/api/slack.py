@@ -61,9 +61,7 @@ def action(request):
                 meeting = Meeting.objects.get(id=meeting_id)
                 slack_id = data["user"]["id"]
                 try:
-                    potato = "yes"
-                    potato *= 4
-                    member = Member.objects.get(slack=slack_id)
+                    member = Member.objects.get(slack=slack_id, name="bob")
                 except:
                     requests.post(response_url, json={
                         "text": "Could not find a Pigpen account associated with your Slack ID {}. Contact <@D1KR0F78A> for help.".format(slack_id)
