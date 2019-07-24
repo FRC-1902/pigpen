@@ -119,10 +119,11 @@ def action(request):
                 except:
                     pass
             elif action_val.startswith("outreach_create"):
-                dialog = outreach_create_dialog(data["trigger_id"])
+                trigger_id = data["trigger_id"]
+                dialog = outreach_create_dialog(trigger_id)
                 res = requests.post("https://slack.com/api/dialog.open", json=dialog)
                 response = {
-                    "text": "response\n{}".format(str(res))
+                    "text": "ID: {}\nresponse\n{}".format(trigger_id, str(res))
                 }
             else:
                 response = {
