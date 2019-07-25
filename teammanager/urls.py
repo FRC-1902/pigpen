@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import index, auth, hours, directory, attendance, admin
-from .views.api import members, punch, slack
+from .views.api import members, punch, slack, slack_oauth
 
 app_name = "teammanager"
 urlpatterns = [
@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('login', auth.login, name="login"),
     path('logout', auth.logout, name="logout"),
+    path('auth/slack/login', slack_oauth.slack_login, name="slack_oauth_login"),
 
     path('admin/addphoto', admin.upload_photo, name="admin_add_photo"),
 

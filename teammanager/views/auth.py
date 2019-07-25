@@ -18,4 +18,5 @@ def login(request):
 
 def logout(request):
     dj_logout(request)
+    request.session.flush()
     return redirect('man:index')
