@@ -80,7 +80,7 @@
     <ul class="navbar-nav ml-auto">
       {% if not request.user.is_authenticated and not request.session.slack_oauth %}
         <li class="nav-item">
-          <a class="nav-link" href="#" data-target="#login_modal" data-toggle="modal">Log In</a>
+          <a class="nav-link" href="#" data-target="#login_modal" data-toggle="modal">Admin Log In</a>
         </li>
       {% else %}
         {% if user.is_staff %}
