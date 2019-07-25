@@ -17,6 +17,7 @@ urlpatterns = [
     path('meetings/', attendance.meetings, name="meetings"),
     path('meetings/<int:id>', attendance.meeting_breakdown, name="meeting"),
     path('member/<int:id>', attendance.member, name="member"),
+    path("members/noslack", attendance.no_slack_list, name="no_slack"),
 
     path('login', auth.login, name="login"),
     path('logout', auth.logout, name="logout"),

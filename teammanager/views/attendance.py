@@ -89,3 +89,10 @@ def member(request, id):
         "hr_out": time_to_string(hours.get("out", "0")),
         "family": family
     })
+
+
+def no_slack_list(request):
+    members = Member.objects.filter(slack__isnull=True)
+    return render(request, "teammanager/no_slack_list.html", {
+        "members": members
+    })

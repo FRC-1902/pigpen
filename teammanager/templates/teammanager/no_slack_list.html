@@ -1,0 +1,13 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <div class="container row">
+    {% for member in members %}
+      <div class="col-6 col-md-4 col-lg-2 text-center">
+      <p>
+      {{ member.first }} {{ member.last }}
+      </p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
