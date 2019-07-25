@@ -10,7 +10,7 @@ from teammanager.models import Punch, Member, Family, Meeting
 
 
 def close_old_punches():
-    yesterday = timezone.now().replace(hour=3, minute=0, second=1)
+    yesterday = timezone.now() - timedelta(hours=24)
     q = Punch.objects.filter(end__isnull=True, start__lt=yesterday)
 
     for p in q:
