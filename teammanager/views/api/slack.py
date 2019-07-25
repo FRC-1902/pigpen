@@ -1,6 +1,7 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.urls import reverse
 from teammanager.models import Member, Punch, Meeting
 from datetime import datetime
 import requests
@@ -37,6 +38,8 @@ def action(request):
             elif action_val.startswith("outreach_signup_create_"): # Posting an outreach signup
                 meeting_id = int(action_val.replace("outreach_signup_create_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
+                meeting.signup_active = True
+                meeting.save()
 
                 requests.post(response_url, json={
                     "text": "Alright! Posting..."
@@ -49,8 +52,7 @@ def action(request):
             elif action_val.startswith("outreach_checkin_create_"): # Posting an outreach checkin
                 meeting_id = int(action_val.replace("outreach_checkin_create_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
-                meeting.signup_active = True
-                meeting.save()
+
                 requests.post(response_url, json={
                     "text": "Alright! Posting..."
                 })
@@ -81,10 +83,13 @@ def action(request):
                     }
                 else:
                     meeting.members.add(member)
+                    requests.post(response_url, json={
+                        "blocks": outreach_signup_blocks(meeting)
+                    })
                     response = {
                         "response_type": "ephemeral",
                         "replace_original": False,
-                        "text": "Okay, you've signed up for *{}*".format(meeting)
+                        "text": "Okay, you've signed up for *{}*.".format(meeting)
                     }
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
@@ -268,12 +273,19 @@ def outreach_create_blocks(posting="signup"):
 
 
 def outreach_signup_blocks(meeting):
+    text = "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|Sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
+    member_count = len(meeting.members.all())
+    if member_count > 0:
+        if member_count == 1:
+            text = text + "\n{} is attending.".format(member_count)
+        else:
+            text = text + "\n{} are attending.".format(member_count)
     response = [
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button.".format(meeting)
+                "text": text
             }
         },
         {
