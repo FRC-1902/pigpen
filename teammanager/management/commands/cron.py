@@ -56,7 +56,8 @@ def update_hours():
         hours = timedelta()
 
         for punch in pq:
-            hours += punch.duration()
+            if punch.is_complete():
+                hours += punch.duration()
 
         member.hours = hours.total_seconds()
 
