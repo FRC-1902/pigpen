@@ -25,6 +25,8 @@ def location(request):
         "any_checkins": len(members_in) > 0
     })
 
+def getKey(item):
+    return item[0]
 
 def meeting_breakdown(request, id):
     try:
@@ -38,7 +40,7 @@ def meeting_breakdown(request, id):
             punches_sorted.append((punch.start, punch, "in"))
         if punch.end:
             punches_sorted.append((punch.end, punch, "out"))
-    punches_sorted = sorted(punches_sorted)
+    punches_sorted = sorted(punches_sorted, key=getKey)
 
     return render(request, "teammanager/meeting.html", {
         "members": meeting.members.all(),
