@@ -83,6 +83,9 @@ def action(request):
                     }
                 else:
                     meeting.members.add(member)
+                    requests.post(response_url, json={
+                        "blocks": outreach_signup_blocks(meeting)
+                    })
                     response = {
                         "response_type": "ephemeral",
                         "replace_original": False,
@@ -270,13 +273,16 @@ def outreach_create_blocks(posting="signup"):
 
 
 def outreach_signup_blocks(meeting):
+    text = "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|Sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
+    member_count = len(meeting.members.all())
+    if member_count > 0:
+        text = text + "\n{} are attending.".format(member_count)
     response = [
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the "
-                        "button. <http://pen.vegetarianbaconite.com{}|Sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
+                "text": text
             }
         },
         {
