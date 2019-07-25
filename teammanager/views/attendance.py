@@ -10,7 +10,7 @@ from ..utils import time_to_string
 def location(request):
     members = Member.objects.all().order_by("first", "last")
     out = []
-    members_in = [x.member for x in Punch.objects.filter(end__isnull=True)]
+    members_in = [x.member for x in Punch.objects.filter(end__isnull=True, meeting__type="build")]
 
     for member in members:
         out.append({
