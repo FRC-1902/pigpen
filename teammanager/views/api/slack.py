@@ -273,13 +273,13 @@ def outreach_create_blocks(posting="signup"):
 
 
 def outreach_signup_blocks(meeting):
-    text = "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|Sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
+    text = "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|See the sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
     member_count = len(meeting.members.all())
     if member_count > 0:
         if member_count == 1:
-            text = text + "\n{} is attending.".format(member_count)
+            text = text + "\n{} people is attending.".format(member_count)
         else:
-            text = text + "\n{} are attending.".format(member_count)
+            text = text + "\n{} people are attending.".format(member_count)
     response = [
         {
             "type": "section",
