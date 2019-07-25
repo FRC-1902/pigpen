@@ -34,7 +34,8 @@ def meeting_breakdown(request, id):
     punches = Punch.objects.filter(meeting=meeting)
     punches_sorted = []
     for punch in punches:
-        punches_sorted.append((punch.start, punch, "in"))
+        if punch.start:
+            punches_sorted.append((punch.start, punch, "in"))
         if punch.end:
             punches_sorted.append((punch.end, punch, "out"))
     punches_sorted = sorted(punches_sorted)
