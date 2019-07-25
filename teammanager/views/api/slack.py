@@ -83,6 +83,7 @@ def action(request):
                     }
                 else:
                     meeting.members.add(member)
+                    meeting.save()
                     requests.post(response_url, json={
                         "blocks": outreach_signup_blocks(meeting)
                     })
@@ -117,6 +118,8 @@ def action(request):
                 pun = Punch(member=member, meeting=meeting)
                 pun.start = timezone.now()
                 pun.save()
+                meeting.members.add(member)
+                meeting.save()
                 response = {
                     "response_type": "ephemeral",
                     "replace_original": False,
