@@ -9,7 +9,13 @@ def gen_token():
 
 def time_to_string(time):
     try:
-        total = str(time).split(":")
-        return "{}h {}m".format(total[0], int(total[1]))
+        if "day" in str(time):
+            days = str(time).split(" day")[0]
+            rest = str(time).split(", ")[1]
+            total = str(rest).split(":")
+            return "{}h {}m".format(int(total[0]) + (24 * int(days)), int(total[1]))
+        else:
+            total = str(time).split(":")
+            return "{}h {}m".format(total[0], int(total[1]))
     except IndexError:
         return "0m"
