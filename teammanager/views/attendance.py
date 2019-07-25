@@ -1,8 +1,6 @@
 from datetime import timedelta
-
 from django.db.models import Sum
 from django.shortcuts import render, redirect
-
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
 
@@ -25,8 +23,10 @@ def location(request):
         "any_checkins": len(members_in) > 0
     })
 
+
 def getKey(item):
     return item[0]
+
 
 def meeting_breakdown(request, id):
     try:
