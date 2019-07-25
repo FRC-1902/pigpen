@@ -11,12 +11,12 @@
         <h1 class="display-4">Welcome to Pigpen</h1>
         <p class="lead">Exploding Bacon's internal Team Management System.</p>
         <hr>
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated or request.session.slack_oauth %}
           Use the links on the header to navigate the site.
         {% else %}
-          <p>Please log in to access the site.
-   "403_client_error"         For non-team visitors, please visit us at
-            <a href="403_client_error""https://www.explodingbacon.com/">www.explodingbacon.com</a>. </p>
+          <p>Please log in to access the site. For non-team visitors, please visit us at
+            <a href="https://www.explodingbacon.com/">www.explodingbacon.com</a>.
+          </p>
         {% endif %}
       </div>
       <iframe class="w-100" style="height: 500px;" frameborder="0"
