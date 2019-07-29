@@ -429,7 +429,7 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
             "title": "Sign up for Outreach",
             "submit_label": "Confirm",
             "notify_on_cancel": True,
-            "state": "Limo",
+            "state": "{}".format(outreach.id),
             "elements": [
                 {
                     "label": "Additional information",
