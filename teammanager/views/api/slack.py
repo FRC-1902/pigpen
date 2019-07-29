@@ -350,6 +350,7 @@ def outreach_checkin_blocks(meeting):
     ]
     return response
 
+
 def outreach_checkout_blocks(meeting):
     response = [
         {
@@ -376,6 +377,7 @@ def outreach_checkout_blocks(meeting):
         }
     ]
     return response
+
 
 def outreach_create_dialog(trigger_id):
     data = {
@@ -433,8 +435,7 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
                     "label": "Additional information",
                     "name": "comment",
                     "type": "textarea",
-                    "hint": "This signup is set to take additional information. This could be what you're bringing, "
-                            "who is driving you there, etc..."
+                    "hint": "This signup is set to take additional information."
                 }
             ]
         }
