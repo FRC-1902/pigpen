@@ -90,7 +90,6 @@ def action(request):
                         response = {
                             "text": dialog
                         }
-                        return HttpResponse(status=200)
                     else:
                         meeting.members.add(member)
                         meeting.save()
