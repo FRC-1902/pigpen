@@ -66,7 +66,7 @@ def action(request):
                 submission = None
                 if "submission" in data:
                     submission = data["submission"]
-                    meeting_id = int(submission["state"])
+                    meeting_id = int(data["state"])
                 else:
                     meeting_id = int(action_val.replace("outreach_signup_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
