@@ -426,8 +426,8 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
         "trigger_id": trigger_id,
         "dialog": {
             "callback_id": "outreach_new",
-            "title": "Create an Outreach",
-            "submit_label": "Create",
+            "title": "Sign up for Outreach",
+            "submit_label": "Sign Up",
             "notify_on_cancel": True,
             "state": "Limo",
             "elements": [
@@ -435,27 +435,6 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
                     "type": "text",
                     "label": "Event Name",
                     "name": "name"
-                },
-                {
-                    "type": "text",
-                    "label": "Date (i.e. 4-20-2019)",
-                    "name": "date"
-                },
-                {
-                    "label": "Signup Type",
-                    "type": "select",
-                    "name": "signup_type",
-                    "value": "one",
-                    "options": [
-                        {
-                            "label": "One-Click Signup",
-                            "value": "one"
-                        },
-                        {
-                            "label": "Additional Info Needed",
-                            "value": "info"
-                        }
-                    ]
                 }
             ]
         }
