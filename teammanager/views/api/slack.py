@@ -82,16 +82,23 @@ def action(request):
                         "text": "You're already signed up for *{}*!".format(meeting)
                     }
                 else:
-                    meeting.members.add(member)
-                    meeting.save()
-                    requests.post(response_url, json={
-                        "blocks": outreach_signup_blocks(meeting)
-                    })
-                    response = {
-                        "response_type": "ephemeral",
-                        "replace_original": False,
-                        "text": "Okay, you've signed up for *{}*.".format(meeting)
-                    }
+                    if meeting.signup_notes_needed:
+                        trigger_id = data["trigger_id"]
+                        dialog = outreach_signup_notes_dialog(trigger_id, meeting)
+                        res = requests.post("https://slack.com/api/dialog.open", json=dialog,
+                                            headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
+                        return HttpResponse(status=200)
+                    else:
+                        meeting.members.add(member)
+                        meeting.save()
+                        requests.post(response_url, json={
+                            "blocks": outreach_signup_blocks(meeting)
+                        })
+                        response = {
+                            "response_type": "ephemeral",
+                            "replace_original": False,
+                            "text": "Okay, you've signed up for *{}*.".format(meeting)
+                        }
             elif action_val.startswith("outreach_checkin_"):  # Checking in to an outreach
                 meeting_id = int(action_val.replace("outreach_checkin_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
@@ -276,7 +283,7 @@ def outreach_create_blocks(posting="signup"):
 
 
 def outreach_signup_blocks(meeting):
-    text = "Sign-up for outreach event *{}* opened! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|See the sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
+    text = "Sign-up for outreach event *{}*! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|See the sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
     member_count = len(meeting.members.all())
     if member_count > 0:
         if member_count == 1:
@@ -384,6 +391,44 @@ def outreach_create_dialog(trigger_id):
                     "type": "text",
                     "label": "Date (i.e. 4-20-2019)",
                     "name": "date"
+                },
+                {
+                    "label": "Signup Type",
+                    "type": "select",
+                    "name": "signup_type",
+                    "options": [
+                        {
+                            "label": "One-Click Signup",
+                            "value": "one"
+                        },
+                        {
+                            "label": "Additional Info",
+                            "value": "info"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+    return data
+
+
+def outreach_signup_notes_dialog(trigger_id, outreach):
+    data = {
+        "trigger_id": trigger_id,
+        "dialog": {
+            "callback_id": "outreach_signup_notes",
+            "title": "Sign up for {}".format(outreach),
+            "submit_label": "Sign Up",
+            "notify_on_cancel": True,
+            "state": "{}".format(outreach.id),
+            "elements": [
+                {
+                    "label": "Additional information",
+                    "name": "comment",
+                    "type": "textarea",
+                    "hint": "This signup is set to take additional information. This could be what you're bringing "
+                            ". who is driving you there, etc..."
                 }
             ]
         }
