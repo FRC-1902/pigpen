@@ -67,6 +67,7 @@ def action(request):
                 if "submission" in data:
                     submission = data["submission"]
                     meeting_id = int(data["state"])
+                    info = submission["info"]
                 else:
                     meeting_id = int(action_val.replace("outreach_signup_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
@@ -87,7 +88,7 @@ def action(request):
                         "text": "You're already signed up for *{}*!".format(meeting)
                     }
                 else:
-                    if meeting.signup_notes_needed and not submission:
+                    if False and meeting.signup_notes_needed and not submission:
                         trigger_id = data["trigger_id"]
                         dialog = outreach_signup_notes_dialog(trigger_id, meeting)
                         res = requests.post("https://slack.com/api/dialog.open", json=dialog,
