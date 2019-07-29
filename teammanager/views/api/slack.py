@@ -88,7 +88,7 @@ def action(request):
                         res = requests.post("https://slack.com/api/dialog.open", json=dialog,
                                             headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                         response = {
-                            "text": dialog
+                            "text": str(dialog)
                         }
                     else:
                         meeting.members.add(member)
