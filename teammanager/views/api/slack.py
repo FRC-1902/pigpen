@@ -63,7 +63,7 @@ def action(request):
                 }
 
             elif action_val.startswith("outreach_signup_"): # Signing up for an outreach
-                sumission = None
+                submission = None
                 if "submission" in data:
                     submission = data["submission"]
                     meeting_id = int(submission["state"])
