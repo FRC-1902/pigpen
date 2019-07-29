@@ -162,15 +162,18 @@ def action(request):
                         }
                 except:
                     pass
-            elif action_val.startswith("outreach_create"):
+            elif action_val.startswith("outreach_create"): # Pulling up the outreach creation dialog
                 trigger_id = data["trigger_id"]
                 dialog = outreach_create_dialog(trigger_id)
                 res = requests.post("https://slack.com/api/dialog.open", json=dialog, headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                 response = {
                     "text": "Creating outreach..."
                 }
-            elif action_val == "outreach_new":
+            elif action_val == "outreach_new": # Creating an outreach
                 submission = data["submission"]
+                info = submission["signup_type"]
+                signup_notes_needed = submission["signup_type"] == "info"
+
                 try:
                     date = datetime.strptime(submission["date"], '%m-%d-%Y')
                 except Exception as e:
@@ -179,7 +182,7 @@ def action(request):
                     })
                     return HttpResponse(status=200)
 
-                meeting = Meeting(type="out", name=submission["name"], date=date)
+                meeting = Meeting(type="out", name=submission["name"], date=date, signup_notes_needed=signup_notes_needed)
                 meeting.save()
                 response = {
                     "text": "Outreach *{}* created!".format(meeting)
@@ -396,13 +399,14 @@ def outreach_create_dialog(trigger_id):
                     "label": "Signup Type",
                     "type": "select",
                     "name": "signup_type",
+                    "value": "one",
                     "options": [
                         {
                             "label": "One-Click Signup",
                             "value": "one"
                         },
                         {
-                            "label": "Additional Info",
+                            "label": "Additional Info Needed",
                             "value": "info"
                         }
                     ]
