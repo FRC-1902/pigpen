@@ -84,7 +84,7 @@ def action(request):
                 else:
                     if meeting.signup_notes_needed:
                         trigger_id = data["trigger_id"]
-                        dialog = outreach_signup_notes_dialog(trigger_id, meeting)
+                        dialog = outreach_create_dialog(trigger_id)
                         res = requests.post("https://slack.com/api/dialog.open", json=dialog,
                                             headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                         response = {
