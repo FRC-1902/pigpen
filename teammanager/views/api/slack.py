@@ -426,10 +426,10 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
         "trigger_id": trigger_id,
         "dialog": {
             "callback_id": "outreach_signup_notes",
-            "title": "Sign up for {}".format(str(outreach)),
+            "title": "Sign up",
             "submit_label": "Sign Up",
             "notify_on_cancel": True,
-            "state": "meeting_{}".format(outreach.id),
+            "state": "meeting",
             "elements": [
                 {
                     "label": "Additional information",
