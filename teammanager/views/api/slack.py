@@ -84,7 +84,7 @@ def action(request):
                 else:
                     if meeting.signup_notes_needed:
                         trigger_id = data["trigger_id"]
-                        dialog = outreach_create_dialog(trigger_id)
+                        dialog = outreach_signup_notes_dialog(trigger_id, outreach)
                         res = requests.post("https://slack.com/api/dialog.open", json=dialog,
                                             headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                         response = {
@@ -426,10 +426,10 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
         "trigger_id": trigger_id,
         "dialog": {
             "callback_id": "outreach_signup_notes",
-            "title": "Sign up for {}".format(outreach),
+            "title": "Sign up",
             "submit_label": "Sign Up",
             "notify_on_cancel": True,
-            "state": "{}".format(outreach.id),
+            "state": "meeting_{}".format(outreach.id),
             "elements": [
                 {
                     "label": "Additional information",
