@@ -435,7 +435,8 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
                     "label": "Additional information",
                     "name": "info",
                     "type": "textarea",
-                    "hint": "Additional information is required."
+                    "hint": "Additional information is required for signup. This might be what you're bringing, who's"
+                            "driving you, etc..."
                 }
             ]
         }
