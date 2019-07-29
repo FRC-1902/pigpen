@@ -63,7 +63,12 @@ def action(request):
                 }
 
             elif action_val.startswith("outreach_signup_"): # Signing up for an outreach
-                meeting_id = int(action_val.replace("outreach_signup_", ""))
+                sumission = None
+                if "submission" in data:
+                    submission = data["submission"]
+                    meeting_id = int(submission["state"])
+                else:
+                    meeting_id = int(action_val.replace("outreach_signup_", ""))
                 meeting = Meeting.objects.get(id=meeting_id)
                 slack_id = data["user"]["id"]
                 try:
@@ -82,7 +87,7 @@ def action(request):
                         "text": "You're already signed up for *{}*!".format(meeting)
                     }
                 else:
-                    if meeting.signup_notes_needed:
+                    if meeting.signup_notes_needed and not submission:
                         trigger_id = data["trigger_id"]
                         dialog = outreach_signup_notes_dialog(trigger_id, meeting)
                         res = requests.post("https://slack.com/api/dialog.open", json=dialog,
@@ -423,18 +428,18 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
     data = {
         "trigger_id": trigger_id,
         "dialog": {
-            "callback_id": "outreach_new",
+            "callback_id": "outreach_signup_notes",
             "title": "Sign up for Outreach",
             "submit_label": "Confirm",
             "notify_on_cancel": True,
             "state": "{}".format(outreach.id),
             "elements": [
                 {
-                    "label": "Additional information",
+                    "label": "Additional Information",
                     "name": "info",
                     "type": "textarea",
                     "hint": "Additional information is required for signup. This might be what you're bringing, who's"
-                            "driving you, etc..."
+                            " driving you, etc..."
                 }
             ]
         }
