@@ -427,7 +427,7 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
         "dialog": {
             "callback_id": "outreach_new",
             "title": "Sign up for Outreach",
-            "submit_label": "Sign Up",
+            "submit_label": "Confirm",
             "notify_on_cancel": True,
             "state": "Limo",
             "elements": [
