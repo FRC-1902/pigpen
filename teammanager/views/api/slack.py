@@ -88,7 +88,7 @@ def action(request):
                         res = requests.post("https://slack.com/api/dialog.open", json=dialog,
                                             headers={"Authorization": "Bearer {}".format(os.getenv("SLACK_OAUTH"))})
                         response = {
-                            "text": str(dialog)
+                            "text": "{}\nResponse: {}".format(str(dialog), str(res))
                         }
                     else:
                         meeting.members.add(member)
@@ -433,8 +433,8 @@ def outreach_signup_notes_dialog(trigger_id, outreach):
                     "label": "Additional information",
                     "name": "comment",
                     "type": "textarea",
-                    "hint": "This signup is set to take additional information. This could be what you're bringing "
-                            ". who is driving you there, etc..."
+                    "hint": "This signup is set to take additional information. This could be what you're bringing, "
+                            "who is driving you there, etc..."
                 }
             ]
         }
