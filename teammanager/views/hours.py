@@ -115,6 +115,6 @@ def attendance_groups(request):
 
 
     return render(request, "teammanager/clusters.html", {
-        "groups": [("90%+", wow), ("60%+", sub_90), ("30%+", sub_60), ("1%+", sub_30)],
+        "groups": [("90%+", wow), ("(60% - 89%)", sub_90), ("(30% - 59%)", sub_60), ("(1% - 29%)", sub_30)],
         "zero": zero_hours
     })
