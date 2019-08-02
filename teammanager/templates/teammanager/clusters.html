@@ -20,12 +20,17 @@
       object-fit: cover;
     }
   </style>
+  <script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+  </script>
   <div class="container">
     {% for group in groups %}
       <h2 class="mt-4 mb-4 text-center">{{ group.0 }}</h2>
       <div class="row justify-content-center mb-1">
         {% for entry in group.1 %}
-          <div class="float-left text-center named-head">
+          <div class="float-left text-center named-head" data-toggle="tooltip" data-placement="top" title="{{ entry.2 }}%">
                 <a href="{% url 'man:member' id=entry.0.id %}">
                   <small class="text-dark">
                     <img class="head rounded-circle mb-1"

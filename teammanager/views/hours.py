@@ -69,9 +69,12 @@ def outreach_hours_add(request):
     })
 
 
+def getKey(item):
+    return item[2]
+
 def attendance_groups(request):
     members = list(Member.objects.order_by("-role", "first"))
-
+    members_tuples = []
     students = []
     adults = []
     total_meetings = Meeting.objects.filter(type="build")
@@ -102,16 +105,22 @@ def attendance_groups(request):
             # attendance = 100
 
             obj = (member, time_to_string(hours.get("total", "0")), attendance)
-            if attendance == 0:
-                zero_hours.append(obj)
-            elif attendance < 30:
-                sub_30.append(obj)
-            elif attendance < 60:
-                sub_60.append(obj)
-            elif attendance < 90:
-                sub_90.append(obj)
-            else:
-                wow.append(obj)
+            members_tuples.append(obj)
+
+    members_tuples = reversed(sorted(members_tuples, key=getKey))
+
+    for member in members_tuples:
+        attendance = member[2]
+        if attendance == 0:
+            zero_hours.append(member)
+        elif attendance < 30:
+            sub_30.append(member)
+        elif attendance < 60:
+            sub_60.append(member)
+        elif attendance < 90:
+            sub_90.append(member)
+        else:
+            wow.append(member)
 
 
     return render(request, "teammanager/clusters.html", {
