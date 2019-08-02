@@ -9,6 +9,7 @@ urlpatterns = [
     path('hours', hours.hours, name="hours"),
     path('hours/table', hours.hours_table, name="hours_table"),
     path('hours/outreach/add', hours.outreach_hours_add, name="outreach_hours_add"),
+    path('hours/groups', hours.attendance_groups, name="hours_groups"),
 
     path('directory', directory.directory, name="directory"),
     path('directory/families', directory.families, name="families"),

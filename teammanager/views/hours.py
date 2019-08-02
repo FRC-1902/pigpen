@@ -67,3 +67,54 @@ def outreach_hours_add(request):
     return render(request, 'teammanager/outreach_hours_add.html', {
         "members": members
     })
+
+
+def attendance_groups(request):
+    members = list(Member.objects.order_by("-role", "first"))
+
+    students = []
+    adults = []
+    total_meetings = Meeting.objects.filter(type="build")
+    total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
+    total_hours = timedelta(hours=total_hours)
+
+    zero_hours = []
+    sub_30 = []
+    sub_60 = []
+    sub_90 = []
+    wow = []
+
+    for member in members:
+        if not member.role == "asib":
+            hours = member.get_hours()
+            hours_delta = timedelta()
+
+            meetings = []
+
+            punches = Punch.objects.filter(member=member)
+            for punch in punches:
+                if punch.is_complete():
+                    hours_delta += punch.duration()
+                if punch.meeting not in meetings:
+                    meetings.append(punch.meeting)
+            attendance = int(hours_delta / total_hours * 100)
+            # if attendance > 100:
+            # attendance = 100
+
+            obj = (member, time_to_string(hours.get("total", "0")), attendance)
+            if attendance == 0:
+                zero_hours.append(obj)
+            elif attendance < 30:
+                sub_30.append(obj)
+            elif attendance < 60:
+                sub_60.append(obj)
+            elif attendance < 90:
+                sub_90.append(obj)
+            else:
+                wow.append(obj)
+
+
+    return render(request, "teammanager/clusters.html", {
+        "groups": [("90%+", wow), ("60%+", sub_90), ("30%+", sub_60), ("1%+", sub_30)],
+        "zero": zero_hours
+    })

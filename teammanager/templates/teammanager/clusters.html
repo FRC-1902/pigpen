@@ -1,0 +1,57 @@
+{% extends 'teammanager/base.html' %}
+
+{% block title %}Clusters - Pigpen{% endblock %}
+
+{% block content %}
+  <style>
+    .gray {
+      -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(100%);
+    }
+
+    .named-head {
+      width: 70px;
+      padding-bottom: 16px;
+    }
+
+    .head {
+      width: 3em;
+      height: 3em;
+      object-fit: cover;
+    }
+  </style>
+  <div class="container-fluid">
+    {% for group in groups %}
+      <h2 class="mt-4 mb-4 text-center">{{ group.0 }}</h2>
+      <div class="row justify-content-center mb-1">
+        {% for entry in group.1 %}
+          <div class="float-left text-center named-head">
+                <a href="{% url 'man:member' id=entry.0.id %}">
+                  <small class="text-dark">
+                    <img class="head rounded-circle mb-1"
+                         src="{{ entry.0.get_avatar }}"><br>
+                    {{ entry.0.short_name }}
+                  </small>
+                </a>
+              </div>
+        {% endfor %}
+      </div>
+      <hr class="my-1">
+    {% endfor %}
+    <h2 class="mt-4 text-center">With Us in Spirit</h2>
+    <h5 class="mb-4 text-center text-muted">(just not in attendance)</h5>
+    <div class="row justify-content-center mb-1">
+      {% for entry in zero %}
+        <div class="float-left text-center named-head">
+          <a href="{% url 'man:member' id=entry.0.id %}">
+            <small class="text-dark">
+              <img class="head rounded-circle mb-1"
+                   src="{{ entry.0.get_avatar }}"><br>
+              {{ entry.0.short_name }}
+            </small>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
