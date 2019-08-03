@@ -32,6 +32,7 @@ def do_punch(request):
                     pun = Punch(member=member, meeting=meeting)
                     pun.start = timezone.now()
                     pun.save()
+                    meeting.members.add(member)
 
                 pun.refresh_from_db()  # Needed to fix naive datetime issue
 
