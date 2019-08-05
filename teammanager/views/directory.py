@@ -6,7 +6,7 @@ from ..models import Family, Position
 def directory(request):
     sections = []
 
-    for pos in ["stoff", "tmldr", "stsub", "adsub", "stbus", "adbus", "adbod"]:
+    for pos in ["stoff", "tmldr", "stsub", "adsub", "stbus", "adbus", "adbod", "old"]:
         pos_list = Position.objects.filter(category=pos).order_by("sort")
 
         if pos_list.exists():
