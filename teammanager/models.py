@@ -56,7 +56,7 @@ class Member(models.Model):
         hours = {}
         hours['total'] = timedelta()
         for punch in Punch.objects.filter(member=self):
-            if punch.is_complete():
+            if punch.is_complete() and (punch.meeting.type == "build" or punch.meetingtype == "out"):
                 hours['total'] += punch.duration()
 
                 if punch.meeting.type in hours:
