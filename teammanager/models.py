@@ -25,7 +25,8 @@ class Member(models.Model):
     roles = (
         ("stu", "Student"),
         ("mtr", "Adult"),
-        ("asib", "Sibling")
+        ("asib", "Sibling"),
+        ("ext", "Extended")
     )
 
     first = models.TextField()

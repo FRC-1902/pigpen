@@ -88,7 +88,7 @@ def attendance_groups(request):
     wow = []
 
     for member in members:
-        if not member.role == "asib":
+        if not member.role == "asib" and not member.role == "ext":
             hours = member.get_hours()
             hours_delta = timedelta()
 
