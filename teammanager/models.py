@@ -83,6 +83,7 @@ class Position(models.Model):
         ("adsub", "Adult Subsystem/Subteam Leads"),
         ("stbus", "Student Business Leads"),
         ("adbus", "Adult Business Leads"),
+        ("old", "OG Bacon")
     ]
 
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
