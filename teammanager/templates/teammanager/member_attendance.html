@@ -27,6 +27,7 @@
         </div>
         <hr>
         <div class="row">
+         {% if member.role == "stu" or member.role == "mtr" %}
           <div class="col-12">
             <h4>Hours: {{ hr_total }}</h4>
             <div class="pl-4">
@@ -37,7 +38,7 @@
               <hr>
             </div>
           </div>
-          <div class="col-12">
+            <div class="col-12">
             <h4>Attendance</h4>
             <div class="pl-4">
               <h6 class="text-muted">{{ meetings|length }}/{{ total_meetings }} Build Meetings (
@@ -48,7 +49,6 @@
                 {% endif %}
                 of hours )
               </h6>
-
               {% for meeting in meetings %}
                 <a href="{% url "teammanager:meeting" id=meeting.id %}">{{ meeting.date }}</a><br>
               {% endfor %}
@@ -56,6 +56,7 @@
             {% if member.slack or family|length > 1 %}
               <hr>
             {% endif %}
+          {% endif %}
           </div>
           {% if member.slack %}
             <div class="col-12">
