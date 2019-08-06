@@ -2,3 +2,4 @@ Django~=2.2.3
 Pillow==6.0.0
 requests~=2.21.0
 gunicorn~=19.9.0
+ics==0.5
