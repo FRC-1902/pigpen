@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, auth, hours, directory, attendance, admin
+from .views import index, auth, hours, directory, attendance, admin, outreach
 from .views.api import members, punch, slack, slack_oauth
 
 app_name = "teammanager"
@@ -13,6 +13,8 @@ urlpatterns = [
 
     path('directory', directory.directory, name="directory"),
     path('directory/families', directory.families, name="families"),
+
+    path('outreach/fromcal', outreach.create_outreach_from_calendar, name="outreach_from_calendar"),
 
     path('location', attendance.location, name="location"),
     path('meetings/', attendance.meetings, name="meetings"),
