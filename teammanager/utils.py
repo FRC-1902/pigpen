@@ -1,6 +1,9 @@
 import random
 import string
 
+import requests
+from ics import Calendar
+
 
 def gen_token():
     letters = string.ascii_letters + string.digits
@@ -19,3 +22,8 @@ def time_to_string(time):
             return "{}h {}m".format(total[0], int(total[1]))
     except IndexError:
         return "0m"
+
+
+def get_calendar():
+    url = "https://calendar.google.com/calendar/ical/explodingbacon.team1902%40gmail.com/public/basic.ics"
+    return Calendar(requests.get(url).text)

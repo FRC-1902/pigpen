@@ -1,19 +1,17 @@
 import pytz
-import requests
-
 from django.shortcuts import render
 from django.utils import timezone
 
-from ics import Calendar
+from teammanager import utils
 
 
 def create_outreach_from_calendar(request):
     if request.method == "GET":
-        url = "https://calendar.google.com/calendar/ical/explodingbacon.team1902%40gmail.com/public/basic.ics"
         date_fmt = "%a %b %-d, %Y"
         time_fmt = "%-I:%M %p"
-        c = Calendar(requests.get(url).text)
         tz = pytz.timezone("America/New_York")
+
+        c = utils.get_calendar()
 
         events = []
         for event in c.events:
