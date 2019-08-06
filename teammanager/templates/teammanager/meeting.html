@@ -36,6 +36,9 @@
             attended)
           {% endif %}
           </i></span>
+          {% if request.user.is_authenticated %}
+            <a class="btn btn-secondary text-white ml-3" href="{% url 'admin:teammanager_meeting_change' meeting.id %}">Edit</a>
+          {% endif %}
         </h3>
         {% if meeting.type == "othr" %}
           <h5 class="text-center text-muted">Non-Mandatory</h5>
