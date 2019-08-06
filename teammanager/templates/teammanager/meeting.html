@@ -44,6 +44,7 @@
           <h5 class="text-center text-muted">Non-Mandatory</h5>
         {% elif meeting.type == "fun" %}
           <h5 class="text-center text-muted">Fun/Other - Hours Don't Count</h5>
+          {% elif meeting.type == "out" %}
         {% endif %}
         <hr>
         <h5>Students</h5>

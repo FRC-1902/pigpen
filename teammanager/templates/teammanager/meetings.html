@@ -36,43 +36,39 @@
         <h5>Upcoming Outreaches</h5>
 
         <div class="list-group">
-          {% for meeting in meetings %}
-            {% if meeting.type == "out" %}
-              <div class="list-group-item">
+          {% for meeting in outreaches_upcoming %}
+            <div class="list-group-item">
               <span>
                 <b>{{ meeting.name }}</b> on {{ meeting.date }}
               </span>
-                <p>
-                  This is a description of an outreach. It's very descriptive. It describes the outreach well.
-                </p>
-                {% if meeting.members.all|length > 0 %}
+              <p>
+                This is a description of an outreach. It's very descriptive. It describes the outreach well.
+              </p>
+              {% if meeting.members.all|length > 0 %}
                 <a href="{% url "teammanager:meeting" id=meeting.id %}" class="btn btn-sm btn-primary">View Info</a>
-                {% endif %}
-                {% if meeting.signup_active %}
-                  <!--<button class="btn btn-sm btn-secondary">Pigpen™ Quick Signup</button>-->
-                  <button disabled class="btn btn-sm btn-secondary">Web Signup Coming Soon</button>
-                {% else %}
-                  <a href="https://www.explodingbacon.com/forums/" class="btn btn-sm btn-primary">Visit Forum</a>
-                {% endif %}
-              </div>
-            {% endif %}
+              {% endif %}
+              {% if meeting.signup_active %}
+                <!--<button class="btn btn-sm btn-secondary">Pigpen™ Quick Signup</button>-->
+                <button disabled class="btn btn-sm btn-secondary">Web Signup Coming Soon</button>
+              {% else %}
+                <a href="https://www.explodingbacon.com/forums/" class="btn btn-sm btn-primary">Visit Forum</a>
+              {% endif %}
+            </div>
           {% endfor %}
         </div>
         <br>
         <h5>Past Outreaches</h5>
-        {% if False %}
+        {% if outreaches_old|length > 0 %}
           <div class="list-group">
-            {% for meeting in meetings %}
-              {% if meeting.type == "out" %}
-                <a href="{% url "teammanager:meeting" id=meeting.id %}"
-                   class="list-group-item list-group-item-action">{{ meeting }}
-                  <span class="ml-1 badge badge-primary">{{ meeting.members.all|length }} att.</span>
-                </a>
-              {% endif %}
+            {% for meeting in outreaches_old %}
+              <a href="{% url "teammanager:meeting" id=meeting.id %}"
+                 class="list-group-item list-group-item-action">{{ meeting }}
+                <span class="ml-1 badge badge-primary">{{ meeting.members.all|length }} att.</span>
+              </a>
             {% endfor %}
           </div>
         {% else %}
-          <p>Coming soon!</p>
+          <p>None!</p>
         {% endif %}
       </div>
     </div>
