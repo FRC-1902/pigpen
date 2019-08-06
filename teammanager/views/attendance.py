@@ -1,9 +1,11 @@
 from datetime import timedelta
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
+from teammanager import utils
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
 
@@ -94,6 +96,30 @@ def member(request, id):
         "hr_out": time_to_string(hours.get("out", "0")),
         "family": family
     })
+
+
+@staff_member_required
+def meetings_verify(request):
+    if 'id' in request.GET:
+        try:
+            m = Meeting.objects.get(id=request.GET['id'])
+            m.verified = True
+            m.save()
+        except:
+            pass
+        return redirect("man:meetings_verify")
+    else:
+        meetings = []
+        now = timezone.now()
+        for meeting in Meeting.objects.filter(verified=False).filter(date__lt=now):
+            if not meeting.name:
+                meeting.name = ""
+            meeting.date_str = meeting.date.strftime(utils.date_fmt)
+            meetings.append(meeting)
+
+        return render(request, "teammanager/meeting_verification.html", {
+            "meetings": meetings
+        })
 
 
 def no_slack_list(request):

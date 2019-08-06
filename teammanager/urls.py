@@ -17,8 +17,11 @@ urlpatterns = [
     path('outreach/fromcal', outreach.create_outreach_from_calendar, name="outreach_from_calendar"),
 
     path('location', attendance.location, name="location"),
+
     path('meetings/', attendance.meetings, name="meetings"),
     path('meetings/<int:id>', attendance.meeting_breakdown, name="meeting"),
+    path('meetings/verify', attendance.meetings_verify, name="meetings_verify"),
+
     path('member/<int:id>', attendance.member, name="member"),
     path("members/noslack", attendance.no_slack_list, name="no_slack"),
 

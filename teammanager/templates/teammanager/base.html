@@ -73,6 +73,9 @@
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'man:location' %}">Who's In?</a>
             <a class="dropdown-item" href="{% url 'man:meetings' %}">Meeting Details</a>
+            {% if request.user.is_staff %}
+              <a class="dropdown-item" href="{% url 'man:meetings_verify' %}">Verify Meetings</a>
+            {% endif %}
           </div>
         </div>
         <div class="nav-item dropdown">

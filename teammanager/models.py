@@ -115,6 +115,7 @@ class Meeting(models.Model):
     signup_active = models.BooleanField(default=False),
     signup_notes_needed = models.BooleanField(default=False)
     members = models.ManyToManyField("Member")
+    verified = models.BooleanField(default=False, null=False, blank=False)
 
     def __str__(self):
         if self.name:

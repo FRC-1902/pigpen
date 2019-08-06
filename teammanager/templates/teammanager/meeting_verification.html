@@ -1,0 +1,40 @@
+{% extends 'teammanager/base.html' %}
+
+{% block style %}
+  <style>
+    .small-col { /* Make a column as small as possible */
+      width: 1px;
+      white-space: nowrap;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+    <table class="table table-hover table-striped">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Hours</th>
+        <th class="small-col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for meeting in meetings %}
+        <tr>
+          <td>{{ meeting.name }}</td>
+          <td>{{ meeting.date_str }}</td>
+          <td>{{ meeting.get_type_display }}</td>
+          <td>{{ meeting.length }}</td>
+          <td class="small-col">
+            <a class="btn btn-primary" href="{% url 'man:meetings_verify' %}?id={{ meeting.id }}">Confirm</a>
+            <a class="btn btn-secondary" href="{% url 'admin:teammanager_meeting_change' meeting.id %}" target="_blank">Edit</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -4,6 +4,8 @@ import string
 import requests
 from ics import Calendar
 
+date_fmt = "%a %b %-d, %Y"
+time_fmt = "%-I:%M %p"
 
 def gen_token():
     letters = string.ascii_letters + string.digits
