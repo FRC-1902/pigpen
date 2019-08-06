@@ -59,23 +59,33 @@
   <div class="collapse navbar-collapse" id="navItems">
     <ul class="navbar-nav">
       {% if request.user.is_authenticated or request.session.slack_oauth %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'man:hours' %}">Hours</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'man:location' %}">Who's In?</a>
-        </li>
-        <li>
-          <a class="nav-link" href="{% url 'man:directory' %}">Directory</a>
-        </li>
-        <li>
-          <a class="nav-link" href="{% url 'man:families' %}">Families</a>
-        </li>
-      {% endif %}
-      {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'man:admin_add_photo' %}">Add Photos</a>
-        </li>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+             aria-expanded="false">Hours</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'man:hours' %}">All Hours</a>
+            <a class="dropdown-item" href="{% url 'man:hours_groups' %}">Categories</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+             aria-expanded="false">Meetings</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'man:location' %}">Who's In?</a>
+            <a class="dropdown-item" href="{% url 'man:meetings' %}">Meeting Details</a>
+          </div>
+        </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+             aria-expanded="false">Directory</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'man:directory' %}">Leaders</a>
+            <a class="dropdown-item" href="{% url 'man:families' %}">Families</a>
+            {% if request.user.is_authenticated %}
+              <a class="dropdown-item" href="{% url 'man:admin_add_photo' %}">Add Photos</a>
+            {% endif %}
+          </div>
+        </div>
       {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto">
