@@ -1,4 +1,5 @@
 from datetime import timedelta
+
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -35,6 +36,7 @@ class Member(models.Model):
     avatar = models.ImageField(null=True, blank=True)
     family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
     hours = models.IntegerField(default=0, blank=False)
+    outreach_hours = models.IntegerField(default=0, blank=False)
     attendance = models.IntegerField(default=0, blank=False)
     slack = models.CharField(max_length=20, null=True, blank=True)
     slack_username = models.CharField(max_length=50, null=True, blank=True)
@@ -54,14 +56,16 @@ class Member(models.Model):
     def get_hours(self):
         hours = {}
         hours['total'] = timedelta()
+        hours['build'] = timedelta()
+        hours['out'] = timedelta()
         for punch in Punch.objects.filter(member=self):
-            if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "out"):
+            if punch.is_complete() and bool(punch.meeting.type in ['build', 'out', 'othr']):
                 hours['total'] += punch.duration()
 
-                if punch.meeting.type in hours:
-                    hours[punch.meeting.type] += punch.duration()
-                else:
-                    hours[punch.meeting.type] = punch.duration()
+                if punch.meeting.type in ['build', 'othr']:
+                    hours['build'] += punch.duration()
+                elif punch.meeting.type in ['out']:
+                    hours['out'] += punch.duration()
 
         return hours
 
@@ -97,11 +101,11 @@ class Position(models.Model):
 
 class Meeting(models.Model):
     types = (
-        ("build", "Build Meeting"),
-        ("out", "Outreach"),
-        ("comp", "Competition"),
-        ("fun", "Fun Event"),
-        ("othr", "Other Mandatory")
+        ("build", "Build Meeting"),  # Official open time, counts toward hours and total open time
+        ("out", "Outreach"),  # Official outreach, that counts toward outreach hours
+        ("comp", "Competition"),  # Competition, does not count toward hours or total open time
+        ("fun", "Fun Event"),  # Does not count towards hours or total open time
+        ("othr", "Other Non-Mandatory")  # Counts hours, but does not count towards total open time
     )
 
     date = models.DateField()

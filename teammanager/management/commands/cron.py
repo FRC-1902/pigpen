@@ -45,7 +45,7 @@ def create_families():
 
 
 def add_members_to_build_meetings():
-    for meeting in Meeting.objects.filter(type="build"):
+    for meeting in Meeting.objects.exclude(type="out"):
         for punch in Punch.objects.filter(meeting=meeting):
             meeting.members.add(punch.member)
 
@@ -54,12 +54,17 @@ def update_hours():
     for member in Member.objects.all():
         pq = Punch.objects.filter(member=member)
         hours = timedelta()
+        outreach_hours = timedelta()
 
         for punch in pq:
-            if punch.is_complete():
+            if punch.is_complete() and bool(punch.meeting.type in ['build', 'othr']):
                 hours += punch.duration()
 
+            if punch.is_complete() and bool(punch.meeting.type in ['out']):
+                outreach_hours += punch.duration()
+
         member.hours = hours.total_seconds()
+        member.outreach_hours = outreach_hours.total_seconds()
 
         member.save()
 
