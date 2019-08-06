@@ -25,7 +25,7 @@ def families(request):
     singles = []
 
     for fam in list(fams):
-        if fam.member_set.count() <= 1:
+        if fam.member_set.count() <= 1 and fam.member_set.all()[0].role != "old":
             singles = singles + list(fam.member_set.all())
             fams.remove(fam)
 
