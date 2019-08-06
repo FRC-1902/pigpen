@@ -1,5 +1,4 @@
 from datetime import timedelta
-
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -72,7 +71,7 @@ class Member(models.Model):
         elif self.slack_avatar:
             return self.slack_avatar
         else:
-            return "http://pen.vegetarianbaconite.com/static/teammanager/no_profile.png"
+            return "http://pen.explodingbacon.com/static/teammanager/no_profile.png"
 
 
 class Position(models.Model):

@@ -1,12 +1,13 @@
-from django.http.response import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils import timezone
-from django.urls import reverse
-from teammanager.models import Member, Punch, Meeting
-from datetime import datetime
-import requests
 import json
 import os
+import requests
+from datetime import datetime
+from django.http.response import HttpResponse, JsonResponse
+from django.urls import reverse
+from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+
+from teammanager.models import Member, Punch, Meeting
 
 
 @csrf_exempt
@@ -292,7 +293,8 @@ def outreach_create_blocks(posting="signup"):
 
 
 def outreach_signup_blocks(meeting):
-    text = "Sign-up for outreach event *{}*! Be sure you can attend before you click on the button. <http://pen.vegetarianbaconite.com{}|See the sign up list here!>".format(meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
+    text = "Sign-up for outreach event *{}*! Be sure you can attend before you click on the button. <http://pen.explodingbacon.com{}|See the sign up list here!>".format(
+        meeting, reverse("man:meeting", kwargs={"id": meeting.id}))
     member_count = len(meeting.members.all())
     if member_count > 0:
         if member_count == 1:

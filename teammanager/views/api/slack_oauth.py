@@ -20,6 +20,6 @@ def slack_login(request):
 
 def do_oauth(code):
     url = "https://slack.com/api/oauth.access?client_id=5024182498.703454056853&client_secret=%s&code=%s&redirect_uri=%s" % \
-          (os.getenv("SLACK_SECRET", "none"), code, "https%3A%2F%2Fpen.vegetarianbaconite.com%2Fauth%2Fslack%2Flogin")
+          (os.getenv("SLACK_SECRET", "none"), code, "https%3A%2F%2Fpen.explodingbacon.com%2Fauth%2Fslack%2Flogin")
 
     return requests.get(url).json()
