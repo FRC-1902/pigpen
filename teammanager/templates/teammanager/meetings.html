@@ -41,9 +41,13 @@
               <span>
                 <b>{{ meeting.name }}</b> on {{ meeting.date }}
               </span>
-              <p>
-                This is a description of an outreach. It's very descriptive. It describes the outreach well.
-              </p>
+              {% if meeting.description %}
+                <p>
+                  {{ meeting.description }}
+                </p>
+              {% else %}
+                <p>No description provided.</p>
+              {% endif %}
               {% if meeting.members.all|length > 0 %}
                 <a href="{% url "teammanager:meeting" id=meeting.id %}" class="btn btn-sm btn-primary">View Info</a>
               {% endif %}

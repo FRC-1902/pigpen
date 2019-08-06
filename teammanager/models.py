@@ -111,6 +111,7 @@ class Meeting(models.Model):
     date = models.DateField()
     type = models.CharField(max_length=10, default="build", choices=types)
     name = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     length = models.IntegerField(null=False, default=4)
     signup_active = models.BooleanField(default=False)
     signup_notes_needed = models.BooleanField(default=False)
