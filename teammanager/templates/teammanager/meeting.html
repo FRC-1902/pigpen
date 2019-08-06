@@ -37,6 +37,11 @@
           {% endif %}
           </i></span>
         </h3>
+        {% if meeting.type == "othr" %}
+          <h5 class="text-center text-muted">Non-Mandatory</h5>
+        {% elif meeting.type == "fun" %}
+          <h5 class="text-center text-muted">Fun/Other - Hours Don't Count</h5>
+        {% endif %}
         <hr>
         <h5>Students</h5>
         <div class="row">
@@ -73,7 +78,7 @@
           {% endfor %}
         </div>
         <div class="d-block d-sm-block d-md-none">
-            <hr>
+          <hr>
         </div>
       </div>
       <div class="col-sm-12 offset-md-1 col-md-4">
@@ -84,13 +89,13 @@
         <div class="list-group">
           {% for punch in punches %}
             <li class="list-group-item">
-              <span >
+              <span>
                 <small>
                 <img class="head rounded-circle mb-1"
                      src="{{ punch.1.member.get_avatar }}">
                   </small>
               </span>
-              <span>{{ punch.0|date:"g:i a"  }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span></li>
+              <span>{{ punch.0|date:"g:i a" }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span></li>
             <!--<a href="#" class="list-group-item list-group-item-action">
             <span>
             {{ punch.0|date:"g:i a"  }}:
