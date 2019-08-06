@@ -3,13 +3,78 @@
 {% block title %}Meetings - Pigpen{% endblock %}
 
 {% block content %}
-    <br>
-    <div class="d-flex flex-row justify-content-center">
-      <div class="p-0 list-group">
-        {% for meeting in meetings %}
-          <a href="{% url "teammanager:meeting" id=meeting.id %}"
-             class="list-group-item list-group-item-action">{{ meeting }}</a>
-        {% endfor %}
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-4">
+        <h5>OPEN Build Meetings</h5>
+        <div class="list-group">
+          {% for meeting in meetings %}
+            {% if meeting.type == "build" %}
+              <a href="{% url "teammanager:meeting" id=meeting.id %}"
+                 class="list-group-item list-group-item-action">{{ meeting }}
+                <span class="ml-1 badge badge-primary float-right">{{ meeting.members.all|length }} att.</span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <br>
+        <h5>Extra/Non-Mandatory Meetings</h5>
+        <div class="list-group">
+          {% for meeting in meetings %}
+            {% if meeting.type == "othr" %}
+              <a href="{% url "teammanager:meeting" id=meeting.id %}"
+                 class="list-group-item list-group-item-action">{{ meeting }}
+                <span class="ml-1 badge badge-primary float-right">{{ meeting.members.all|length }} att.</span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-12 col-md-12 col-lg-6 offset-md-0 offset-lg-2">
+        <h5>Upcoming Outreaches</h5>
+
+        <div class="list-group">
+          {% for meeting in meetings %}
+            {% if meeting.type == "out" %}
+              <div class="list-group-item">
+              <span>
+                <b>{{ meeting.name }}</b> on {{ meeting.date }}
+              </span>
+                <p>
+                  This is a description of an outreach. It's very descriptive. It describes the outreach well.
+                </p>
+                {% if meeting.members.all|length > 0 %}
+                <a href="{% url "teammanager:meeting" id=meeting.id %}" class="btn btn-sm btn-primary">View Info</a>
+                {% endif %}
+                {% if meeting.signup_active %}
+                  <!--<button class="btn btn-sm btn-secondary">Pigpen™ Quick Signup</button>-->
+                  <button disabled class="btn btn-sm btn-secondary">Web Signup Coming Soon</button>
+                {% else %}
+                  <a href="https://www.explodingbacon.com/forums/" class="btn btn-sm btn-primary">Visit Forum</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <br>
+        <h5>Past Outreaches</h5>
+        {% if False %}
+          <div class="list-group">
+            {% for meeting in meetings %}
+              {% if meeting.type == "out" %}
+                <a href="{% url "teammanager:meeting" id=meeting.id %}"
+                   class="list-group-item list-group-item-action">{{ meeting }}
+                  <span class="ml-1 badge badge-primary">{{ meeting.members.all|length }} att.</span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>Coming soon!</p>
+        {% endif %}
       </div>
     </div>
+  </div>
 {% endblock %}
