@@ -62,8 +62,11 @@
           <div class="list-group">
             {% for meeting in outreaches_old %}
               <a href="{% url "teammanager:meeting" id=meeting.id %}"
-                 class="list-group-item list-group-item-action">{{ meeting }}
-                <span class="ml-1 badge badge-primary">{{ meeting.members.all|length }} att.</span>
+                 class="list-group-item list-group-item-action">
+                <span>
+                  <b>{{ meeting.name }}</b> on {{ meeting.date }}
+                </span>
+                <span class="ml-1 badge badge-primary float-right">{{ meeting.members.all|length }} att.</span>
               </a>
             {% endfor %}
           </div>
