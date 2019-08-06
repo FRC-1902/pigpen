@@ -189,7 +189,7 @@ def action(request):
                     })
                     return HttpResponse(status=200)
 
-                meeting = Meeting(type="out", name=submission["name"], date=date, signup_active=False, signup_notes_needed=signup_notes_needed)
+                meeting = Meeting(type="out", name=submission["name"], date=date, signup_notes_needed=signup_notes_needed)
                 meeting.save()
                 response = {
                     "text": "Outreach *{}* created!".format(meeting)
