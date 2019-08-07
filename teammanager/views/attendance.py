@@ -4,6 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.http import JsonResponse
 
 from teammanager import utils
 from ..models import Member, Punch, Meeting
@@ -61,16 +62,47 @@ def meeting_breakdown(request, id):
 
 
 def meetings(request):
-    now = timezone.now()
-    #meetings = Meeting.objects.filter(date__lte=now).order_by("date").reverse()
-    meetings = Meeting.objects.all().order_by("date").reverse()
-    outreaches_upcoming = Meeting.objects.filter(type="out", date__gte=now).order_by("date")
-    outreaches_old = Meeting.objects.filter(type="out", date__lt=now).order_by("date").reverse()
-    return render(request, "teammanager/meetings.html", {
-        "meetings": meetings,
-        "outreaches_upcoming": outreaches_upcoming,
-        "outreaches_old": outreaches_old
-    })
+    if request.method == "POST":
+        try:
+            member = Member.objects.get(request.session["member"])
+        except:
+            return JsonResponse({
+                "success": False,
+                "error": "Invalid member session."
+            })
+        data = request.POST
+        if "signup" in data:
+            id = data["signup"]
+            try:
+                meeting = Meeting.objects.get(id=id, type="out")
+            except:
+                return JsonResponse({
+                    "success": False,
+                    "error": "Invalid meeting id or wrong meeting type."
+                })
+            meeting.members.add(member)
+            return JsonResponse({
+                "success": True
+            })
+    else:
+        member = None
+        if "member" in request.session:
+            try:
+                member = Member.objects.get(request.session["member"])
+            except:
+                pass
+        now = timezone.now()
+        #meetings = Meeting.objects.filter(date__lte=now).order_by("date").reverse()
+        member = None
+        meetings = Meeting.objects.all().order_by("date").reverse()
+        outreaches_upcoming = Meeting.objects.filter(type="out", date__gte=now).order_by("date")
+        outreaches_old = Meeting.objects.filter(type="out", date__lt=now).order_by("date").reverse()
+        return render(request, "teammanager/meetings.html", {
+            "meetings": meetings,
+            "outreaches_upcoming": outreaches_upcoming,
+            "outreaches_old": outreaches_old,
+            "member": member
+        })
 
 
 def member(request, id):
