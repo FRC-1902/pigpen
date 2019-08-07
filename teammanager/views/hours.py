@@ -43,7 +43,7 @@ def hours_table(request):
                     time_to_string(hours.get("out", 0)),
                     attendance,
                 ]))
-            else:
+            elif member.role == 'mtr':
                 adults.append(tuple([
                     member,
                     time_to_string(hours.get("total", "0")),
