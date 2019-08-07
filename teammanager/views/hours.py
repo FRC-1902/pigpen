@@ -28,7 +28,7 @@ def hours_table(request):
 
         punches = Punch.objects.filter(member=member)
         for punch in punches:
-            if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "out"):
+            if punch.is_complete() and punch.meeting.type == "build":
                 hours_delta += punch.duration()
 
         attendance = int(hours_delta/total_hours * 100)
@@ -93,7 +93,7 @@ def attendance_groups(request):
 
             punches = Punch.objects.filter(member=member)
             for punch in punches:
-                if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "out"):
+                if punch.is_complete() and punch.meeting.type == "build":
                     hours_delta += punch.duration()
                 if punch.meeting not in meetings and punch.meeting.type == "build":
                     meetings.append(punch.meeting)

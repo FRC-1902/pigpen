@@ -60,12 +60,12 @@ class Member(models.Model):
         hours['out'] = timedelta()
         for punch in Punch.objects.filter(member=self):
             if punch.is_complete() and bool(punch.meeting.type in ['build', 'out', 'othr']):
-                hours['total'] += punch.duration()
-
                 if punch.meeting.type in ['build', 'othr']:
                     hours['build'] += punch.duration()
+                    hours['total'] += punch.duration()
                 elif punch.meeting.type in ['out']:
                     hours['out'] += punch.duration()
+                    hours['total'] += punch.duration()
 
         return hours
 
