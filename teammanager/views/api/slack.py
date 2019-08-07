@@ -261,7 +261,7 @@ def outreach(request):
 def outreach_create_blocks(posting="signup"):
     now = timezone.now()
     options = []
-    for meeting in Meeting.objects.filter(type="out", date__lt=now).order_by("date").reverse():
+    for meeting in Meeting.objects.filter(type="out", date__gte=now).order_by("date"):
         options.append({
             "text": {
                 "type": "plain_text",
