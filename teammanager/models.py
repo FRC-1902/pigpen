@@ -130,6 +130,18 @@ class Meeting(models.Model):
         else:
             return self.get_type_display()
 
+    def hours_sum(self, member):
+        sum = None
+        punches = Punch.objects.filter(member=member, meeting=self)
+
+        for punch in punches:
+            if punch.is_complete():
+                if not sum:
+                    sum = timedelta()
+                sum = sum + punch.duration()
+
+        return sum
+
 class Punch(models.Model):
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)

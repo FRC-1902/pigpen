@@ -126,9 +126,10 @@ def member(request, id):
             hours += punch.duration()
         if punch.meeting not in meetings and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             meetings.append(punch.meeting)
-        if punch.meeting.type == "out":
-            if punch.is_complete():
-                outreaches.append((punch.meeting, time_to_string(punch.duration())))
+        if punch.meeting.type == "out" and punch.meeting not in outreaches:
+            sum = punch.meeting.hours_sum(member)
+            if sum:
+                outreaches.append((punch.meeting, time_to_string(sum)))
             else:
                 outreaches.append((punch.meeting, None))
 
