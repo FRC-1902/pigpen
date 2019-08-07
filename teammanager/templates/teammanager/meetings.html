@@ -36,7 +36,7 @@
 
       <div class="col-12 col-md-12 offset-md-0 col-lg-6 offset-lg-1">
         <h5>Upcoming Outreaches</h5>
-        ID: {{ request.session.slack_id }}
+        ID: {{ request.session.slack_id }} = {{ member.short_name }}
         <div class="list-group">
           {% for meeting in outreaches_upcoming %}
             <div class="list-group-item">
@@ -61,7 +61,7 @@
                     <button disabled class="btn btn-sm btn-secondary">Advanced Web Signup Coming Soon</button>
                   {% else %}
                     <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#outreach-{{ meeting.id }}">Pigpen™ Quick Signup</button>
-                  {% endif %}
+                  {% endif %}resp['access_token']
                 {% endif %}
               {% else %}
                 <a href="https://www.explodingbacon.com/forums/" class="btn btn-sm btn-primary">Visit Forum</a>

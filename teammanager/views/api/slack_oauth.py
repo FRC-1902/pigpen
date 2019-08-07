@@ -2,6 +2,7 @@ import os
 
 import requests
 from django.shortcuts import redirect
+from teammanager.models import Member
 
 
 def slack_login(request):
@@ -18,7 +19,14 @@ def slack_login(request):
                 identity = get_identity(token)
                 if identity and "user" in identity:
                     if "id" in identity["user"]:
-                        request.session["slack_id"] = identity["user"]["id"]
+                        slack_id = identity["user"]["id"]
+                        request.session["slack_id"] = slack_id
+                        try:
+                            member = Member.objects.get(slack=slack_id)
+                            request.session["member"] = member
+                        except:
+                            pass
+
 
     return redirect("man:index")
 
