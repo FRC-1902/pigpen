@@ -91,7 +91,7 @@ def outreach_hours_add(request):
     else:
         return render(request, 'teammanager/outreach_hours_add.html', {
             "members": members,
-            "outreaches": Meeting.objects.filter(type="out")
+            "outreaches": Meeting.objects.filter(type="out").order_by("date").reverse()
         })
 
 

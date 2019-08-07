@@ -12,8 +12,13 @@ def slack_login(request):
             print(resp)
 
             if resp.get("ok", False) and resp.get("team", {}).get("id", "") == "T050Q5CEN":
-                request.session['slack_oauth'] = resp['access_token']
+                token = resp['access_token']
+                request.session['slack_oauth'] = token
                 print("Saving Session")
+                identity = get_identity(token)
+                if identity and "user" in identity:
+                    if "id" in identity["user"]:
+                        request.session["slack_id"] = identity["user"]["id"]
 
     return redirect("man:index")
 
@@ -23,3 +28,7 @@ def do_oauth(code):
           (os.getenv("SLACK_SECRET", "none"), code, "https%3A%2F%2Fpen.explodingbacon.com%2Fauth%2Fslack%2Flogin")
 
     return requests.get(url).json()
+
+
+def get_identity(token):
+    return requests.get("https://slack.com/api/users.identity?token={}".format(token)).jsn()
