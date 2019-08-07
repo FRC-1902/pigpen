@@ -58,7 +58,7 @@
               {% for meeting in meetings %}
                 <a href="{% url "teammanager:meeting" id=meeting.id %}">
                   <span>
-                    <b>{{ meeting.get_name }}</b> on {{ meeting.date }}
+                    {{ meeting.date }} - <b>{{ meeting.get_name }}</b>
                     {% if meeting.type == "othr" %}
                       <small class="text-muted"><i>(optional)</i></small>
                     {% endif %}
