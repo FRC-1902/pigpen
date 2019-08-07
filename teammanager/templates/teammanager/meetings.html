@@ -11,8 +11,12 @@
        {
            signup: id
        },
-       function(data, status, jqXHR) {
-            location.reload();
+       function(data) {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert(data.error);
+            }
         })
     }
   </script>
@@ -55,6 +59,9 @@
               <span>
                 <b>{{ meeting.get_name }}</b> on {{ meeting.date }}
               </span>
+              {% if member in meeting.members.all %}
+                <span class="float-right badge badge-secondary">Attending!</span>
+              {% endif %}
               {% if meeting.description %}
                 <p>
                   {{ meeting.description }}
@@ -68,10 +75,11 @@
               {% if meeting.signup_active %}
                 {% if member %}
                   {% if member in meeting.members.all %}
-                    <button class="btn btn-sm btn-secondary">Unsign Up :(</button>
+                    <!--<button class="btn btn-sm btn-secondary">Unsign Up :(</button>-->
+                    <button disabled class="btn btn-sm btn-secondary">Un-Signup Coming Soon</button>
                   {% else %}
                     {% if meeting.signup_notes_needed %}
-                      <button disabled class="btn btn-sm btn-secondary">Advanced Web Signup Coming Soon</button>
+                      <button disabled class="btn btn-sm btn-secondary">Advanced Signup Coming Soon</button>
                     {% else %}
                       <button class="btn btn-sm btn-secondary" data-toggle="modal"
                               data-target="#outreach-{{ meeting.id }}">Pigpen™ Quick Signup
@@ -133,7 +141,7 @@
               <b>Are you sure</b> you want to sign up for this outreach?
             </div>
             <div class="modal-footer text-center">
-              <button type="button" class="btn btn-secondary">Sign Up</button>
+              <button onclick="signup({{ meeting.id }})" type="button" class="btn btn-secondary">Sign Up</button>
               <button type="button" class="btn btn-light" data-dismiss="modal">Nevermind</button>
             </div>
           </div>

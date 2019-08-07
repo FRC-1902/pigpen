@@ -5,6 +5,7 @@ from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from teammanager import utils
 from ..models import Member, Punch, Meeting
@@ -61,10 +62,11 @@ def meeting_breakdown(request, id):
     })
 
 
+@csrf_exempt
 def meetings(request):
     if request.method == "POST":
         try:
-            member = Member.objects.get(request.session["member"])
+            member = Member.objects.get(id=request.session["member"])
         except:
             return JsonResponse({
                 "success": False,
@@ -90,10 +92,9 @@ def meetings(request):
             try:
                 member = Member.objects.get(id=request.session["member"])
             except:
-                pass
+                print("Failed to get member")
         now = timezone.now()
         #meetings = Meeting.objects.filter(date__lte=now).order_by("date").reverse()
-        member = None
         meetings = Meeting.objects.all().order_by("date").reverse()
         outreaches_upcoming = Meeting.objects.filter(type="out", date__gte=now).order_by("date")
         outreaches_old = Meeting.objects.filter(type="out", date__lt=now).order_by("date").reverse()
