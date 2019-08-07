@@ -83,7 +83,7 @@ def member(request, id):
     for punch in punches:
         if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             hours += punch.duration()
-        if punch.meeting not in meetings and punch.meeting.type == "build":
+        if punch.meeting not in meetings and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             meetings.append(punch.meeting)
 
     meetings.reverse()

@@ -27,7 +27,8 @@
     <div class="row mx-xl-5">
       <div class="col-sm-12 col-md-7">
         <h3 class="text-center">
-          {{ meeting }} <span class="text-muted"><i>({{ members|length }}
+          <span>{{ meeting.get_name }} on {{ meeting.date }}</span>
+          <span class="text-muted"><i>({{ members|length }}
           {% if meeting.type == "build" %}
             attended)
           {% elif meeting.type == "out" %}
@@ -40,7 +41,9 @@
             <a class="btn btn-secondary text-white ml-3" href="{% url 'admin:teammanager_meeting_change' meeting.id %}">Edit</a>
           {% endif %}
         </h3>
-        {% if meeting.type == "othr" %}
+        {% if meeting.type == "out" %}
+          <h5 class="text-center text-muted">Outreach</h5>
+        {% elif meeting.type == "othr" %}
           <h5 class="text-center text-muted">Non-Mandatory</h5>
         {% elif meeting.type == "fun" %}
           <h5 class="text-center text-muted">Fun/Other - Hours Don't Count</h5>

@@ -12,7 +12,8 @@
           {% for meeting in meetings %}
             {% if meeting.type == "build" %}
               <a href="{% url "teammanager:meeting" id=meeting.id %}"
-                 class="list-group-item list-group-item-action">{{ meeting }}
+                 class="list-group-item list-group-item-action">
+                <span><b>{{ meeting.get_name }}</b> on {{ meeting.date }}</span>
                 <span class="ml-1 badge badge-primary float-right">{{ meeting.members.all|length }} att.</span>
               </a>
             {% endif %}
@@ -24,7 +25,8 @@
           {% for meeting in meetings %}
             {% if meeting.type == "othr" %}
               <a href="{% url "teammanager:meeting" id=meeting.id %}"
-                 class="list-group-item list-group-item-action">{{ meeting }}
+                 class="list-group-item list-group-item-action">
+                <span><b>{{ meeting.get_name }}</b> on {{ meeting.date }}</span>
                 <span class="ml-1 badge badge-primary float-right">{{ meeting.members.all|length }} att.</span>
               </a>
             {% endif %}
@@ -39,7 +41,7 @@
           {% for meeting in outreaches_upcoming %}
             <div class="list-group-item">
               <span>
-                <b>{{ meeting.name }}</b> on {{ meeting.date }}
+                <b>{{ meeting.get_name }}</b> on {{ meeting.date }}
               </span>
               {% if meeting.description %}
                 <p>

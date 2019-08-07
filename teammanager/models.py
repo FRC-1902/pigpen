@@ -124,6 +124,11 @@ class Meeting(models.Model):
         else:
             return "%s on %s" % (self.get_type_display(), self.date)
 
+    def get_name(self):
+        if self.name:
+            return self.name
+        else:
+            return self.get_type_display()
 
 class Punch(models.Model):
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
