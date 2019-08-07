@@ -31,4 +31,4 @@ def do_oauth(code):
 
 
 def get_identity(token):
-    return requests.get("https://slack.com/api/users.identity?token={}".format(token)).jsn()
+    return requests.get("https://slack.com/api/users.identity?token={}".format(token)).json()
