@@ -114,6 +114,7 @@ def member(request, id):
         return redirect("teammanager:index")
 
     meetings = []
+    outreaches_processed = []
     outreaches = []
     total_meetings = Meeting.objects.filter(type="build")
     total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
@@ -126,7 +127,8 @@ def member(request, id):
             hours += punch.duration()
         if punch.meeting not in meetings and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             meetings.append(punch.meeting)
-        if punch.meeting.type == "out" and punch.meeting not in outreaches:
+        if punch.meeting.type == "out" and punch.meeting not in outreaches_processed:
+            outreaches_processed.append(punch.meeting)
             sum = punch.meeting.hours_sum(member)
             if sum:
                 outreaches.append((punch.meeting, time_to_string(sum)))
