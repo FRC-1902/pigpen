@@ -102,17 +102,12 @@
                      src="{{ punch.1.member.get_avatar }}">
                   </small>
               </span>
-              <span>{{ punch.0|date:"g:i a" }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span></li>
-            <!--<a href="#" class="list-group-item list-group-item-action">
-            <span>
-            {{ punch.0|date:"g:i a"  }}:
-            </span>
-            <small>
-                <img class="head rounded-circle mb-1"
-                     src="{{ punch.1.member.get_avatar }}">
-              </small>
-            <span>{{ punch.1.member.short_name }} punches {{ punch.2 }}</span>
-            </a>-->
+              {% if punch.1.fake %}
+                <span>{{ punch.1.member.short_name }} was present for {{ punch.0 }}</span>
+              {% else %}
+                <span>{{ punch.0|date:"g:i a" }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span>
+              {% endif %}
+            </li>
           {% endfor %}
         </div>
       </div>

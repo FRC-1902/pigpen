@@ -135,6 +135,7 @@ class Punch(models.Model):
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
+    fake = models.BooleanField(default=False)
 
     def duration(self):
         return self.end - self.start

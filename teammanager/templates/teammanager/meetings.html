@@ -63,7 +63,12 @@
           {% endfor %}
         </div>
         <br>
-        <h5>Past Outreaches</h5>
+        <h5>
+          Past Outreaches
+          {% if request.user.is_authenticated and request.user.is_staff %}
+            <a href="{% url "man:outreach_hours_add" %}" class="btn btn-secondary btn-sm">Add Hours</a>
+          {% endif %}
+        </h5>
         {% if outreaches_old|length > 0 %}
           <div class="list-group">
             {% for meeting in outreaches_old %}

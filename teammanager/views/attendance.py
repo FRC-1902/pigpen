@@ -38,13 +38,20 @@ def meeting_breakdown(request, id):
     punches = Punch.objects.filter(meeting=meeting)
 
     punches_sorted = []
+    fakes = False
     for punch in punches:
-        if punch.start:
-            punches_sorted.append((punch.start, punch, "in"))
-        if punch.end:
-            punches_sorted.append((punch.end, punch, "out"))
+        if punch.fake:
+            if punch.is_complete():
+                fakes = True
+                punches_sorted.append((time_to_string(punch.duration()), punch))
+        else:
+            if punch.start:
+                punches_sorted.append((punch.start, punch, "in"))
+            if punch.end:
+                punches_sorted.append((punch.end, punch, "out"))
 
-    punches_sorted = sorted(punches_sorted, key=lambda x: x[0])
+    if not fakes:
+        punches_sorted = sorted(punches_sorted, key=lambda x: x[0])
 
     return render(request, "teammanager/meeting.html", {
         "members": meeting.members.all(),

@@ -1,8 +1,8 @@
-from datetime import timedelta
+from datetime import timedelta, date, datetime
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
@@ -61,9 +61,38 @@ def hours_table(request):
 @login_required
 def outreach_hours_add(request):
     members = Member.objects.all().order_by("first")
-    return render(request, 'teammanager/outreach_hours_add.html', {
-        "members": members
-    })
+    if request.method == "POST":
+        data = request.POST
+        print(data)
+        adding = []
+        for member in members:
+            if "mbr-{}".format(member.id) in data and member not in adding:
+                adding.append(member)
+        hours = float(data["num_hrs"])
+        print("Hours: " + str(hours))
+        outreach = Meeting.objects.get(id=data["outreach-select"])
+
+        for member in adding:
+            start_time = datetime.combine(outreach.date, datetime.min.time())
+            end_time = start_time + timedelta(hours=hours)
+            print("start: {}, end: {}".format(start_time, end_time))
+
+            try:
+                punch = Punch.objects.get(member=member, meeting=outreach)
+            except:
+                punch = Punch(member=member, meeting=outreach)
+
+            punch.start = start_time
+            punch.end = end_time
+            punch.fake = True
+            punch.save()
+            outreach.members.add(member)
+        return redirect("man:outreach_hours_add")
+    else:
+        return render(request, 'teammanager/outreach_hours_add.html', {
+            "members": members,
+            "outreaches": Meeting.objects.filter(type="out")
+        })
 
 
 def getKey(item):
