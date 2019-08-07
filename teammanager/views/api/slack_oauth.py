@@ -23,7 +23,7 @@ def slack_login(request):
                         request.session["slack_id"] = slack_id
                         try:
                             member = Member.objects.get(slack=slack_id)
-                            request.session["member"] = member
+                            request.session["member"] = member.id
                         except:
                             pass
 

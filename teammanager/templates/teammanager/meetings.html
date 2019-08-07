@@ -36,7 +36,7 @@
 
       <div class="col-12 col-md-12 offset-md-0 col-lg-6 offset-lg-1">
         <h5>Upcoming Outreaches</h5>
-        ID: {{ request.session.slack_id }} = {{ member.short_name }}
+        ID: {{ request.session.slack_id }} = {{ request.session.member }}
         <div class="list-group">
           {% for meeting in outreaches_upcoming %}
             <div class="list-group-item">
