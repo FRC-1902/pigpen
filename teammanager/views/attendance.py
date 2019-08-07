@@ -114,6 +114,7 @@ def member(request, id):
         return redirect("teammanager:index")
 
     meetings = []
+    outreaches = []
     total_meetings = Meeting.objects.filter(type="build")
     total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
     total_hours = timedelta(hours=total_hours)
@@ -125,6 +126,11 @@ def member(request, id):
             hours += punch.duration()
         if punch.meeting not in meetings and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             meetings.append(punch.meeting)
+        if punch.meeting.type == "out":
+            if punch.is_complete():
+                outreaches.append((punch.meeting, time_to_string(punch.duration())))
+            else:
+                outreaches.append((punch.meeting, None))
 
     meetings.reverse()
     attend = int(hours / total_hours * 100)
@@ -136,6 +142,7 @@ def member(request, id):
     return render(request, "teammanager/member_attendance.html", {
         "member": member,
         "meetings": meetings,
+        "outreaches": outreaches,
         "total_meetings": len(total_meetings),
         "attendance_percent": attend,
         "hr_total": time_to_string(hours.get("total", "0")),
