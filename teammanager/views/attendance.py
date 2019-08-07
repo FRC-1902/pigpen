@@ -88,7 +88,7 @@ def meetings(request):
         member = None
         if "member" in request.session:
             try:
-                member = Member.objects.get(request.session["member"])
+                member = Member.objects.get(id=request.session["member"])
             except:
                 pass
         now = timezone.now()
