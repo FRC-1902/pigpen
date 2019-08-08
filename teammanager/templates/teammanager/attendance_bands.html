@@ -63,9 +63,12 @@
           </div>
         {% endfor %}
       </div>
+      {% if inactive %}
+        <hr class="my-1">
+      {% endif %}
     {% endif %}
     {% if inactive %}
-      <h2 class="mt-4 text-center">Inactive</h2>
+      <h2 class="mt-4 mb-4 text-center">Inactive</h2>
       <div class="row justify-content-center mb-1">
         {% for entry in inactive %}
           <div class="float-left text-center named-head">
