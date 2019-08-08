@@ -2,9 +2,9 @@ from datetime import timedelta
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from teammanager import utils
@@ -172,7 +172,7 @@ def meetings_verify(request):
     else:
         meetings = []
         now = timezone.now()
-        for meeting in Meeting.objects.filter(verified=False).filter(date__lt=now):
+        for meeting in Meeting.objects.filter(verified=False).filter(date__lt=now).order_by("date"):
             if not meeting.name:
                 meeting.name = ""
             meeting.date_str = meeting.date.strftime(utils.date_fmt)
