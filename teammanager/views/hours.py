@@ -31,9 +31,9 @@ def hours_table(request):
             if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
                 hours_delta += punch.duration()
 
-        attendance = int(hours_delta/total_hours * 100)
-        #if attendance > 100:
-            #attendance = 100
+        attendance = int(hours_delta / total_hours * 100)
+        # if attendance > 100:
+        # attendance = 100
 
         if int(hours.get("total", "0").seconds) > 0:
             if member.role == 'stu':
@@ -100,7 +100,7 @@ def getKey(item):
 
 
 def attendance_groups(request):
-    members = list(Member.objects.order_by("-role", "first"))
+    members = list(Member.objects.exclude(role="asib").exclude(role="vip").order_by("-role", "first"))
     members_tuples = []
     students = []
     adults = []
@@ -115,24 +115,23 @@ def attendance_groups(request):
     wow = []
 
     for member in members:
-        if not member.role == "asib" and not member.role == "vip":
-            hours = member.get_hours()
-            hours_delta = timedelta()
+        hours = member.get_hours()
+        hours_delta = timedelta()
 
-            meetings = []
+        meetings = []
 
-            punches = Punch.objects.filter(member=member)
-            for punch in punches:
-                if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
-                    hours_delta += punch.duration()
-                if punch.meeting not in meetings and punch.meeting.type == "build":
-                    meetings.append(punch.meeting)
-            attendance = int(hours_delta / total_hours * 100)
-            # if attendance > 100:
-            # attendance = 100
+        punches = Punch.objects.filter(member=member)
+        for punch in punches:
+            if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
+                hours_delta += punch.duration()
+            if punch.meeting not in meetings and punch.meeting.type == "build":
+                meetings.append(punch.meeting)
+        attendance = int(hours_delta / total_hours * 100)
+        # if attendance > 100:
+        # attendance = 100
 
-            obj = (member, time_to_string(hours.get("total", "0")), attendance)
-            members_tuples.append(obj)
+        obj = (member, time_to_string(hours.get("total", "0")), attendance)
+        members_tuples.append(obj)
 
     members_tuples = reversed(sorted(members_tuples, key=getKey))
 
@@ -152,6 +151,9 @@ def attendance_groups(request):
                 wow.append(member)
         else:
             inactive.append(member)
+
+    print(inactive)
+    inactive = sorted(inactive, key=lambda x: x[0].first + x[0].last)
 
     return render(request, "teammanager/attendance_bands.html", {
         "groups": [("90%+", wow), ("(60% - 89%)", sub_90), ("(30% - 59%)", sub_60), ("(1% - 29%)", sub_30)],
