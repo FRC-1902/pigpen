@@ -4,7 +4,7 @@
 
 {% block content %}
   <style>
-  .named-head {
+    .named-head {
       width: 70px;
       padding-bottom: 16px;
     }
@@ -42,7 +42,7 @@
             <h4>Attendance</h4>
             <div class="pl-4">
               <h6 class="text-muted">
-                  {{ build_meetings|length }}/{{ total_meetings }} Build Meetings (
+                {{ build_meetings|length }}/{{ total_meetings }} Build Meetings (
                 {% if attendance_percent >= 30 %}
                   <span class="text-success"><b>{{ attendance_percent }}%</b></span>
                 {% else %}
@@ -68,29 +68,32 @@
           </div>
           {% if outreaches|length > 0 %}
             <div class="col-12">
-            <h4>Outreach Events</h4>
-            <div class="pl-4">
-              {% for outreach in outreaches %}
-                <a href="{% url "teammanager:meeting" id=outreach.0.id %}">
+              <h4>Outreach Events</h4>
+              <div class="pl-4">
+                {% for outreach in outreaches %}
+                  <a href="{% url "teammanager:meeting" id=outreach.0.id %}">
                   <span>
                     {{ outreach.0.date }} - <b>{{ outreach.0.get_name }}</b>
                     {% if outreach.1 %}
                       <small class="text-muted"><i>({{ outreach.1 }})</i></small>
                     {% endif %}
                    </span>
-                </a><br>
-              {% endfor %}
+                  </a><br>
+                {% endfor %}
+              </div>
+              {% if member.slack or family|length > 1 %}
+                <hr>
+              {% endif %}
             </div>
-            {% if member.slack or family|length > 1 %}
-              <hr>
-            {% endif %}
           {% endif %}
           {% if member.slack %}
             <div class="col-12">
               <h4>Slack Info</h4>
               <div class="pl-4">
                 <img class="rounded" src="{{ member.slack_avatar }}" width="30px" height="auto">
-                <code>@{{ member.slack_username }}</code>
+                <a class="text-secondary" href="https://explodingbacon.slack.com/team/{{ member.slack }}">
+                  <code>@{{ member.slack_username }}</code>
+                </a>
               </div>
               {% if family|length > 1 %}
                 <hr>
