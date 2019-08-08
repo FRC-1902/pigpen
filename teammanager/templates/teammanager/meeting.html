@@ -29,13 +29,13 @@
         <h3 class="text-center">
           <span>{{ meeting.get_name }} on {{ meeting.date }}</span>
           <span class="text-muted"><i>({{ members|length }}
-          {% if meeting.type == "build" %}
-            attended)
-          {% elif meeting.type == "out" %}
-            signed up)
-          {% else %}
-            attended)
-          {% endif %}
+            {% if meeting.type == "build" %}
+              attended)
+            {% elif meeting.type == "out" %}
+              signed up)
+            {% else %}
+              attended)
+            {% endif %}
           </i></span>
           {% if request.user.is_staff %}
             <a class="btn btn-secondary text-white ml-3" href="{% url 'admin:teammanager_meeting_change' meeting.id %}">Edit</a>
@@ -47,7 +47,7 @@
           <h5 class="text-center text-muted">Non-Mandatory</h5>
         {% elif meeting.type == "fun" %}
           <h5 class="text-center text-muted">Fun/Other - Hours Don't Count</h5>
-          {% elif meeting.type == "out" %}
+        {% elif meeting.type == "out" %}
         {% endif %}
         <hr>
         <h5>Students</h5>
@@ -98,14 +98,20 @@
             <li class="list-group-item">
               <span>
                 <small>
-                <img class="head rounded-circle mb-1"
+                <img class="head rounded-circle mb-1 mr-3"
                      src="{{ punch.1.member.get_avatar }}">
                   </small>
               </span>
+              {% if request.user.is_staff %}
+                <a class="text-dark" href="{% url 'admin:teammanager_punch_change' punch.1.id %}">
+              {% endif %}
               {% if punch.1.fake %}
                 <span>{{ punch.1.member.short_name }} was present for {{ punch.0 }}</span>
               {% else %}
                 <span>{{ punch.0|date:"g:i a" }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span>
+              {% endif %}
+              {% if request.user.is_staff %}
+                </a>
               {% endif %}
             </li>
           {% endfor %}

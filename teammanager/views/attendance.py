@@ -98,7 +98,7 @@ def meetings(request):
         meetings = Meeting.objects.all().order_by("date").reverse()
         outreaches_upcoming = Meeting.objects.filter(type="out", date__gte=now).order_by("date")
         outreaches_old = Meeting.objects.filter(type="out", date__lt=now).order_by("date").reverse()
-        return render(request, "teammanager/meetings.html", {
+        return render(request, "teammanager/meeting_list.html", {
             "meetings": meetings,
             "outreaches_upcoming": outreaches_upcoming,
             "outreaches_old": outreaches_old,
