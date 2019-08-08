@@ -26,7 +26,7 @@ def families(request):
 
     for fam in list(fams):
         if fam.member_set.count() <= 1:
-            if fam.member_set.all()[0].role != "ext":
+            if fam.member_set.exists() and fam.member_set.all()[0].role != "ext":
                 singles = singles + list(fam.member_set.all())
             fams.remove(fam)
 
