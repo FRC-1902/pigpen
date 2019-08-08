@@ -12,15 +12,19 @@
       </thead>
       <tbody>
       {% for row in members %}
-        <tr onclick="window.location='{% url 'admin:teammanager_member_change' row.0.id %}'">
-          {% for cell in row %}
-            {% if not cell %}
-              <td class="text-danger"><b>{{ cell }}</b></td>
+        {% if request.user.is_staff %}
+          <tr onclick="window.location='{% url 'admin:teammanager_member_change' row.0.id %}'">
             {% else %}
-              <td>{{ cell }}</td>
-            {% endif %}
-          {% endfor %}
-        </tr>
+          <tr>
+        {% endif %}
+      {% for cell in row %}
+        {% if not cell %}
+          <td class="text-danger"><b>{{ cell }}</b></td>
+        {% else %}
+          <td>{{ cell }}</td>
+        {% endif %}
+      {% endfor %}
+      </tr>
       {% endfor %}
       </tbody>
     </table>
