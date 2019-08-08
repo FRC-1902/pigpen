@@ -20,7 +20,7 @@
                     <span><small><img class="head-sm rounded-circle"
                                       src="{{ cell.get_avatar }}"></small></span> {{ cell.short_name }}
                   </span>
-                    <span class="d-block d-sm-none">
+                  <span class="d-block d-sm-none">
                     {{ cell.short_name }}
                   </span>
                 </td>
@@ -65,6 +65,12 @@
                     {{ cell.short_name }}
                   </span>
                 </td>
+              {% elif forloop.counter == 3 and row.0.role == "stu" %} <!-- The member's outreach -->
+                {% if row.0.outreach_hours > 54000 %}
+                  <td class="text-success"><b>{{ cell }}</b></td>
+                {% else %}
+                  <td>{{ cell }}</td>
+                {% endif %}
               {% elif forloop.counter == 4 %} <!-- The member's attendance -->
                 {% if cell >= 30 %}
                   <td class="text-success"><b>{{ cell }}%</b></td>
