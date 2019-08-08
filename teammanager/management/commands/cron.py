@@ -83,13 +83,22 @@ def get_slack_users():
                 first = str(name.split(" ")[0])
                 last = str(name.split(" ")[-1])
 
-                mq = Member.objects.filter(first__iexact=first, last__iexact=last)
+                mq = Member.objects.filter(slack=member.get("id"))
+
+                if not mq.exists():
+                    mq = Member.objects.filter(first__iexact=first, last__iexact=last)
+
                 if mq.exists():
                     m = mq.first()
                     m.subtitle = re.sub(r":\w*:", "", profile.get("status_text", None)).strip()
                     m.slack = member.get("id")
-                    m.slack_username = profile.get("display_name_normalized")
                     m.slack_avatar = profile.get("image_512")
+
+                    if bool(profile.get("display_name_normalized")):
+                        m.slack_username = profile.get("display_name_normalized")
+                    else:
+                        m.slack_username = profile.get("real_name_normalized")
+
                     m.save()
                 else:
                     print("Can't find " + first + " " + last)
