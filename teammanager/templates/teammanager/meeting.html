@@ -95,7 +95,7 @@
         <hr>
         <div class="list-group">
           {% for punch in punches %}
-            <li class="list-group-item">
+            <li class="list-group-item" onclick="window.location='{% url 'teammanager:member' id=punch.1.member.id %}'">
               <span>
                 <small>
                 <img class="head rounded-circle mb-1 mr-3"
