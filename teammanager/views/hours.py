@@ -100,7 +100,7 @@ def getKey(item):
 
 
 def attendance_groups(request):
-    members = list(Member.objects.filter(active=True).order_by("-role", "first"))
+    members = list(Member.objects.order_by("-role", "first"))
     members_tuples = []
     students = []
     adults = []
@@ -136,20 +136,25 @@ def attendance_groups(request):
 
     members_tuples = reversed(sorted(members_tuples, key=getKey))
 
+    inactive = []
     for member in members_tuples:
-        attendance = member[2]
-        if attendance == 0:
-            zero_hours.append(member)
-        elif attendance < 30:
-            sub_30.append(member)
-        elif attendance < 60:
-            sub_60.append(member)
-        elif attendance < 90:
-            sub_90.append(member)
+        if member[0].active:
+            attendance = member[2]
+            if attendance == 0:
+                zero_hours.append(member)
+            elif attendance < 30:
+                sub_30.append(member)
+            elif attendance < 60:
+                sub_60.append(member)
+            elif attendance < 90:
+                sub_90.append(member)
+            else:
+                wow.append(member)
         else:
-            wow.append(member)
+            inactive.append(member)
 
     return render(request, "teammanager/attendance_bands.html", {
         "groups": [("90%+", wow), ("(60% - 89%)", sub_90), ("(30% - 59%)", sub_60), ("(1% - 29%)", sub_30)],
-        "zero": zero_hours
+        "zero": zero_hours,
+        "inactive": inactive
     })

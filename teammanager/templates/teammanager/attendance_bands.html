@@ -64,5 +64,21 @@
         {% endfor %}
       </div>
     {% endif %}
+    {% if inactive %}
+      <h2 class="mt-4 text-center">Inactive</h2>
+      <div class="row justify-content-center mb-1">
+        {% for entry in inactive %}
+          <div class="float-left text-center named-head">
+            <a href="{% url 'man:member' id=entry.0.id %}">
+              <small class="text-dark">
+                <img class="gray head rounded-circle mb-1"
+                     src="{{ entry.0.get_avatar }}"><br>
+                {{ entry.0.short_name }}
+              </small>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}
