@@ -56,7 +56,7 @@ def staff_list(request):
             member,
             member.get_role_display(),
             bool(member.avatar),
-            member.slack_username if bool(member.slack_username) else "",
+            member.slack_username if bool(member.slack_username) else None,
         ))
 
     return render(request, "teammanager/directory_staff.html", {

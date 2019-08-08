@@ -14,7 +14,11 @@
       {% for row in members %}
         <tr onclick="window.location='{% url 'admin:teammanager_member_change' row.0.id %}'">
           {% for cell in row %}
-            <td>{{ cell }}</td>
+            {% if not cell %}
+              <td class="text-danger"><b>{{ cell }}</b></td>
+            {% else %}
+              <td>{{ cell }}</td>
+            {% endif %}
           {% endfor %}
         </tr>
       {% endfor %}
