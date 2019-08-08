@@ -26,13 +26,14 @@ class Member(models.Model):
         ("stu", "Student"),
         ("mtr", "Adult"),
         ("asib", "Sibling"),
-        ("ext", "Extended")
+        ("vip", "VIP Bacon")
     )
 
     first = models.TextField()
     last = models.TextField()
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     role = models.CharField(max_length=10, default="stu", choices=roles)
+    active = models.BooleanField(default=True, null=False, blank=False)
     avatar = models.ImageField(null=True, blank=True)
     family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
     hours = models.IntegerField(default=0, blank=False)

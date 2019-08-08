@@ -13,9 +13,15 @@ from ..utils import time_to_string
 
 
 def whos_in(request):
-    members = Member.objects.all().order_by("first", "last")
+    members = list(Member.objects.filter(active=True).order_by("first", "last"))
     out = []
     members_in = [x.member for x in Punch.objects.filter(end__isnull=True, meeting__type="build")]
+
+    for m in members_in:
+        if m not in members:
+            members.append(m)
+
+    members = sorted(members, key=lambda x: x.first + x.last)
 
     for member in members:
         out.append({
@@ -56,7 +62,7 @@ def meeting_breakdown(request, id):
         punches_sorted = sorted(punches_sorted, key=lambda x: x[0])
 
     return render(request, "teammanager/meeting.html", {
-        "members": meeting.members.all(),
+        "members": meeting.members.order_by("first", "last"),
         "meeting": meeting,
         "punches": punches_sorted
     })

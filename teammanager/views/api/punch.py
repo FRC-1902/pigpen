@@ -22,6 +22,10 @@ def do_punch(request):
                 member = q.first()
                 meeting = Meeting.objects.get_or_create(type='build', date=timezone.localdate())[0]
 
+                if not member.active:
+                    member.active = True
+                    member.save()
+
                 pq = Punch.objects.filter(member=member, meeting=meeting, end=None)
                 exists = pq.exists()
                 if exists:

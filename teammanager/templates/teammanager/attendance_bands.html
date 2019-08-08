@@ -21,9 +21,9 @@
     }
   </style>
   <script>
-  $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+      $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+      })
   </script>
   <div class="container">
     <br>
@@ -33,33 +33,36 @@
       <h2 class="mt-4 mb-4 text-center">{{ group.0 }}</h2>
       <div class="row justify-content-center mb-1">
         {% for entry in group.1 %}
-          <div class="float-left text-center named-head" data-toggle="tooltip" data-placement="top" title="{{ entry.2 }}%">
-                <a href="{% url 'man:member' id=entry.0.id %}">
-                  <small class="text-dark">
-                    <img class="head rounded-circle mb-1"
-                         src="{{ entry.0.get_avatar }}"><br>
-                    {{ entry.0.short_name }}
-                  </small>
-                </a>
-              </div>
+          <div class="float-left text-center named-head" data-toggle="tooltip" data-placement="top"
+               title="{{ entry.2 }}%">
+            <a href="{% url 'man:member' id=entry.0.id %}">
+              <small class="text-dark">
+                <img class="head rounded-circle mb-1"
+                     src="{{ entry.0.get_avatar }}"><br>
+                {{ entry.0.short_name }}
+              </small>
+            </a>
+          </div>
         {% endfor %}
       </div>
       <hr class="my-1">
     {% endfor %}
-    <h2 class="mt-4 text-center">With Us in Spirit</h2>
-    <h5 class="mb-4 text-center text-muted">(just not in attendance)</h5>
-    <div class="row justify-content-center mb-1">
-      {% for entry in zero %}
-        <div class="float-left text-center named-head">
-          <a href="{% url 'man:member' id=entry.0.id %}">
-            <small class="text-dark">
-              <img class="head rounded-circle mb-1"
-                   src="{{ entry.0.get_avatar }}"><br>
-              {{ entry.0.short_name }}
-            </small>
-          </a>
-        </div>
-      {% endfor %}
-    </div>
+    {% if zero %}
+      <h2 class="mt-4 text-center">With Us in Spirit</h2>
+      <h5 class="mb-4 text-center text-muted">(just not in attendance)</h5>
+      <div class="row justify-content-center mb-1">
+        {% for entry in zero %}
+          <div class="float-left text-center named-head">
+            <a href="{% url 'man:member' id=entry.0.id %}">
+              <small class="text-dark">
+                <img class="head rounded-circle mb-1"
+                     src="{{ entry.0.get_avatar }}"><br>
+                {{ entry.0.short_name }}
+              </small>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

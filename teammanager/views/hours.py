@@ -13,7 +13,7 @@ def hours(request):
 
 
 def hours_table(request):
-    members = list(Member.objects.order_by("-role", "first"))
+    members = list(Member.objects.filter(active=True).order_by("-role", "first"))
 
     head = ["Name", "Total", "Outreach", "Attendance"]
     students = []
@@ -98,8 +98,9 @@ def outreach_hours_add(request):
 def getKey(item):
     return item[2]
 
+
 def attendance_groups(request):
-    members = list(Member.objects.order_by("-role", "first"))
+    members = list(Member.objects.filter(active=True).order_by("-role", "first"))
     members_tuples = []
     students = []
     adults = []
@@ -114,7 +115,7 @@ def attendance_groups(request):
     wow = []
 
     for member in members:
-        if not member.role == "asib" and not member.role == "ext":
+        if not member.role == "asib" and not member.role == "vip":
             hours = member.get_hours()
             hours_delta = timedelta()
 

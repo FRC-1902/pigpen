@@ -15,6 +15,7 @@ def get_members(request):
             "id": member.id,
             "name": str(member),
             "position": member.role,
+            "active": member.active,
             "isIn": bool(member in members_in)
         })
 

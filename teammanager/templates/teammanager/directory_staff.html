@@ -13,7 +13,7 @@
       <tbody>
       {% for row in members %}
         {% if request.user.is_staff %}
-          <tr onclick="window.location='{% url 'admin:teammanager_member_change' row.0.id %}'">
+          <tr onclick="window.location='{% url 'man:member' id=row.0.id %}'">
             {% else %}
           <tr>
         {% endif %}

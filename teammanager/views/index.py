@@ -1,11 +1,13 @@
-from django.shortcuts import render
 from datetime import timedelta
+
+from django.shortcuts import render
+
 from ..models import Member
 from ..utils import time_to_string
 
 
 def index(request):
-    members = list(Member.objects.order_by("-role", "first"))
+    members = list(Member.objects.filter(active=True).order_by("-role", "first"))
 
     students = []
 

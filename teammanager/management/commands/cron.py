@@ -69,6 +69,17 @@ def update_hours():
         member.save()
 
 
+def mark_users_inactive():
+    for member in Member.objects.all():
+        try:
+            if timezone.now() - timedelta(days=100) > member.punch_set.all().order_by("-end").first().end:
+                member.active = False
+                member.save()
+        except AttributeError as e:
+            member.active = False
+            member.save()
+
+
 def get_slack_users():
     key = os.getenv("SLACK_OAUTH")
 
@@ -115,4 +126,5 @@ class Command(BaseCommand):
         create_families()
         add_members_to_build_meetings()
         update_hours()
+        mark_users_inactive()
         get_slack_users()  # Also gets subtitles

@@ -9,7 +9,7 @@ from ..models import Member
 def upload_photo(request):
     if request.method == "GET":
         return render(request, 'teammanager/upload_photo.html', {
-            "members": Member.objects.all().order_by("first", "last")
+            "members": Member.objects.filter(active=True).order_by("first", "last")
         })
     else:
         if 'member' in request.POST and 'photo' in request.FILES:
