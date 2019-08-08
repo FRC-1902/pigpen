@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('outreach/fromcal', outreach.create_outreach_from_calendar, name="outreach_from_calendar"),
 
-    path('location', attendance.location, name="location"),
+    path('location', attendance.whos_in, name="location"),
 
     path('meetings/', attendance.meetings, name="meetings"),
     path('meetings/<int:id>', attendance.meeting_breakdown, name="meeting"),

@@ -1,4 +1,4 @@
-from datetime import timedelta, date, datetime
+from datetime import timedelta, datetime
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
@@ -148,8 +148,7 @@ def attendance_groups(request):
         else:
             wow.append(member)
 
-
-    return render(request, "teammanager/clusters.html", {
+    return render(request, "teammanager/attendance_bands.html", {
         "groups": [("90%+", wow), ("(60% - 89%)", sub_90), ("(30% - 59%)", sub_60), ("(1% - 29%)", sub_30)],
         "zero": zero_hours
     })

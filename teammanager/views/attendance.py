@@ -12,7 +12,7 @@ from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
 
 
-def location(request):
+def whos_in(request):
     members = Member.objects.all().order_by("first", "last")
     out = []
     members_in = [x.member for x in Punch.objects.filter(end__isnull=True, meeting__type="build")]
@@ -25,7 +25,7 @@ def location(request):
             "isIn": bool(member in members_in),
             "avatar": member.get_avatar()
         })
-    return render(request, 'teammanager/location.html', {
+    return render(request, 'teammanager/attendance_whos_in.html', {
         "members": out,
         "any_checkins": len(members_in) > 0
     })
