@@ -44,3 +44,22 @@ def families(request):
         "families": fams,
         "singles": singles,
     })
+
+
+def staff_list(request):
+    members = Member.objects.all().order_by("first")
+
+    head = ["Name", "Role", "Avatar", "Slack"]
+    out = []
+    for member in members:
+        out.append((
+            member,
+            member.get_role_display(),
+            bool(member.avatar),
+            member.slack_username if bool(member.slack_username) else "",
+        ))
+
+    return render(request, "teammanager/directory_staff.html", {
+        "head": head,
+        "members": out
+    })

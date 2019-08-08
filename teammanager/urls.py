@@ -14,6 +14,7 @@ urlpatterns = [
     path('directory', directory.directory, name="directory_all"),
     path('directory/leaders', directory.leaders, name="directory_leaders"),
     path('directory/families', directory.families, name="directory_families"),
+    path('directory/staff', directory.staff_list, name="directory_staff"),
 
     path('outreach/fromcal', outreach.create_outreach_from_calendar, name="outreach_from_calendar"),
 
