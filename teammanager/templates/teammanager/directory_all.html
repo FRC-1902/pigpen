@@ -1,0 +1,38 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <div class="container-fluid">
+    <h3 class="text-center">Students</h3>
+    <div class="row justify-content-center">
+      {% for member in students %}
+        <div class="col-sm-12 col-md-4 col-xl-3 mb-4 justify-content-center text-center">
+          <a href="{% url 'man:member' id=member.id %}">
+            <img class="head rounded-circle mb-3" src="{{ member.get_avatar }}">
+            <h5 class="text-dark">{{ member }}</h5>
+          </a>
+        </div>
+
+        <!-- Stagger rows --->
+        {% if forloop.counter0 != 0 and forloop.counter|divisibleby:"7" %}
+          <div class="w-100 d-none d-xl-block"></div>{% endif %}
+
+      {% endfor %}
+    </div>
+    <h3 class="text-center">Adults</h3>
+    <div class="row justify-content-center">
+      {% for member in adults %}
+        <div class="col-sm-12 col-md-4 col-xl-3 mb-4 justify-content-center text-center">
+          <a href="{% url 'man:member' id=member.id %}">
+            <img class="head rounded-circle mb-3" src="{{ member.get_avatar }}">
+            <h5 class="text-dark">{{ member }}</h5>
+          </a>
+        </div>
+
+        <!-- Stagger rows --->
+        {% if forloop.counter0 != 0 and forloop.counter|divisibleby:"7" %}
+          <div class="w-100 d-none d-xl-block"></div>{% endif %}
+
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

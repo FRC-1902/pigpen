@@ -1,9 +1,19 @@
 from django.shortcuts import render
 
-from ..models import Family, Position
+from ..models import Member, Family, Position
 
 
 def directory(request):
+    students = list(Member.objects.filter(role="stu").order_by("first"))
+    mentors = list(Member.objects.filter(role="mtr").order_by("first"))
+
+    return render(request, "teammanager/directory_all.html", {
+        "students": students,
+        "adults": mentors
+    })
+
+
+def leaders(request):
     sections = []
 
     for pos in ["stoff", "tmldr", "stsub", "adsub", "stbus", "adbus", "adbod", "old"]:
@@ -15,7 +25,7 @@ def directory(request):
                 "positions": list(pos_list)
             })
 
-    return render(request, "teammanager/directory.html", {
+    return render(request, "teammanager/directory_leaders.html", {
         "sections": sections
     })
 
@@ -30,7 +40,7 @@ def families(request):
                 singles = singles + list(fam.member_set.all())
             fams.remove(fam)
 
-    return render(request, "teammanager/families.html", {
+    return render(request, "teammanager/directory_families.html", {
         "families": fams,
         "singles": singles,
     })
