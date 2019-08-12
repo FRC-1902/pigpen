@@ -72,7 +72,7 @@ def update_hours():
 def mark_users_inactive():
     for member in Member.objects.filter(role="mtr"):
         try:
-            if timezone.now() - timedelta(days=100) > member.punch_set.all().order_by("-end").first().end:
+            if timezone.now() - timedelta(days=100) > member.punch_set.exclude(end__isnull=True).order_by("-end").first().end:
                 member.active = False
                 member.save()
         except AttributeError as e:
