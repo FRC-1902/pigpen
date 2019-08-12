@@ -70,7 +70,7 @@ def update_hours():
 
 
 def mark_users_inactive():
-    for member in Member.objects.all():
+    for member in Member.objects.filter(role="mtr"):
         try:
             if timezone.now() - timedelta(days=100) > member.punch_set.all().order_by("-end").first().end:
                 member.active = False
