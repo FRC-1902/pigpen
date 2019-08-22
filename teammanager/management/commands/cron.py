@@ -2,6 +2,7 @@ import os
 import re
 from datetime import timedelta
 
+import pytz
 import requests
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -10,20 +11,21 @@ from teammanager.models import Punch, Member, Family, Meeting
 
 
 def close_old_punches():
+    tz = pytz.timezone("America/New_York")
     yesterday = timezone.now() - timedelta(hours=24)
     q = Punch.objects.filter(end__isnull=True, start__lt=yesterday)
 
     for p in q:
         if p.meeting.type == 'build':
             if p.start.weekday() > 4:  # Weekends
-                p.end = p.start.replace(hour=17, minute=0, second=0)
+                p.end = p.start.astimezone(tz).replace(hour=17, minute=0, second=0)
             else:  # Weekdays
-                p.end = p.start.replace(hour=21, minute=0, second=0)
+                p.end = p.start.astimezone(tz).replace(hour=21, minute=0, second=0)
 
             if p.start < p.end:  # Sanity check
                 p.save()
             else:  # Discard punches in after meeting end if not manually punched out.
-                p.delete()
+                pass  # Actually, do nothing (for now).
 
 
 def create_families():
