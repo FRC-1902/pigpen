@@ -12,7 +12,7 @@ from teammanager.models import Punch, Member, Family, Meeting
 
 def close_old_punches():
     tz = pytz.timezone("America/New_York")
-    yesterday = timezone.now() - timedelta(hours=24)
+    yesterday = timezone.now().astimezone(tz).replace(hour=4, minute=0, second=0)
     q = Punch.objects.filter(end__isnull=True, start__lt=yesterday)
 
     for p in q:
@@ -23,6 +23,7 @@ def close_old_punches():
                 p.end = p.start.astimezone(tz).replace(hour=21, minute=0, second=0)
 
             if p.start < p.end:  # Sanity check
+                print("Success with " + str(p))
                 p.save()
             else:  # Discard punches in after meeting end if not manually punched out.
                 pass  # Actually, do nothing (for now).
