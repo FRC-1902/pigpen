@@ -1,0 +1,37 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-6 col-lg-5">
+        <form action="{% url 'man:teambuilding_add' %}" method="post">
+          {% if success %}
+          <div class="alert alert-success mt-4">
+            Successfully added {{ success }}
+          </div>
+          {% endif %}
+          <div class="card my-4">
+            <div class="card-body">
+              {% csrf_token %}
+              <h4 class="card-title">Add a Question</h4>
+              <hr>
+              <div class="form-group">
+                <label for="question">Question: <small>Leave blank if it's a "this or that" question</small></label>
+                <input id="question" name="question" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="option_one">Option One:</label>
+                <input id="option_one" name="option_one" type="text" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="option_two">Option Two:</label>
+                <input id="option_two" name="option_two" type="text" class="form-control">
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

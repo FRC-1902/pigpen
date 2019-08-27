@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import index, auth, hours, directory, attendance, admin, outreach
-from .views.api import members, punch, slack, slack_oauth
+from .views import index, auth, hours, directory, attendance, admin, outreach, teambuilding
+from .views.api import members, punch, slack, slack_oauth, teambuilding as teambuilding_api
 
 app_name = "teammanager"
 urlpatterns = [
@@ -33,6 +33,9 @@ urlpatterns = [
 
     path('admin/addphoto', admin.upload_photo, name="admin_add_photo"),
 
+    path('teambuilding/add', teambuilding.add_question, name="teambuilding_add"),
+    path('teambuilding/select', teambuilding.select_question, name="teambuilding_select"),
+
     path('api/members/add', members.add_member, name="api_hours"),
     path('api/members/all', members.get_members, name="api_members"),
     path('api/member/<int:member>/hours', members.get_hours, name="api_hours"),
@@ -42,4 +45,7 @@ urlpatterns = [
 
     path('api/slack/action', slack.action, name="slack_action"),
     path('api/slack/outreach', slack.outreach, name="slack_outreach"),
+
+    path('api/teambuilding/config', teambuilding_api.get_config, name='api_teambuilding_config'),
+    path('api/teambuilding/respond', teambuilding_api.set_response, name='api_teambuilding_respond'),
 ]

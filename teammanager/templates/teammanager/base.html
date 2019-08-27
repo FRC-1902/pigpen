@@ -96,6 +96,18 @@
             {% endif %}
           </div>
         </div>
+        <div class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+             aria-expanded="false">Teambuilding</a>
+          <div class="dropdown-menu">
+            {% if request.user.is_staff %}
+              <a class="dropdown-item" href="{% url 'man:teambuilding_add' %}">Add Question</a>
+              <a class="dropdown-item" href="{% url 'man:teambuilding_select' %}">Select Question</a>
+            {% else %}
+              <a class="dropdown-item" href="{% url 'man:teambuilding_add' %}">Suggest a Question</a>
+            {% endif %}
+          </div>
+        </div>
       {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto">

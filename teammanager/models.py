@@ -168,3 +168,27 @@ class Registration(models.Model):
 
     def __str__(self):
         return "%s registered at %s" % (str(self.member), str(self.meeting))
+
+
+class TeambuildingQuestion(models.Model):
+    question = models.TextField(null=True, blank=True)
+    option_one = models.CharField(max_length=100, null=False, blank=False)
+    option_two = models.CharField(max_length=100, null=False, blank=False)
+    active = models.BooleanField(default=False)
+    used = models.BooleanField(default=False)
+
+    def __str__(self):
+        if self.question:
+            return self.question
+        else:
+            return "%s or %s" % (self.option_one, self.option_two)
+
+
+class TeambuildingResponse(models.Model):
+    question = models.ForeignKey("TeambuildingQuestion", on_delete=models.CASCADE)
+    member = models.ForeignKey("Member", on_delete=models.CASCADE)
+    option_one_selected = models.BooleanField(default=False)
+    option_two_selected = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s responded to %s" % (str(self.member), str(self.question))
