@@ -180,7 +180,7 @@ class TeambuildingQuestion(models.Model):
 
     def __str__(self):
         if self.question:
-            return self.question
+            return "%s %s or %s" % (self.question, self.option_one, self.option_two)
         else:
             return "%s or %s" % (self.option_one, self.option_two)
 
