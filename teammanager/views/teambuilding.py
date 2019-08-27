@@ -28,6 +28,11 @@ def add_question(request):
 @staff_member_required
 def select_question(request):
     if request.method == 'GET':
+        if 'deactivate' in request.GET:
+            for q in TeambuildingQuestion.objects.filter(active=True):
+                q.active = False
+                q.save()
+
         return render(request, 'teammanager/teambuilding_question_select.html', {
             "current_question": TeambuildingQuestion.objects.filter(active=True).first(),
             "questions": TeambuildingQuestion.objects.all()
@@ -37,7 +42,7 @@ def select_question(request):
         if 'question_id' in data:
             new_q = TeambuildingQuestion.objects.get(id=data['question_id'])
 
-            for q in TeambuildingQuestion.objects.filter(active=False):
+            for q in TeambuildingQuestion.objects.filter(active=True):
                 q.active = False
                 q.save()
 
