@@ -7,7 +7,7 @@ import requests
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from teammanager.models import Punch, Member, Family, Meeting
+from teammanager.models import Punch, Member, Family, Meeting, TeambuildingQuestion
 
 
 def close_old_punches():
@@ -122,6 +122,13 @@ def get_slack_users():
         print("NO KEY")
 
 
+def mark_teambuilding_questions_used():
+    for q in TeambuildingQuestion.objects.filter(used=False):
+        if q.response_set.exists():
+            q.used = True
+            q.save()
+
+
 class Command(BaseCommand):
     def handle(self, **options):
         close_old_punches()
@@ -130,3 +137,4 @@ class Command(BaseCommand):
         update_hours()
         mark_users_inactive()
         get_slack_users()  # Also gets subtitles
+        mark_teambuilding_questions_used()

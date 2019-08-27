@@ -186,7 +186,7 @@ class TeambuildingQuestion(models.Model):
 
 
 class TeambuildingResponse(models.Model):
-    question = models.ForeignKey("TeambuildingQuestion", on_delete=models.CASCADE)
+    question = models.ForeignKey("TeambuildingQuestion", on_delete=models.CASCADE, related_name="response_set")
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
     option_one_selected = models.BooleanField(default=False)
     option_two_selected = models.BooleanField(default=False)

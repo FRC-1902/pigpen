@@ -35,7 +35,7 @@ def select_question(request):
 
         return render(request, 'teammanager/teambuilding_question_select.html', {
             "current_question": TeambuildingQuestion.objects.filter(active=True).first(),
-            "questions": TeambuildingQuestion.objects.all()
+            "questions": TeambuildingQuestion.objects.filter(used=False)
         })
     else:
         data = request.POST
