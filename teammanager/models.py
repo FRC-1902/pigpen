@@ -143,6 +143,7 @@ class Meeting(models.Model):
 
         return sum
 
+
 class Punch(models.Model):
     member = models.ForeignKey("Member", on_delete=models.CASCADE)
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)

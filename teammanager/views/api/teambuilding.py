@@ -15,6 +15,7 @@ def get_config(request):
         out = {
             **out,
             "question": q.question,
+            "id": q.id,
             "option_one": q.option_one,
             "option_two": q.option_two,
         }
