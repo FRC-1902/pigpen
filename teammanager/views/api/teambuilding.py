@@ -12,7 +12,8 @@ def get_config(request):
 
     if qq.exists():
         q = qq.first()
-        out += {
+        out = {
+            **out,
             "question": str(q),
             "option_one": q.option_one,
             "option_two": q.option_two,

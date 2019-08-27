@@ -23,7 +23,6 @@ def close_old_punches():
                 p.end = p.start.astimezone(tz).replace(hour=21, minute=0, second=0)
 
             if p.start < p.end:  # Sanity check
-                print("Success with " + str(p))
                 p.save()
             else:  # Discard punches in after meeting end if not manually punched out.
                 pass  # Actually, do nothing (for now).
