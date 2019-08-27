@@ -6,11 +6,19 @@ from teammanager.models import TeambuildingQuestion, TeambuildingResponse, Token
 
 
 def get_config(request):
-    q = TeambuildingQuestion.objects.filter(active=True)
-    return JsonResponse({
-        "active": q.exists(),
-        "question": str(q.first())
-    })
+    out = {}
+    qq = TeambuildingQuestion.objects.filter(active=True)
+    out['active'] = qq.exists()
+
+    if qq.exists():
+        q = qq.first()
+        out += {
+            "question": str(q),
+            "option_one": q.option_one,
+            "option_two": q.option_two,
+        }
+
+    return JsonResponse(out)
 
 
 @csrf_exempt
