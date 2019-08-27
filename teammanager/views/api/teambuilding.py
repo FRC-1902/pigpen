@@ -14,7 +14,7 @@ def get_config(request):
         q = qq.first()
         out = {
             **out,
-            "question": str(q),
+            "question": q.question,
             "option_one": q.option_one,
             "option_two": q.option_two,
         }
