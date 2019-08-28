@@ -178,6 +178,14 @@ class TeambuildingQuestion(models.Model):
     active = models.BooleanField(default=False)
     used = models.BooleanField(default=False)
 
+
+    def display(self):
+        if self.question:
+            return self.question
+        else:
+            return "%s or %s?" % (self.option_one, self.option_two)
+
+
     def __str__(self):
         if self.question:
             return "%s %s or %s" % (self.question, self.option_one, self.option_two)
