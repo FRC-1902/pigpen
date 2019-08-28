@@ -156,7 +156,7 @@ def attendance_groups(request):
     inactive = sorted(inactive, key=lambda x: x[0].first + x[0].last)
 
     return render(request, "teammanager/attendance_bands.html", {
-        "groups": [("90%+", wow), ("(60% - 89%)", sub_90), ("(30% - 59%)", sub_60), ("(1% - 29%)", sub_30)],
+        "groups": [("90%+", wow), ("(89% - 60%)", sub_90), ("(59% - 30%)", sub_60), ("(29% - 1%)", sub_30)],
         "zero": zero_hours,
         "inactive": inactive
     })

@@ -33,6 +33,8 @@ urlpatterns = [
 
     path('admin/addphoto', admin.upload_photo, name="admin_add_photo"),
 
+    path('teambuilding/answers', teambuilding.answers, name="teambuilding_answers"),
+
     path('teambuilding/add', teambuilding.add_question, name="teambuilding_add"),
     path('teambuilding/select', teambuilding.select_question, name="teambuilding_select"),
 

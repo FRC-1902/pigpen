@@ -5,6 +5,13 @@ from django.shortcuts import render, redirect
 from teammanager.models import TeambuildingQuestion
 
 
+def answers(request):
+    question = TeambuildingQuestion.objects.get(active=True)
+    return render(request, 'teammanager/teambuilding_answers.html', {
+        "question": question
+    })
+
+
 def add_question(request):
     if request.method == 'GET':
         return render(request, 'teammanager/teambuilding_question_add.html')
