@@ -128,7 +128,7 @@ def member(request, id):
     total_hours = timedelta(hours=total_hours)
 
     hours = timedelta()
-    punches = Punch.objects.filter(member=member).order_by("start")
+    punches = Punch.objects.filter(member=member).order_by("start").reverse()
     for punch in punches:
         if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             hours += punch.duration()
