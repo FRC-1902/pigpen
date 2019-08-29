@@ -144,7 +144,7 @@ def member(request, id):
             else:
                 outreaches.append((punch.meeting, None))
 
-    meetings.reverse()
+    #meetings.reverse()
     attend = int(hours / total_hours * 100)
     # if attend > 100:
     # attend = 100
