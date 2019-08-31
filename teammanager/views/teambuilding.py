@@ -12,9 +12,13 @@ def answers(request):
         q = TeambuildingQuestion.objects.filter(active=True)
         question = q.first()
 
+    all_questions = TeambuildingQuestion.objects.filter(used=True)
+    if question:
+        all_questions = all_questions.exclude(id=question.id)
+
     return render(request, 'teammanager/teambuilding_answers.html', {
         "question": question,
-        "all_questions": list(TeambuildingQuestion.objects.filter(used=True).exclude(id=question.id))
+        "all_questions": list(all_questions)
     })
 
 
