@@ -6,9 +6,15 @@ from teammanager.models import TeambuildingQuestion
 
 
 def answers(request):
-    question = TeambuildingQuestion.objects.get(active=True)
+    if 'q' in request.GET:
+        question = TeambuildingQuestion.objects.filter(id=request.GET['q']).first()
+    else:
+        q = TeambuildingQuestion.objects.filter(active=True)
+        question = q.first()
+
     return render(request, 'teammanager/teambuilding_answers.html', {
-        "question": question
+        "question": question,
+        "all_questions": list(TeambuildingQuestion.objects.filter(used=True).exclude(id=question.id))
     })
 
 
