@@ -76,3 +76,4 @@ fabric.properties
 *.sqlite3
 env/
 media/*
+.vagrant/
