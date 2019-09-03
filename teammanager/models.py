@@ -8,6 +8,8 @@ from .utils import gen_token
 
 class Token(models.Model):
     token = models.CharField(max_length=100, default=gen_token)
+    key = models.CharField(max_length=100)
+    exchanged = models.BooleanField(default=False)
     comment = models.TextField()
 
     def __str__(self):
