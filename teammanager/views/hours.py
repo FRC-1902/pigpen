@@ -24,12 +24,7 @@ def hours_table(request):
 
     for member in members:
         hours = member.get_hours()
-        hours_delta = timedelta()
-
-        punches = Punch.objects.filter(member=member)
-        for punch in punches:
-            if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
-                hours_delta += punch.duration()
+        hours_delta = hours['build']
 
         attendance = int(hours_delta / total_hours * 100)
         # if attendance > 100:
