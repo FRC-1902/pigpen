@@ -7,6 +7,7 @@ import requests
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
+from pigpen import settings
 from teammanager.models import Punch, Member, Family, Meeting, TeambuildingQuestion
 
 
@@ -54,14 +55,16 @@ def add_members_to_build_meetings():
 
 def update_hours():
     for member in Member.objects.all():
-        pq = Punch.objects.filter(member=member)
+        apq = Punch.objects.filter(member=member, start__gt=settings.attendance_start_date).exclude(meeting__type='out')
+        opq = Punch.objects.filter(member=member, start__gt=settings.outreach_start_date).filter(meeting__type='out')
         hours = timedelta()
         outreach_hours = timedelta()
 
-        for punch in pq:
+        for punch in apq:
             if punch.is_complete() and bool(punch.meeting.type in ['build', 'othr']):
                 hours += punch.duration()
 
+        for punch in opq:
             if punch.is_complete() and bool(punch.meeting.type in ['out']):
                 outreach_hours += punch.duration()
 

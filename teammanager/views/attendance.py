@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
+from pigpen import settings
 from teammanager import utils
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
@@ -123,12 +124,12 @@ def member(request, id):
     meetings = []
     outreaches_processed = []
     outreaches = []
-    total_meetings = Meeting.objects.filter(type="build")
-    total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
-    total_hours = timedelta(hours=total_hours)
+
+    total_hours = Meeting.total_hours()
+    total_meetings = list(Meeting.meetings_since_cutoff())
 
     hours = timedelta()
-    punches = Punch.objects.filter(member=member).order_by("start").reverse()
+    punches = Punch.objects.filter(member=member, start__gt=settings.attendance_start_date).order_by("start").reverse()
     for punch in punches:
         if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
             hours += punch.duration()

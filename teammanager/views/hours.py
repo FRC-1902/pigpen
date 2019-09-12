@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 
+from pigpen import settings
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
 
@@ -18,9 +19,8 @@ def hours_table(request):
     head = ["Name", "Total", "Outreach", "Attendance"]
     students = []
     adults = []
-    total_meetings = Meeting.objects.filter(type="build")
-    total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
-    total_hours = timedelta(hours=total_hours)
+
+    total_hours = Meeting.total_hours()
 
     for member in members:
         hours = member.get_hours()
@@ -104,9 +104,8 @@ def attendance_groups(request):
     members_tuples = []
     students = []
     adults = []
-    total_meetings = Meeting.objects.filter(type="build")
-    total_hours = total_meetings.aggregate(Sum('length'))['length__sum']
-    total_hours = timedelta(hours=total_hours)
+
+    total_hours = Meeting.total_hours()
 
     zero_hours = []
     sub_30 = []
@@ -118,15 +117,7 @@ def attendance_groups(request):
         hours = member.get_hours()
         hours_delta = timedelta()
 
-        meetings = []
-
-        punches = Punch.objects.filter(member=member)
-        for punch in punches:
-            if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
-                hours_delta += punch.duration()
-            if punch.meeting not in meetings and punch.meeting.type == "build":
-                meetings.append(punch.meeting)
-        attendance = int(hours_delta / total_hours * 100)
+        attendance = int(hours['build'] / total_hours * 100)
         # if attendance > 100:
         # attendance = 100
 

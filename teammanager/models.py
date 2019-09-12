@@ -3,6 +3,7 @@ from datetime import timedelta
 from django.contrib.auth.models import User
 from pigpen import settings
 from django.db import models
+from django.db.models import Sum
 
 from .utils import gen_token
 
@@ -146,6 +147,15 @@ class Meeting(models.Model):
                 sum = sum + punch.duration()
 
         return sum
+
+    @staticmethod
+    def total_hours():
+        total_hours = Meeting.objects.filter(type="build", date__gt=settings.attendance_start_date).aggregate(Sum('length'))['length__sum']
+        return timedelta(hours=total_hours)
+
+    @staticmethod
+    def meetings_since_cutoff():
+        return Meeting.objects.filter(type="build", date__gt=settings.attendance_start_date)
 
 
 class Punch(models.Model):
