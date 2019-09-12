@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.models import User
+from pigpen import settings
 from django.db import models
 
 from .utils import gen_token
@@ -61,14 +62,15 @@ class Member(models.Model):
         hours['total'] = timedelta()
         hours['build'] = timedelta()
         hours['out'] = timedelta()
-        for punch in Punch.objects.filter(member=self):
-            if punch.is_complete() and bool(punch.meeting.type in ['build', 'out', 'othr']):
-                if punch.meeting.type in ['build', 'othr']:
-                    hours['build'] += punch.duration()
-                    hours['total'] += punch.duration()
-                elif punch.meeting.type in ['out']:
-                    hours['out'] += punch.duration()
-                    hours['total'] += punch.duration()
+        for punch in Punch.objects.filter(member=self, start__gt=settings.attendance_start_date):
+            if punch.is_complete() and bool(punch.meeting.type in ['build', 'othr']):
+                hours['build'] += punch.duration()
+                hours['total'] += punch.duration()
+
+        for punch in Punch.objects.filter(member=self, start__gt=settings.outreach_start_date):
+            if punch.is_complete() and bool(punch.meeting.type in ['out']):
+                hours['out'] += punch.duration()
+                hours['total'] += punch.duration()
 
         return hours
 
