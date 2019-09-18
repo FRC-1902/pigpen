@@ -28,7 +28,7 @@ def do_punch(request):
 
                 pq = Punch.objects.filter(member=member, meeting=meeting, end=None)
                 exists = pq.exists()
-                if exists:
+                if exists:  # Punch out
                     pun = pq.first()
 
                     if (timezone.now() - pun.start).seconds < 120:
@@ -39,11 +39,19 @@ def do_punch(request):
                     else:
                         pun.end = timezone.now()
                         pun.save()
-                else:
-                    pun = Punch(member=member, meeting=meeting)
-                    pun.start = timezone.now()
-                    pun.save()
-                    meeting.members.add(member)
+                else:  # Punch in
+                    recent_pq = Punch.objects.filter(end__gte=timezone.now() - timezone.timedelta(minutes=2))
+
+                    if recent_pq.exists():
+                        return JsonResponse({
+                            "success": False,
+                            "error": "You punched out too recently. Please wait at least 2 minutes before punching in."
+                        })
+                    else:
+                        pun = Punch(member=member, meeting=meeting)
+                        pun.start = timezone.now()
+                        pun.save()
+                        meeting.members.add(member)
 
                 pun.refresh_from_db()  # Needed to fix naive datetime issue
 
