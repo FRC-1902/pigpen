@@ -30,8 +30,15 @@ def do_punch(request):
                 exists = pq.exists()
                 if exists:
                     pun = pq.first()
-                    pun.end = timezone.now()
-                    pun.save()
+
+                    if (timezone.now() - pun.start).seconds < 120:
+                        return JsonResponse({
+                            "success": False,
+                            "error": "You punched in too recently. Please wait at least 2 minutes before punching out."
+                        })
+                    else:
+                        pun.end = timezone.now()
+                        pun.save()
                 else:
                     pun = Punch(member=member, meeting=meeting)
                     pun.start = timezone.now()
