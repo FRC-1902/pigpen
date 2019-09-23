@@ -109,6 +109,16 @@
             <a class="dropdown-item" href="{% url 'man:teambuilding_answers' %}">Answers</a>
           </div>
         </div>
+        {% if request.user.is_authenticated %}
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">Outreach</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Add Event</a>
+              <a class="dropdown-item" href="{% url 'man:outreach_hours_add' %}">Add Hours</a>
+            </div>
+          </div>
+        {% endif %}
       {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto">
