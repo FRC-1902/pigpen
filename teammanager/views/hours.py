@@ -3,10 +3,13 @@ from datetime import timedelta, datetime
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect
+from django.utils import timezone
 
 from pigpen import settings
 from ..models import Member, Punch, Meeting
 from ..utils import time_to_string
+
+from pprint import pprint as print
 
 
 def hours(request):
@@ -58,18 +61,22 @@ def outreach_hours_add(request):
     members = Member.objects.all().order_by("first")
     if request.method == "POST":
         data = request.POST
-        print(data)
         adding = []
-        for member in members:
-            if "mbr-{}".format(member.id) in data and member not in adding:
-                adding.append(member)
-        hours = float(data["num_hrs"])
-        print("Hours: " + str(hours))
+
+        for element in data:
+            if "mbr-" in element and data[element]:
+                mid = int(element.split('-')[1])
+                print(mid)
+                q = Member.objects.filter(id=mid)
+                if q.exists():
+                    adding.append(q.first())
+
+        print(adding)
         outreach = Meeting.objects.get(id=data["outreach-select"])
 
         for member in adding:
-            start_time = datetime.combine(outreach.date, datetime.min.time())
-            end_time = start_time + timedelta(hours=hours)
+            start_time = timezone.datetime.combine(outreach.date, datetime.min.time())
+            end_time = start_time + timedelta(hours=int(data['mbr-%s' % member.id]))
             print("start: {}, end: {}".format(start_time, end_time))
 
             try:
@@ -80,6 +87,10 @@ def outreach_hours_add(request):
             punch.start = start_time
             punch.end = end_time
             punch.fake = True
+
+            if data["vol-%s" % member.id]:
+                punch.volunteer_hrs = data["vol-%s" % member.id]
+
             punch.save()
             outreach.members.add(member)
         return redirect("man:outreach_hours_add")

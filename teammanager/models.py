@@ -164,6 +164,7 @@ class Punch(models.Model):
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
     fake = models.BooleanField(default=False)
+    volunteer_hrs = models.IntegerField(default=0)
 
     def duration(self):
         return self.end - self.start

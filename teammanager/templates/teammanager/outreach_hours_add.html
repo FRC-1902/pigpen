@@ -1,43 +1,45 @@
 {% extends 'teammanager/base.html' %}
 
 {% block content %}
-  <div class="row justify-content-center mt-3">
-    <div class="col-sm-12 col-md-8 col-lg-4">
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Add Outreach Hours</h3>
-          <form action="{% url 'man:outreach_hours_add' %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-              <label for="outreach-select">Select Outreach</label>
-              <select class="form-control" id="outreach-select" name="outreach-select">
-                {% for outreach in outreaches %}
-                  <option value="{{ outreach.id }}">{{ outreach.name }} on {{ outreach.date }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <!--<div class="form-group">
-              <label for="date">Date</label>
-              <input class="form-control" type="date" name="date" id="date">
-            </div>-->
-            <div class="form-group">
-              <label for="numHrs"># Hours</label>
-              <input class="form-control" type="number" step="0.01" name="num_hrs" id="numHrs">
-            </div>
+<div class="row justify-content-center mt-3">
+  <div class="col-sm-12 col-md-8 col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Add Outreach Hours</h3>
+        <form action="{% url 'man:outreach_hours_add' %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="outreach-select">Select Outreach</label>
+            <select class="form-control" id="outreach-select" name="outreach-select">
+              {% for outreach in outreaches %}
+              <option value="{{ outreach.id }}">{{ outreach.name }} on {{ outreach.date }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-            <h6>Members:</h6>
-            {% for member in members %}
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox"
-                       name="mbr-{{ member.id }}" id="chk-{{ member.id }}">
-                <label for="chk-{{ member.id }}">{{ member }}</label>
+        <h6>Members:</h6>
+        {% for member in members %}
+          <div class="row mb-2">
+              <div class="col-4">
+                <label>{{ member }}</label>
               </div>
-            {% endfor %}
-          <br>
-          <button class="btn btn-secondary">Submit</button>
-          </form>
-        </div>
-      </div>
+              <div class="col-4">
+                <input class="form-control" type="number" step="0.25"
+                name="mbr-{{ member.id }}" id="hrs-{{ member.id }}"
+                placeholder="Outreach">
+              </div>
+              <div class="col-4">
+                <input class="form-control" type="number" step="0.25"
+                name="vol-{{ member.id }}" id="vol-{{ member.id }}"
+                placeholder="Volunteer">
+              </div>
+          </div>
+        {% endfor %}
+        <br>
+        <button class="btn btn-secondary">Submit</button>
+      </form>
     </div>
   </div>
+</div>
+</div>
 {% endblock %}
