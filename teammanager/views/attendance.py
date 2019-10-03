@@ -129,6 +129,7 @@ def member(request, id):
     total_meetings = list(Meeting.meetings_since_cutoff())
 
     hours = timedelta()
+    vol = timedelta()
     punches = Punch.objects.filter(member=member, start__gt=settings.attendance_start_date).order_by("start").reverse()
     for punch in punches:
         if punch.is_complete() and (punch.meeting.type == "build" or punch.meeting.type == "othr"):
@@ -137,7 +138,14 @@ def member(request, id):
             meetings.append(punch.meeting)
             if punch.meeting.type == "build":
                 build_meetings.append(punch.meeting)
-        if punch.meeting.type == "out" and punch.meeting not in outreaches_processed:
+
+    outreaches_q = Punch.objects.filter(member=member, meeting__type="out", start__gt=settings.outreach_start_date).order_by("start").reverse()
+    for punch in outreaches_q:
+        if punch.volunteer_hrs != 0:
+            vol += timedelta(hours=punch.volunteer_hrs)
+        else:
+            vol += punch.duration()
+        if punch.meeting not in outreaches_processed:
             outreaches_processed.append(punch.meeting)
             sum = punch.meeting.hours_sum(member)
             if sum:
@@ -162,6 +170,7 @@ def member(request, id):
         "hr_total": time_to_string(hours.get("total", "0")),
         "hr_build": time_to_string(hours.get("build", "0")),
         "hr_out": time_to_string(hours.get("out", "0")),
+        "hr_vol": time_to_string(vol),
         "family": family
     })
 
