@@ -1,15 +1,10 @@
-from datetime import timedelta, datetime
-
-from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
-from django.shortcuts import render, redirect
-from django.utils import timezone
-
-from pigpen import settings
-from ..models import Member, Punch, Meeting
-from ..utils import time_to_string
-
+from datetime import timedelta
 from pprint import pprint as print
+
+from django.shortcuts import render
+
+from ..models import Member, Meeting
+from ..utils import time_to_string
 
 
 def hours(request):
@@ -54,51 +49,6 @@ def hours_table(request):
         "students": students,
         "adults": adults,
     })
-
-
-@login_required
-def outreach_hours_add(request):
-    members = Member.objects.all().order_by("first")
-    if request.method == "POST":
-        data = request.POST
-        adding = []
-
-        for element in data:
-            if "mbr-" in element and data[element]:
-                mid = int(element.split('-')[1])
-                print(mid)
-                q = Member.objects.filter(id=mid)
-                if q.exists():
-                    adding.append(q.first())
-
-        print(adding)
-        outreach = Meeting.objects.get(id=data["outreach-select"])
-
-        for member in adding:
-            start_time = timezone.datetime.combine(outreach.date, datetime.min.time())
-            end_time = start_time + timedelta(hours=int(data['mbr-%s' % member.id]))
-            print("start: {}, end: {}".format(start_time, end_time))
-
-            try:
-                punch = Punch.objects.get(member=member, meeting=outreach)
-            except:
-                punch = Punch(member=member, meeting=outreach)
-
-            punch.start = start_time
-            punch.end = end_time
-            punch.fake = True
-
-            if data["vol-%s" % member.id]:
-                punch.volunteer_hrs = data["vol-%s" % member.id]
-
-            punch.save()
-            outreach.members.add(member)
-        return redirect("man:outreach_hours_add")
-    else:
-        return render(request, 'teammanager/outreach_hours_add.html', {
-            "members": members,
-            "outreaches": Meeting.objects.filter(type="out").order_by("date").reverse()
-        })
 
 
 def getKey(item):

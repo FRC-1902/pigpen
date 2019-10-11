@@ -8,7 +8,6 @@ urlpatterns = [
     path('', index.index, name="index"),
     path('hours', hours.hours, name="hours"),
     path('hours/table', hours.hours_table, name="hours_table"),
-    path('hours/outreach/add', hours.outreach_hours_add, name="outreach_hours_add"),
     path('hours/groups', hours.attendance_groups, name="hours_groups"),
 
     path('directory', directory.directory, name="directory_all"),
@@ -17,6 +16,8 @@ urlpatterns = [
     path('directory/staff', directory.staff_list, name="directory_staff"),
 
     path('outreach/fromcal', outreach.create_outreach_from_calendar, name="outreach_from_calendar"),
+    path('outreach/event/add', outreach.add_event, name="outreach_event_add"),
+    path('outreach/hours/add', outreach.add_hours, name="outreach_hours_add"),
 
     path('location', attendance.whos_in, name="location"),
 

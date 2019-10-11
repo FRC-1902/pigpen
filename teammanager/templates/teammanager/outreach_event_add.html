@@ -1,0 +1,29 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-5">
+            <div class="card mt-3">
+                <form action="{% url 'man:outreach_event_add' %}" method="post">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <h3 class="card-title">Add Outreach Event</h3>
+                        <div class="form-group">
+                            <label for="event_name">Event Name</label>
+                            <input required type="text" class="form-control" name="name" id="event_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input required type="date" class="form-control" name="date" id="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="desc">Description <small>(optional)</small></label>
+                            <textarea class="form-control" name="desc" id="desc"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-success w-100">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
