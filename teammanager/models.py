@@ -41,8 +41,8 @@ class Member(models.Model):
     avatar = models.ImageField(null=True, blank=True)
     family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
     hours = models.IntegerField(default=0, blank=False)
-    outreach_hours = models.IntegerField(default=0, blank=False)
-    attendance = models.IntegerField(default=0, blank=False)
+    outreach_hours = models.FloatField(default=0, blank=False)
+    attendance = models.FloatField(default=0, blank=False)
     slack = models.CharField(max_length=20, null=True, blank=True)
     slack_username = models.CharField(max_length=50, null=True, blank=True)
     slack_avatar = models.TextField(null=True, blank=True)
@@ -118,7 +118,7 @@ class Meeting(models.Model):
     type = models.CharField(max_length=10, default="build", choices=types)
     name = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    length = models.IntegerField(null=False, default=4)
+    length = models.FloatField(null=False, default=4)
     signup_active = models.BooleanField(default=False)
     signup_notes_needed = models.BooleanField(default=False)
     members = models.ManyToManyField("Member", blank=True)
@@ -164,7 +164,7 @@ class Punch(models.Model):
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
     fake = models.BooleanField(default=False)
-    volunteer_hrs = models.IntegerField(default=0)
+    volunteer_hrs = models.FloatField(default=0)
 
     def duration(self):
         return self.end - self.start
