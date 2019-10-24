@@ -40,7 +40,8 @@ def do_punch(request):
                         pun.end = timezone.now()
                         pun.save()
                 else:  # Punch in
-                    recent_pq = Punch.objects.filter(end__gte=timezone.now() - timezone.timedelta(minutes=2))
+                    recent_pq = Punch.objects.filter(member=member, meeting=meeting,
+                                                     end__gte=timezone.now() - timezone.timedelta(minutes=2))
 
                     if recent_pq.exists():
                         return JsonResponse({
