@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import index, auth, hours, directory, attendance, admin, outreach, teambuilding
+from .views import index, auth, hours, directory, attendance, admin, outreach, teambuilding, info
 from .views.api import members, punch, slack, slack_oauth, teambuilding as teambuilding_api, auth as api_auth
 
 app_name = "teammanager"
@@ -37,6 +37,8 @@ urlpatterns = [
     path('teambuilding/add', teambuilding.add_question, name="teambuilding_add"),
     path('teambuilding/select', teambuilding.select_question, name="teambuilding_select"),
     path('teambuilding/answers', teambuilding.answers, name="teambuilding_answers"),
+
+    path('info/registration', info.registration_info, name="info_registration"),
 
     path('api/token/get', api_auth.exchange_token, name="api_exchange_token"),
 

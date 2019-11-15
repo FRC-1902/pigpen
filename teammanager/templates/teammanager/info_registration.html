@@ -1,0 +1,63 @@
+{% extends 'teammanager/base.html' %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-12 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <h2>Student Registration</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Register with Bacon</h3>
+                <ol>
+                    <li>Fill out the registration questionnaire (link changes each season, will be updated when 2020-21 registration opens).</li>
+                    <li>Both the student and parent/guardian should read the
+                        <a href="http://explodingbacon.com/share/EB-1902--2019-2020-Handbook.pdf">handbook</a> and the
+                        <a href="http://www.explodingbacon.com/share/EB-1902--2019-2020-Bylaws.pdf">bylaws</a>, then sign the
+                        <a href="http://explodingbacon.com/share/EB-1902--Handbook-contract.pdf">acknowledgement form</a>
+                        and turn it in at build.</li>
+                    <li>Request an invite to Slack (our primary method of team communication) by talking to any member of
+                        <a href="{% url 'man:directory_leaders' %}">team leadership</a> or by emailing
+                        <a href="mailto:baconfrclead@gmail.com">baconfrclead@gmail.com</a>. </li>
+                    <li>Sign up for an account on <a href="www.ExplodingBacon.com/forums">the forum</a>.
+                        Student <u>must</u> have an account, and at least one parent/guardian is encouraged to have an account as well.</li>
+                    <li>Pay team dues of $175 per youth member to our treasurer or any member of
+                        <a href="{% url 'man:directory_leaders' %}">team leadership</a>.
+                        Deposit of $50 due upon registration, remaining balance due by September 30th. </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Register with <i>FIRST</i></h3>
+                <ol>
+                    <li>Visit <a href="http://www.firstinspires.org">firstinspires.org</a> </li>
+                    <li>Click "register" in the top right and create an account</li>
+                    <li>Apply to team <b>1902</b></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Register with 4-H</h3>
+                <ol>
+                    <li>Visit <a href="https://florida.4honline.com">florida.4Honline.com</a> </li>
+                    <li>Set up a profile</li>
+                    <li>Add a student member</li>
+                    <li>Apply to club <b>EB FRC</b></li>
+                    <li>Visit <a href="http://florida4h.org/membershipfees">the membership fees site</a> </li>
+                    <li>Pay the $20 fee <b>and send your receipt to <a href="mailto:treasurerbacon@gmail.com">treasurerbacon@gmail.com</a> </b></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
