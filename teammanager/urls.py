@@ -39,6 +39,7 @@ urlpatterns = [
     path('teambuilding/answers', teambuilding.answers, name="teambuilding_answers"),
 
     path('info/registration', info.registration_info, name="info_registration"),
+    path('info/links', info.links, name="info_links"),
 
     path('api/token/get', api_auth.exchange_token, name="api_exchange_token"),
 
