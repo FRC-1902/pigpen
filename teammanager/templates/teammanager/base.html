@@ -68,15 +68,9 @@
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
              aria-expanded="false">Hours</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'man:hours' %}">All Hours</a>
-            <a class="dropdown-item" href="{% url 'man:hours_groups' %}">Percentage Bands</a>
-          </div>
-        </div>
-        <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-             aria-expanded="false">Meetings</a>
-          <div class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'man:location' %}">Who's In?</a>
+            <a class="dropdown-item" href="{% url 'man:hours' %}">Hours Table</a>
+            <a class="dropdown-item" href="{% url 'man:hours_groups' %}">Percentage Bands</a>
             <a class="dropdown-item" href="{% url 'man:meetings' %}">Meeting Details</a>
             {% if request.user.is_staff %}
               <a class="dropdown-item" href="{% url 'man:meetings_verify' %}">Verify Meetings</a>
@@ -96,6 +90,7 @@
             {% endif %}
           </div>
         </div>
+        <a class="nav-item nav-link" href="{% url 'man:info_links' %}">Links</a>
         <div class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
              aria-expanded="false">Teambuilding</a>
