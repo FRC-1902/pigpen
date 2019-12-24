@@ -150,11 +150,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/pigpen/static/'
+STATIC_ROOT = '/opt/pigpen/static/'
 
 if is_prod:
     MEDIA_URL = '/media/'
-    MEDIA_ROOT = '/home/pigpen/media/'
+    MEDIA_ROOT = '/opt/pigpen/media/'
 else:
     PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
     MEDIA_URL = '/media/'
