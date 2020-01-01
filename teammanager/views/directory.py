@@ -16,7 +16,7 @@ def directory(request):
 def leaders(request):
     sections = []
 
-    for pos in ["stoff", "tmldr", "stsub", "adsub", "stbus", "adbus", "adbod", "old"]:
+    for pos in ["stoff", "stsub", "adsub", "stbus", "adbus", "adbod", "old"]:
         pos_list = Position.objects.filter(category=pos).order_by("sort")
 
         if pos_list.exists():

@@ -87,10 +87,9 @@ class Member(models.Model):
 class Position(models.Model):
     categories = [
         ("stoff", "Student Officers"),
-        ("tmldr", "Team Leadership"),
         ("adbod", "Adult Board of Directors"),
-        ("stsub", "Student Subsystem/Subteam Leads"),
-        ("adsub", "Adult Subsystem/Subteam Leads"),
+        ("stsub", "Student Robot Leads"),
+        ("adsub", "Adult Robot Leads"),
         ("stbus", "Student Business Leads"),
         ("adbus", "Adult Business Leads"),
         ("old", "People to Know")
