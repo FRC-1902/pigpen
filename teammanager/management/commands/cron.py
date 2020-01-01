@@ -13,7 +13,11 @@ from teammanager.models import Punch, Member, Family, Meeting, TeambuildingQuest
 
 def close_old_punches():
     tz = pytz.timezone("America/New_York")
+
     yesterday = timezone.now().astimezone(tz).replace(hour=4, minute=0, second=0)
+    if yesterday > timezone.now():
+        yesterday = yesterday - timedelta(days=1)
+
     q = Punch.objects.filter(end__isnull=True, start__lt=yesterday)
 
     for p in q:

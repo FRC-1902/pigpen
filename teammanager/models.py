@@ -1,10 +1,10 @@
 from datetime import timedelta
 
 from django.contrib.auth.models import User
-from pigpen import settings
 from django.db import models
 from django.db.models import Sum
 
+from pigpen import settings
 from .utils import gen_token
 
 
@@ -47,6 +47,9 @@ class Member(models.Model):
     slack_username = models.CharField(max_length=50, null=True, blank=True)
     slack_avatar = models.TextField(null=True, blank=True)
     subtitle = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['first', 'last']
 
     def __str__(self):
         return "%s %s" % (self.first, self.last)
