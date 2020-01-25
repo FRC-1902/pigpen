@@ -27,10 +27,11 @@ def close_old_punches():
             else:  # Weekdays
                 p.end = p.start.astimezone(tz).replace(hour=21, minute=0, second=0)
 
-            if p.start < p.end:  # Sanity check
+            if p.start.astimezone(tz) < p.end.astimezone(tz):  # Sanity check
                 p.save()
             else:  # Discard punches in after meeting end if not manually punched out.
-                pass  # Actually, do nothing (for now).
+                print("Punched in after default out, discarding " + str(p))
+                p.delete()
 
 
 def create_families():
