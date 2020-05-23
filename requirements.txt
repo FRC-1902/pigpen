@@ -3,3 +3,4 @@ Pillow~=6.2.0
 requests~=2.21.0
 gunicorn~=19.9.0
 ics==0.5
+mysqlclient~=1.4.6
