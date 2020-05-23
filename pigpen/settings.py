@@ -13,9 +13,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 from django.utils import timezone
+from django.core.management.utils import get_random_secret_key
 
-
-is_prod = bool(os.getenv("PROD", False))
+DEBUG = not os.getenv("PROD", False)
+DOCKER = os.getenv("DOCKER", False)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,24 +25,34 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if is_prod:
-    SECRET_KEY = os.getenv("PIGPEN_SECRET")
+if DOCKER and not DEBUG:
+    key_loc = "/app/secret/secret.key"
+    if not os.path.exists(key_loc):
+        with open(key_loc, "w") as f:
+            f.write(get_random_secret_key())
+    with open(key_loc, "r") as f:
+        try:
+            SECRET_KEY = f.read()
+        except IOError:
+            SECRET_KEY = ""
+elif DEBUG:
+    SECRET_KEY = 'gkxv2lfmu+qj-qw1umziwnys^x*j)$joh3-(_cu(j-m4=-x)zi'
 else:
-    SECRET_KEY = 'gca@!y=keoyw56)2jxz*$&e+sf9zh4en#-w4in3*0c548sn8ld'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not is_prod
+    SECRET_KEY = ''
 
 attendance_start_date = timezone.now().replace(year=2019, month=9, day=1, hour=0, minute=0, second=0)
 outreach_start_date = timezone.now().replace(year=2019, month=5, day=18, hour=0, minute=0, second=0)
 
-
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
     'pen.vegetarianbaconite.com',
     'pen.explodingbacon.com',
 ]
+
+if DEBUG:
+    ALLOWED_HOSTS.extend([
+        '127.0.0.1',
+        'localhost'
+    ])
 
 # Application definition
 
@@ -88,12 +99,24 @@ WSGI_APPLICATION = 'pigpen.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DOCKER:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'django',
+            'USER': 'django',
+            'PASSWORD': 'django',
+            'HOST': 'mysql',
+            'PORT': '3306',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -113,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if is_prod:
+if not DEBUG:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -149,13 +172,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/opt/pigpen/static/'
+if DOCKER:
+    MEDIA_ROOT = "/app/media"
+    STATIC_ROOT = "/app/static"
 
-if is_prod:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = '/opt/pigpen/media/'
-else:
-    PROJECT_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
