@@ -36,6 +36,7 @@ def close_old_punches():
 
 def create_families():
     for member in Member.objects.filter(family__isnull=True):
+        if member.hidden: continue
         fq = Family.objects.filter(name=member.last)
 
         if fq.exists():
@@ -143,6 +144,6 @@ class Command(BaseCommand):
         create_families()
         add_members_to_build_meetings()
         update_hours()
-        mark_users_inactive()
+        # mark_users_inactive()
         get_slack_users()  # Also gets subtitles
         mark_teambuilding_questions_used()

@@ -38,6 +38,7 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     role = models.CharField(max_length=10, default="stu", choices=roles)
     active = models.BooleanField(default=True, null=False, blank=False)
+    hidden = models.BooleanField(default=False, null=False, blank=False)
     avatar = models.ImageField(null=True, blank=True)
     family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
     hours = models.IntegerField(default=0, blank=False)
@@ -153,6 +154,10 @@ class Meeting(models.Model):
     @staticmethod
     def total_hours():
         total_hours = Meeting.objects.filter(type="build", date__gt=settings.attendance_start_date).aggregate(Sum('length'))['length__sum']
+
+        if not total_hours:
+            total_hours = 0.01
+
         return timedelta(hours=total_hours)
 
     @staticmethod
@@ -165,6 +170,7 @@ class Punch(models.Model):
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
+    temperature = models.FloatField(null=True, blank=True)
     fake = models.BooleanField(default=False)
     volunteer_hrs = models.FloatField(default=0)
 
