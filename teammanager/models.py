@@ -170,6 +170,7 @@ class Punch(models.Model):
     meeting = models.ForeignKey("Meeting", on_delete=models.CASCADE)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
+    temperature = models.FloatField(null=True, blank=True)
     fake = models.BooleanField(default=False)
     volunteer_hrs = models.FloatField(default=0)
 

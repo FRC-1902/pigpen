@@ -51,6 +51,10 @@ def do_punch(request):
                     else:
                         pun = Punch(member=member, meeting=meeting)
                         pun.start = timezone.now()
+
+                        if data.get("temperature"):
+                            pun.temperature = data['temperature']
+
                         pun.save()
                         meeting.members.add(member)
 
