@@ -38,6 +38,7 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     role = models.CharField(max_length=10, default="stu", choices=roles)
     active = models.BooleanField(default=True, null=False, blank=False)
+    hidden = models.BooleanField(default=False, null=False, blank=False)
     avatar = models.ImageField(null=True, blank=True)
     family = models.ForeignKey("Family", null=True, blank=True, on_delete=models.SET_NULL)
     hours = models.IntegerField(default=0, blank=False)
