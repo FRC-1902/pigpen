@@ -111,6 +111,9 @@
                 <span>{{ punch.0|date:"g:i a" }} - {{ punch.1.member.short_name }} punched {{ punch.2 }}</span>
               {% endif %}
               {% if request.user.is_staff %}
+                {% if punch.1.temperature and punch.2 == 'in' %}
+                  <span class="text-muted small">({{ punch.1.temperature }}&deg;F)</span>
+                {% endif %}
                 </a>
               {% endif %}
             </li>
