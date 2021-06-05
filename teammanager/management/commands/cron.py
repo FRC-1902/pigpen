@@ -126,7 +126,7 @@ def get_slack_users():
                 else:
                     print("Can't find " + first + " " + last)
             except Exception as e:
-                print(e)
+                print(member, e)
 
     else:
         print("NO KEY")
