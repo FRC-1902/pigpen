@@ -102,7 +102,7 @@ def meetings(request):
                 print("Failed to get member")
         now = timezone.now()
         #meetings = Meeting.objects.filter(date__lte=now).order_by("date").reverse()
-        meetings = Meeting.objects.all().order_by("date").reverse()
+        meetings = Meeting.objects.filter(date__gte=settings.attendance_start_date).order_by("date").reverse()
         outreaches_upcoming = Meeting.objects.filter(type="out", date__gte=now).order_by("date")
         outreaches_old = Meeting.objects.filter(type="out", date__lt=now).order_by("date").reverse()
         return render(request, "teammanager/meeting_list.html", {
