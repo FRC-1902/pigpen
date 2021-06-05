@@ -153,6 +153,10 @@ class Meeting(models.Model):
     @staticmethod
     def total_hours():
         total_hours = Meeting.objects.filter(type="build", date__gt=settings.attendance_start_date).aggregate(Sum('length'))['length__sum']
+
+        if not total_hours:
+            total_hours = 0.01
+
         return timedelta(hours=total_hours)
 
     @staticmethod
