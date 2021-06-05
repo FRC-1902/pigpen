@@ -143,6 +143,6 @@ class Command(BaseCommand):
         create_families()
         add_members_to_build_meetings()
         update_hours()
-        mark_users_inactive()
+        # mark_users_inactive()
         get_slack_users()  # Also gets subtitles
         mark_teambuilding_questions_used()
