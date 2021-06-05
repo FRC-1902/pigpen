@@ -83,7 +83,8 @@ def update_hours():
 def mark_users_inactive():
     for member in Member.objects.filter(role="mtr"):
         try:
-            if timezone.now() - timedelta(days=100) > member.punch_set.exclude(end__isnull=True).order_by("-end").first().end:
+            if timezone.now() - timedelta(days=100) > member.punch_set.exclude(end__isnull=True).order_by(
+                    "-end").first().end:
                 member.active = False
                 member.save()
         except AttributeError as e:
@@ -140,10 +141,14 @@ def mark_teambuilding_questions_used():
 
 class Command(BaseCommand):
     def handle(self, **options):
-        close_old_punches()
-        create_families()
-        add_members_to_build_meetings()
-        update_hours()
-        # mark_users_inactive()
-        get_slack_users()  # Also gets subtitles
-        mark_teambuilding_questions_used()
+        do_all()
+
+
+def do_all():
+    close_old_punches()
+    create_families()
+    add_members_to_build_meetings()
+    update_hours()
+    # mark_users_inactive()
+    get_slack_users()  # Also gets subtitles
+    mark_teambuilding_questions_used()

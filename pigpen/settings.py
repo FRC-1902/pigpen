@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'teammanager',
 ]
 
@@ -77,6 +78,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pigpen.urls'
+CRONJOBS = [
+    ("0 0 * * *", "teammanager.management.commands.cron.do_all"),
+]
 
 TEMPLATES = [
     {
