@@ -40,8 +40,8 @@ elif DEBUG:
 else:
     SECRET_KEY = ''
 
-attendance_start_date = timezone.now().replace(year=2022, month=1, day=1, hour=0, minute=0, second=0)
-outreach_start_date = timezone.now().replace(year=2021, month=5, day=18, hour=0, minute=0, second=0)
+attendance_start_date = timezone.now().replace(year=2023, month=1, day=1, hour=0, minute=0, second=0)
+outreach_start_date = timezone.now().replace(year=2022, month=6, day=1, hour=0, minute=0, second=0)
 
 ALLOWED_HOSTS = [
     'pen.vegetarianbaconite.com',
