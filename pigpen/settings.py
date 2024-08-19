@@ -40,8 +40,8 @@ elif DEBUG:
 else:
     SECRET_KEY = ''
 
-attendance_start_date = timezone.now().replace(year=2024, month=1, day=1, hour=0, minute=0, second=0)
-outreach_start_date = timezone.now().replace(year=2023, month=6, day=1, hour=0, minute=0, second=0)
+attendance_start_date = timezone.now().replace(year=2024, month=8, day=1, hour=0, minute=0, second=0)
+outreach_start_date = timezone.now().replace(year=2024, month=6, day=1, hour=0, minute=0, second=0)
 
 ALLOWED_HOSTS = [
     'pen.vegetarianbaconite.com',
@@ -79,7 +79,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'pigpen.urls'
 CRONJOBS = [
-    ("0 0 * * *", "teammanager.management.commands.cron.do_all"),
+    ("0 2 * * *", "teammanager.management.commands.cron.do_all"),
 ]
 
 TEMPLATES = [
